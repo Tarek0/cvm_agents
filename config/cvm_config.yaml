@@ -1,0 +1,96 @@
+# CVM System Configuration
+
+# Treatment definitions
+treatments:
+  call_back:
+    description: "Assign the customer to the super saves team for call back to try to resolve their problem. This team has more power to offer better discounts"
+    display_name: "Call Back"
+    enabled: true
+
+  retention_email:
+    description: "Email the customer with a general retention offer"
+    display_name: "Retention Email"
+    enabled: true
+
+  retention_sms:
+    description: "Text the customer with a general retention offer"
+    display_name: "Retention SMS"
+    enabled: true
+
+  service_sms:
+    description: "Text the customer with a general service message letting them know the network in the area is about to be upgraded"
+    display_name: "Service SMS"
+    enabled: true
+
+  loyalty_app:
+    description: "Update the offers with best available offers in the loyalty app"
+    display_name: "Loyalty App"
+    enabled: true
+
+  ignore:
+    description: "Do nothing and see that the customer does next"
+    display_name: "No Action"
+    enabled: true
+
+# Constraints for each treatment
+constraints:
+  call_back:
+    max_per_day: 2
+    remaining_availability: 2
+    cost_per_contact_pounds: 10.0
+    priority: 1  # Higher priority for expensive/limited resources
+
+  retention_email:
+    max_per_day: 1000
+    remaining_availability: 1000
+    cost_per_contact_pounds: 0.25
+    priority: 3
+
+  retention_sms:
+    max_per_day: 1000
+    remaining_availability: 1000
+    cost_per_contact_pounds: 0.50
+    priority: 2
+
+  service_sms:
+    max_per_day: 10000
+    remaining_availability: 10000
+    cost_per_contact_pounds: 0.50
+    priority: 4
+
+  loyalty_app:
+    max_per_day: 10000
+    remaining_availability: 10000
+    cost_per_contact_pounds: 0.10
+    priority: 5
+
+# Global settings
+settings:
+  reset_constraints_daily: true
+  default_output_file: "results.json"
+  logging:
+    default_level: "INFO"
+    file_output: "logs/cvm.log"
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    rotation:
+      max_bytes: 10485760  # 10MB
+      backup_count: 5
+
+# Model settings
+model:
+  id: "gpt-4o"
+  temperature: 0.7
+  max_tokens: 1000
+  planning_interval: 3
+  additional_imports:
+    - datetime
+
+# Validation rules
+validation:
+  customer_id_pattern: "^U\\d{3}$"
+  max_customers_per_batch: 100
+  required_journey_fields:
+    - customer_id
+    - interaction_history
+    - current_plan
+    - usage_patterns 

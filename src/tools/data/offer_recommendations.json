@@ -1,0 +1,382 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-02-15",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Data Saver Plus",
+                "description": "Automated data usage alerts and rollover data",
+                "discount": 5,
+                "duration_months": 12,
+                "value_per_month": 10.00
+            },
+            {
+                "type": "service_feature",
+                "name": "Usage Control Portal",
+                "description": "Premium access to real-time usage monitoring dashboard",
+                "value": "Free tool access",
+                "duration_months": 12,
+                "value_per_month": 5.00
+            }
+        ],
+        "total_value": 180.00,
+        "priority": "low",
+        "expiration_date": "2024-02-22",
+        "outcome": {
+            "status": "declined",
+            "decision_date": "2024-02-18"
+        }
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-02-20",
+        "recommended_offers": [
+            {
+                "type": "international_package",
+                "name": "Euro Traveler Basic",
+                "description": "Daily rate roaming package for Europe",
+                "discount": 10,
+                "duration_months": 1,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "service_feature",
+                "name": "Travel Usage Alerts",
+                "description": "Real-time notifications for roaming usage and charges",
+                "value": "Complimentary service",
+                "duration_months": 1,
+                "value_per_month": 5.00
+            }
+        ],
+        "total_value": 20.00,
+        "priority": "medium",
+        "expiration_date": "2024-02-27",
+        "outcome": {
+            "status": "accepted",
+            "decision_date": "2024-02-21"
+        }
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-02-28",
+        "recommended_offers": [
+            {
+                "type": "billing_adjustment",
+                "name": "Roaming Rate Review",
+                "description": "Investigation of applied roaming rates and package activation",
+                "value": "Account review",
+                "amount": 50.00
+            },
+            {
+                "type": "international_package",
+                "name": "Euro Traveler Plus",
+                "description": "Enhanced European roaming with unlimited data",
+                "discount": 20,
+                "duration_months": 3,
+                "value_per_month": 25.00
+            }
+        ],
+        "total_value": 125.00,
+        "priority": "medium",
+        "expiration_date": "2024-03-07",
+        "outcome": {
+            "status": "declined",
+            "decision_date": "2024-03-01"
+        }
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-01",
+        "recommended_offers": [
+            {
+                "type": "billing_credit",
+                "name": "Bill Investigation Credit",
+                "description": "Temporary credit while investigating roaming charges",
+                "value": "One-time credit",
+                "amount": 75.00
+            },
+            {
+                "type": "plan_upgrade",
+                "name": "Global Traveler Basic",
+                "description": "International-friendly plan with included roaming",
+                "discount": 10,
+                "duration_months": 12,
+                "value_per_month": 20.00
+            }
+        ],
+        "total_value": 315.00,
+        "priority": "high",
+        "expiration_date": "2024-03-08",
+        "outcome": {
+            "status": "declined",
+            "decision_date": "2024-03-02"
+        }
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-03",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Ultimate Data Plus",
+                "description": "Unlimited data with included international roaming in 45 countries",
+                "discount": 15,
+                "duration_months": 12,
+                "value_per_month": 25.00
+            },
+            {
+                "type": "loyalty_reward",
+                "name": "Premium Content Bundle",
+                "description": "Netflix, Disney+, and Amazon Prime subscriptions included",
+                "value": "3 months free streaming",
+                "value_per_month": 35.00
+            },
+            {
+                "type": "billing_credit",
+                "name": "Roaming Dispute Resolution",
+                "description": "Full refund of disputed international charges",
+                "value": "One-time credit",
+                "amount": 150.75
+            },
+            {
+                "type": "international_package",
+                "name": "Global Business Traveler Add-on",
+                "description": "Unlimited data in Europe with 5G access and no speed caps",
+                "discount": 25,
+                "duration_months": 6,
+                "value_per_month": 20.00
+            },
+            {
+                "type": "service_upgrade",
+                "name": "Priority Support Plus",
+                "description": "24/7 dedicated business support line with personal account manager",
+                "duration_months": 12,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "device_offer",
+                "name": "5G Device Upgrade",
+                "description": "Early upgrade eligibility for latest 5G device with international compatibility",
+                "discount": 200,
+                "contract_months": 24
+            }
+        ],
+        "total_value": 845.75,
+        "priority": "high",
+        "expiration_date": "2024-03-11",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-04",
+            "follow_up_scheduled": "2024-03-06"
+        }
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-02-26",
+        "recommended_offers": [
+            {
+                "type": "service_upgrade",
+                "name": "Network Quality Assessment",
+                "description": "Priority network assessment and optimization by senior technical team",
+                "value": "Premium service",
+                "duration_months": 1,
+                "value_per_month": 50.00
+            }
+        ],
+        "total_value": 50.00,
+        "priority": "medium",
+        "expiration_date": "2024-03-05",
+        "outcome": {
+            "status": "accepted",
+            "decision_date": "2024-02-27"
+        }
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-02",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Business Fiber Pro",
+                "description": "Dedicated fiber line with guaranteed 99.9% uptime and priority support",
+                "discount": 20,
+                "duration_months": 24,
+                "value_per_month": 129.99
+            },
+            {
+                "type": "service_feature",
+                "name": "Video Conferencing Optimization",
+                "description": "QoS prioritization for video conferencing applications",
+                "value": "Enhanced service",
+                "duration_months": 24,
+                "value_per_month": 25.00
+            },
+            {
+                "type": "loyalty_reward",
+                "name": "Business Support Plus",
+                "description": "24/7 dedicated business support line with 1-hour response guarantee",
+                "value": "Premium support",
+                "duration_months": 12,
+                "value_per_month": 35.00
+            }
+        ],
+        "total_value": 575.75,
+        "priority": "high",
+        "expiration_date": "2024-03-09",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-03",
+            "follow_up_scheduled": "2024-03-05"
+        }
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-02",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Unlimited Family Elite",
+                "description": "True unlimited data for 5 lines with no throttling",
+                "discount": 25,
+                "duration_months": 24,
+                "value_per_month": 159.99
+            },
+            {
+                "type": "billing_assistance",
+                "name": "Payment Relief Program",
+                "description": "3-month payment plan for current balance with no late fees",
+                "value": "Fee waiver",
+                "amount": 98.25
+            },
+            {
+                "type": "service_feature",
+                "name": "Education Priority Data",
+                "description": "Guaranteed high-speed data for educational platforms",
+                "value": "Enhanced service",
+                "duration_months": 12,
+                "value_per_month": 25.00
+            }
+        ],
+        "total_value": 485.75,
+        "priority": "high",
+        "expiration_date": "2024-03-09",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-03",
+            "follow_up_scheduled": "2024-03-05"
+        }
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-03",
+        "recommended_offers": [
+            {
+                "type": "plan_enhancement",
+                "name": "Senior Safety Bundle",
+                "description": "Medical alert pendant service with 24/7 monitoring",
+                "value": "Premium service",
+                "duration_months": 12,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "minutes_upgrade",
+                "name": "Senior Plus Minutes",
+                "description": "50% more monthly minutes at 25% of standard rate",
+                "discount": 75,
+                "duration_months": 12,
+                "value_per_month": 10.00
+            },
+            {
+                "type": "loyalty_reward",
+                "name": "Long-term Customer Bonus",
+                "description": "One-time credit for 5+ years of loyalty",
+                "value": "Account credit",
+                "amount": 50.00
+            }
+        ],
+        "total_value": 350.00,
+        "priority": "medium",
+        "expiration_date": "2024-03-17",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-03",
+            "follow_up_scheduled": "2024-03-06"
+        }
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-02",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Global Caller Elite",
+                "description": "Enhanced international calling plan with reduced rates to Asia",
+                "discount": 15,
+                "duration_months": 12,
+                "value_per_month": 20.00
+            },
+            {
+                "type": "international_package",
+                "name": "Asia Connect Bundle",
+                "description": "Discounted calling rates to China, Singapore, and other Asian countries",
+                "discount": 25,
+                "duration_months": 6,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "loyalty_reward",
+                "name": "International Minutes Bonus",
+                "description": "500 free international minutes to selected countries",
+                "value": "One-time bonus",
+                "amount": 75.00
+            }
+        ],
+        "total_value": 285.00,
+        "priority": "medium",
+        "expiration_date": "2024-03-09",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-03",
+            "follow_up_scheduled": "2024-03-05"
+        }
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-02",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Business Share Pro",
+                "description": "Enhanced data sharing capabilities with real-time usage monitoring",
+                "discount": 20,
+                "duration_months": 12,
+                "value_per_month": 30.00
+            },
+            {
+                "type": "service_feature",
+                "name": "Business Dashboard Plus",
+                "description": "Advanced analytics and control features for multiple lines",
+                "value": "Premium tool access",
+                "duration_months": 12,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "new_customer_bonus",
+                "name": "Welcome Package",
+                "description": "Additional data allocation for first 3 months",
+                "value": "Extra 20GB per line",
+                "duration_months": 3,
+                "value_per_month": 25.00
+            }
+        ],
+        "total_value": 465.00,
+        "priority": "high",
+        "expiration_date": "2024-03-09",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-03",
+            "follow_up_scheduled": "2024-03-06"
+        }
+    }
+] 

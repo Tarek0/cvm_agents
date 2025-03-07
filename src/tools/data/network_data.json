@@ -1,0 +1,56 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-03-02",
+        "connection_quality": "good",
+        "download_speed_mbps": 85.5,
+        "upload_speed_mbps": 25.2,
+        "latency_ms": 28,
+        "packet_loss_percent": 0.5
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-02",
+        "connection_quality": "poor",
+        "download_speed_mbps": 45.2,
+        "upload_speed_mbps": 12.8,
+        "latency_ms": 85,
+        "packet_loss_percent": 2.8
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-02",
+        "connection_quality": "fair",
+        "download_speed_mbps": 65.8,
+        "upload_speed_mbps": 18.5,
+        "latency_ms": 45,
+        "packet_loss_percent": 1.2
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-02",
+        "connection_quality": "good",
+        "download_speed_mbps": 72.5,
+        "upload_speed_mbps": 22.8,
+        "latency_ms": 25,
+        "packet_loss_percent": 0.3
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-02",
+        "connection_quality": "good",
+        "download_speed_mbps": 78.5,
+        "upload_speed_mbps": 22.5,
+        "latency_ms": 32,
+        "packet_loss_percent": 0.4
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-02",
+        "connection_quality": "good",
+        "download_speed_mbps": 82.8,
+        "upload_speed_mbps": 24.5,
+        "latency_ms": 30,
+        "packet_loss_percent": 0.3
+    }
+] 

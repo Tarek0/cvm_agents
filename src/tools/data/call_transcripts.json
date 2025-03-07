@@ -1,0 +1,114 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-02-28",
+        "type": "call",
+        "summary": "Customer called seeking clarification on roaming charges from their European business trip, specifically questioning the daily rate structure. They mentioned having purchased what they believed was an unlimited European roaming package but seeing additional per-MB charges.",
+        "sentiment": "neutral",
+        "duration_minutes": 10
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-01",
+        "type": "call",
+        "summary": "Customer called expressing strong dissatisfaction with their current plan's value, particularly regarding the unexpected international charges and data overage fees. They emphasized that their monthly bill has increased by over 50% due to these charges and requested to speak with a billing specialist.",
+        "sentiment": "negative",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-03",
+        "type": "call",
+        "summary": "Follow-up call regarding the ongoing billing dispute where customer expressed continued frustration about the unresolved roaming charges. They pointed out that they had documented evidence of purchasing the correct international package and demanded immediate resolution of the overcharges.",
+        "sentiment": "negative",
+        "duration_minutes": 8
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-04",
+        "type": "call",
+        "summary": "Customer escalated the billing dispute to a supervisor, presenting detailed documentation of their international package purchase and subsequent overcharges. They explicitly stated that they have received competitive offers from three other providers and will begin the switch process if the dispute isn't resolved with a full refund by the end of the week.",
+        "sentiment": "negative",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-02-26",
+        "type": "call",
+        "summary": "Customer called technical support regarding persistent network issues affecting their business video conferences. Support ran diagnostics and identified potential infrastructure limitations in their area. A ticket was escalated to the network team.",
+        "sentiment": "neutral",
+        "duration_minutes": 25
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-02",
+        "type": "call",
+        "summary": "Follow-up call about ongoing network quality concerns. Customer shared detailed logs of connection drops during important client meetings. They expressed frustration about the lack of progress since their last contact and mentioned considering business-grade fiber options from competitors.",
+        "sentiment": "negative",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-02-27",
+        "type": "call",
+        "summary": "Customer called to discuss payment arrangements for their overdue balance and explore options for a more affordable family plan. They explained having five lines with heavy data usage due to remote schooling and work-from-home requirements.",
+        "sentiment": "neutral",
+        "duration_minutes": 22
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-03",
+        "type": "call",
+        "summary": "Customer called expressing concern about data throttling affecting their children's virtual classes and requested to speak with a supervisor about plan options. They mentioned receiving promotional materials from competitors offering unlimited family plans at lower rates.",
+        "sentiment": "negative",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-02-26",
+        "type": "call",
+        "summary": "Customer called for assistance with their voicemail setup and to learn about senior-specific features. The conversation was positive, with the customer expressing gratitude for the patient explanation of services.",
+        "sentiment": "positive",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-01",
+        "type": "call",
+        "summary": "Customer inquired about adding a medical alert pendant service to their plan and discussed the possibility of increasing their monthly minutes allocation. They praised the quality of service they've received over their five years with the company.",
+        "sentiment": "positive",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-02-26",
+        "type": "call",
+        "summary": "Customer called to inquire about upgrading their current plan to include more international minutes. They mentioned frequent calls to family in Asia and expressed interest in bundle options that could reduce costs.",
+        "sentiment": "neutral",
+        "duration_minutes": 14
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-02",
+        "type": "call",
+        "summary": "Follow-up call about international calling plans. Customer compared our rates with competitor offerings and requested a detailed breakdown of potential savings with different packages.",
+        "sentiment": "neutral",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-02-27",
+        "type": "call",
+        "summary": "New customer called for assistance with setting up their small business account and activating multiple lines for their team of 3. They were particularly interested in mobile data sharing features.",
+        "sentiment": "positive",
+        "duration_minutes": 25
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-03",
+        "type": "call",
+        "summary": "Customer called regarding confusion about data sharing between team members and requested clarification on how to monitor usage across different lines.",
+        "sentiment": "neutral",
+        "duration_minutes": 15
+    }
+] 

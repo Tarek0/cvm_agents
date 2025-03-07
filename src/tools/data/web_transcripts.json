@@ -1,0 +1,138 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-02-15",
+        "channel": "web_chat",
+        "summary": "Customer requested information about data usage monitoring tools and how to set up usage alerts. They mentioned concerns about going over their data limit in previous months.",
+        "sentiment": "neutral",
+        "duration_minutes": 8
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-02-20",
+        "channel": "web_chat",
+        "summary": "Customer inquired about international roaming rates for an upcoming business trip to Europe. They specifically asked about data packages for France and Germany.",
+        "sentiment": "neutral",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-02-25",
+        "channel": "web_chat",
+        "summary": "Customer expressed shock at unexpected roaming charges from their recent European trip, stating they were not properly informed about the rates. They disputed the charges, claiming the roaming package they purchased wasn't correctly applied to their account.",
+        "sentiment": "negative",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-02",
+        "channel": "web_chat",
+        "summary": "Customer requested a detailed breakdown of their current bill charges and asked about alternative plan options that might better suit their usage. They mentioned seeing better rates advertised by competitors for similar plans.",
+        "sentiment": "neutral",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-03",
+        "channel": "web_chat",
+        "summary": "Customer requested specific comparisons between their current plan and competitor offerings, particularly focusing on international roaming benefits. They expressed frustration that their loyalty of 18 months wasn't being rewarded with better rates.",
+        "sentiment": "negative",
+        "duration_minutes": 20
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-04",
+        "channel": "web_chat",
+        "summary": "Customer expressed intense frustration about the unresolved billing dispute and shared screenshots of competitor offers with significantly better international rates. They stated they would be forced to switch providers if the dispute wasn't resolved satisfactorily within the week.",
+        "sentiment": "negative",
+        "duration_minutes": 25
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-02-25",
+        "channel": "web_chat",
+        "summary": "Customer reported experiencing frequent video call drops during business meetings. They mentioned that the issues started after upgrading to the Business Pro plan and expressed concern about the impact on their small business operations.",
+        "sentiment": "negative",
+        "duration_minutes": 22
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-01",
+        "channel": "web_chat",
+        "summary": "Customer requested information about network upgrades in their area and inquired about alternative business plans with better video conferencing quality. They mentioned receiving promotional materials from competitors advertising dedicated business lines.",
+        "sentiment": "neutral",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-03",
+        "channel": "web_chat",
+        "summary": "Customer followed up on previous network quality issues, providing screenshots of speed tests during video calls. They emphasized the critical nature of reliable service for their business and requested escalation to technical support.",
+        "sentiment": "negative",
+        "duration_minutes": 25
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-02-25",
+        "channel": "web_chat",
+        "summary": "Customer inquired about payment plan options for their overdue balance, explaining recent financial difficulties affecting their family of five. They requested information about more affordable family plans that could accommodate their high data usage needs.",
+        "sentiment": "neutral",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-02",
+        "channel": "web_chat",
+        "summary": "Customer expressed frustration about data speeds slowing down after reaching usage threshold, affecting their children's online schooling. They requested clarification on data caps and throttling policies while mentioning competitor family plans with unlimited high-speed data.",
+        "sentiment": "negative",
+        "duration_minutes": 20
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-02-28",
+        "channel": "web_chat",
+        "summary": "Customer requested assistance with setting up automatic payments for their senior plan and inquired about available accessibility features. They expressed appreciation for the clear explanations and patience shown by the support team.",
+        "sentiment": "positive",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-03",
+        "channel": "web_chat",
+        "summary": "Customer asked about adding a medical alert service to their plan and discussed options for increasing their monthly minutes without significantly impacting the cost. They mentioned being a satisfied customer for over 5 years.",
+        "sentiment": "positive",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-02-28",
+        "channel": "web_chat",
+        "summary": "Customer inquired about international calling plans to Asia, specifically asking about rates for calls to China and Singapore. They requested information about bundle options that could help reduce their current international charges.",
+        "sentiment": "neutral",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-03",
+        "channel": "web_chat",
+        "summary": "Customer requested detailed comparison of international calling rates between our plans and competitor offerings. They expressed interest in finding a more cost-effective solution for their frequent international calls.",
+        "sentiment": "neutral",
+        "duration_minutes": 22
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-02-28",
+        "channel": "web_chat",
+        "summary": "New business customer requested assistance with setting up data sharing features across their team's devices. They had questions about monitoring and managing data usage across multiple lines.",
+        "sentiment": "neutral",
+        "duration_minutes": 25
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-03",
+        "channel": "web_chat",
+        "summary": "Customer inquired about additional business features available for their plan and expressed satisfaction with the service so far. They requested information about upgrading their data sharing capabilities.",
+        "sentiment": "positive",
+        "duration_minutes": 20
+    }
+] 

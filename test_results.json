@@ -1,0 +1,90 @@
+{
+  "results": [
+    {
+      "customer_id": "U127",
+      "timestamp": "2025-03-06T16:49:46.520916",
+      "selected_treatment": "service_sms",
+      "explanation": {
+        "selected_treatment": "service_sms",
+        "explanation": "Due to lack of distinguishing churn risk, the `service_sms` treatment is used.",
+        "priority": 0.5282887334737727
+      },
+      "processing_status": "success",
+      "priority_score": 0.5282887334737727
+    },
+    {
+      "customer_id": "U128",
+      "timestamp": "2025-03-06T16:49:46.521169",
+      "selected_treatment": "service_sms",
+      "explanation": {
+        "selected_treatment": "service_sms",
+        "explanation": "Due to lack of distinguishing churn risk, the `service_sms` treatment is used.",
+        "priority": 0.4954778918168289
+      },
+      "processing_status": "success",
+      "priority_score": 0.4954778918168289
+    },
+    {
+      "customer_id": "U126",
+      "timestamp": "2025-03-06T16:49:46.520746",
+      "selected_treatment": "call_back",
+      "explanation": {
+        "selected_treatment": "call_back",
+        "explanation": "Due to lack of distinguishing churn risk, the `call_back` treatment is used.",
+        "priority": 0.47652070772182653
+      },
+      "processing_status": "success",
+      "priority_score": 0.47652070772182653
+    },
+    {
+      "customer_id": "U124",
+      "timestamp": "2025-03-06T16:49:46.520416",
+      "selected_treatment": "retention_email",
+      "explanation": {
+        "selected_treatment": "retention_email",
+        "explanation": "Due to lack of distinguishing churn risk, the `retention_email` treatment is used.",
+        "priority": 0.47076116244666366
+      },
+      "processing_status": "success",
+      "priority_score": 0.47076116244666366
+    }
+  ],
+  "summary": {
+    "total_processed": 4,
+    "successful": 4,
+    "failed": 0,
+    "constraints_final_state": {
+      "call_back": {
+        "max_per_day": 2,
+        "remaining_availability": 1,
+        "cost_per_contact_pounds": 10.0,
+        "priority": 1
+      },
+      "retention_email": {
+        "max_per_day": 1000,
+        "remaining_availability": 999,
+        "cost_per_contact_pounds": 0.25,
+        "priority": 3
+      },
+      "retention_sms": {
+        "max_per_day": 1000,
+        "remaining_availability": 1000,
+        "cost_per_contact_pounds": 0.5,
+        "priority": 2
+      },
+      "service_sms": {
+        "max_per_day": 10000,
+        "remaining_availability": 9998,
+        "cost_per_contact_pounds": 0.5,
+        "priority": 4
+      },
+      "loyalty_app": {
+        "max_per_day": 10000,
+        "remaining_availability": 10000,
+        "cost_per_contact_pounds": 0.1,
+        "priority": 5
+      }
+    },
+    "optimization_method": "batch"
+  }
+}

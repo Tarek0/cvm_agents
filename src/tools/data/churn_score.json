@@ -1,0 +1,50 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-03-03",
+        "churn_probability": 0.75,
+        "risk_factors": ["billing_disputes", "high_usage", "competitor_offers"],
+        "customer_lifetime_months": 18,
+        "recent_satisfaction_score": 2
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-03",
+        "churn_probability": 0.45,
+        "risk_factors": ["service_quality", "network_issues", "competitor_offers"],
+        "customer_lifetime_months": 36,
+        "recent_satisfaction_score": 3
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-03",
+        "churn_probability": 0.65,
+        "risk_factors": ["payment_issues", "high_usage", "price_sensitivity"],
+        "customer_lifetime_months": 24,
+        "recent_satisfaction_score": 2
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-03",
+        "churn_probability": 0.15,
+        "risk_factors": ["age_group", "limited_services"],
+        "customer_lifetime_months": 60,
+        "recent_satisfaction_score": 4
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-03",
+        "churn_probability": 0.35,
+        "risk_factors": ["price_sensitivity", "competitor_offers", "international_usage"],
+        "customer_lifetime_months": 24,
+        "recent_satisfaction_score": 3
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-03",
+        "churn_probability": 0.25,
+        "risk_factors": ["new_customer", "service_complexity"],
+        "customer_lifetime_months": 1,
+        "recent_satisfaction_score": 4
+    }
+] 

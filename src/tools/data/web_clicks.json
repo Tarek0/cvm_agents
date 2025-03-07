@@ -1,0 +1,86 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-03-02",
+        "page": "/billing/current",
+        "duration_seconds": 180,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-02",
+        "page": "/plans/compare",
+        "duration_seconds": 300,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-02",
+        "page": "/support/network-status",
+        "duration_seconds": 240,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-03",
+        "page": "/business/upgrade-options",
+        "duration_seconds": 420,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-02",
+        "page": "/billing/payment-options",
+        "duration_seconds": 420,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-03",
+        "page": "/plans/family-share",
+        "duration_seconds": 360,
+        "device": "tablet"
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-02",
+        "page": "/support/accessibility",
+        "duration_seconds": 180,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-03",
+        "page": "/plans/senior-discounts",
+        "duration_seconds": 240,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-02",
+        "page": "/plans/international",
+        "duration_seconds": 420,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-03",
+        "page": "/support/international-rates",
+        "duration_seconds": 300,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-02",
+        "page": "/business/data-sharing",
+        "duration_seconds": 480,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-03",
+        "page": "/support/business-features",
+        "duration_seconds": 360,
+        "device": "tablet"
+    }
+] 

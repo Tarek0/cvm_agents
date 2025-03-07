@@ -1,0 +1,98 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-02-01",
+        "plan_name": "Premium Data",
+        "monthly_charge": 65.99,
+        "additional_charges": 12.50,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-01",
+        "plan_name": "Premium Data",
+        "monthly_charge": 65.99,
+        "additional_charges": 25.75,
+        "payment_status": "pending"
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-02-01",
+        "plan_name": "Business Pro",
+        "monthly_charge": 89.99,
+        "additional_charges": 0.00,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-01",
+        "plan_name": "Business Pro",
+        "monthly_charge": 89.99,
+        "additional_charges": 0.00,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-02-01",
+        "plan_name": "Family Share Plus",
+        "monthly_charge": 129.99,
+        "additional_charges": 45.50,
+        "payment_status": "overdue"
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-01",
+        "plan_name": "Family Share Plus",
+        "monthly_charge": 129.99,
+        "additional_charges": 52.75,
+        "payment_status": "pending"
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-02-01",
+        "plan_name": "Senior Essential",
+        "monthly_charge": 35.99,
+        "additional_charges": 0.00,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-01",
+        "plan_name": "Senior Essential",
+        "monthly_charge": 35.99,
+        "additional_charges": 0.00,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-02-01",
+        "plan_name": "International Plus",
+        "monthly_charge": 75.99,
+        "additional_charges": 35.50,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-01",
+        "plan_name": "International Plus",
+        "monthly_charge": 75.99,
+        "additional_charges": 42.75,
+        "payment_status": "pending"
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-02-01",
+        "plan_name": "Business Share Basic",
+        "monthly_charge": 99.99,
+        "additional_charges": 15.00,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-01",
+        "plan_name": "Business Share Basic",
+        "monthly_charge": 99.99,
+        "additional_charges": 25.50,
+        "payment_status": "paid"
+    }
+] 

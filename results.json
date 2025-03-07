@@ -1,0 +1,90 @@
+{
+  "results": [
+    {
+      "customer_id": "U127",
+      "timestamp": "2025-03-05T17:29:29.826166",
+      "selected_treatment": "retention_email",
+      "explanation": {
+        "selected_treatment": "retention_email",
+        "explanation": "Assigned based on hypothetical risk analysis and resource availability.",
+        "priority": 0.84
+      },
+      "processing_status": "success",
+      "priority_score": 0.84
+    },
+    {
+      "customer_id": "U125",
+      "timestamp": "2025-03-05T17:29:29.825768",
+      "selected_treatment": "call_back",
+      "explanation": {
+        "selected_treatment": "call_back",
+        "explanation": "Assigned based on hypothetical risk analysis and resource availability.",
+        "priority": 0.56
+      },
+      "processing_status": "success",
+      "priority_score": 0.56
+    },
+    {
+      "customer_id": "U126",
+      "timestamp": "2025-03-05T17:29:29.825968",
+      "selected_treatment": "retention_email",
+      "explanation": {
+        "selected_treatment": "retention_email",
+        "explanation": "Assigned based on hypothetical risk analysis and resource availability.",
+        "priority": 0.4
+      },
+      "processing_status": "success",
+      "priority_score": 0.4
+    },
+    {
+      "customer_id": "U124",
+      "timestamp": "2025-03-05T17:29:29.825599",
+      "selected_treatment": "call_back",
+      "explanation": {
+        "selected_treatment": "call_back",
+        "explanation": "Assigned based on hypothetical risk analysis and resource availability.",
+        "priority": 0.29
+      },
+      "processing_status": "success",
+      "priority_score": 0.29
+    }
+  ],
+  "summary": {
+    "total_processed": 4,
+    "successful": 4,
+    "failed": 0,
+    "constraints_final_state": {
+      "call_back": {
+        "max_per_day": 2,
+        "remaining_availability": 0,
+        "cost_per_contact_pounds": 10.0,
+        "priority": 1
+      },
+      "retention_email": {
+        "max_per_day": 1000,
+        "remaining_availability": 998,
+        "cost_per_contact_pounds": 0.25,
+        "priority": 3
+      },
+      "retention_sms": {
+        "max_per_day": 1000,
+        "remaining_availability": 1000,
+        "cost_per_contact_pounds": 0.5,
+        "priority": 2
+      },
+      "service_sms": {
+        "max_per_day": 10000,
+        "remaining_availability": 10000,
+        "cost_per_contact_pounds": 0.5,
+        "priority": 4
+      },
+      "loyalty_app": {
+        "max_per_day": 10000,
+        "remaining_availability": 10000,
+        "cost_per_contact_pounds": 0.1,
+        "priority": 5
+      }
+    },
+    "optimization_method": "batch"
+  }
+}

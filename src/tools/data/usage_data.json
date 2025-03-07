@@ -1,0 +1,98 @@
+[
+    {
+        "customer_id": "U124",
+        "date": "2024-02-28",
+        "data_usage_gb": 15.2,
+        "voice_minutes": 120,
+        "sms_count": 45,
+        "roaming_data_gb": 0.5
+    },
+    {
+        "customer_id": "U124",
+        "date": "2024-03-02",
+        "data_usage_gb": 18.7,
+        "voice_minutes": 95,
+        "sms_count": 32,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-02-28",
+        "data_usage_gb": 45.8,
+        "voice_minutes": 280,
+        "sms_count": 15,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U125",
+        "date": "2024-03-02",
+        "data_usage_gb": 52.3,
+        "voice_minutes": 310,
+        "sms_count": 22,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-02-28",
+        "data_usage_gb": 85.3,
+        "voice_minutes": 850,
+        "sms_count": 1250,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U126",
+        "date": "2024-03-02",
+        "data_usage_gb": 92.7,
+        "voice_minutes": 920,
+        "sms_count": 1380,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-02-28",
+        "data_usage_gb": 2.1,
+        "voice_minutes": 380,
+        "sms_count": 45,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U127",
+        "date": "2024-03-02",
+        "data_usage_gb": 1.8,
+        "voice_minutes": 425,
+        "sms_count": 52,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-02-28",
+        "data_usage_gb": 8.5,
+        "voice_minutes": 850,
+        "sms_count": 125,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U128",
+        "date": "2024-03-02",
+        "data_usage_gb": 9.2,
+        "voice_minutes": 920,
+        "sms_count": 138,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-02-28",
+        "data_usage_gb": 35.8,
+        "voice_minutes": 480,
+        "sms_count": 350,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U129",
+        "date": "2024-03-02",
+        "data_usage_gb": 42.3,
+        "voice_minutes": 510,
+        "sms_count": 422,
+        "roaming_data_gb": 0.0
+    }
+] 
