@@ -244,18 +244,21 @@ flowchart TD
     client[Client Application] --> orch
     
     subgraph "Multi-Agent System"
-        orch[Orchestrator Agent] --> data
+        orch[Orchestrator Agent] --> trigger
+        orch --> data
         orch --> journey
         orch --> treatment
         orch --> allocation
         
+        trigger[Trigger Agent] --> |Identified Customers| data
         data[Data Agent] --> |Raw Customer Data| journey
         journey[Journey Agent] --> |Customer Journey| treatment
         treatment[Treatment Agent] --> |Treatment Recommendation| allocation
         allocation[Allocation Agent] --> |Resource Availability| treatment
     end
     
-    data -.-> |Fetches Data| db[(Data Sources)]
+    trigger -.-> |Analyzes| db[(Data Sources)]
+    data -.-> |Fetches Data| db
     treatment -.-> |Uses| llm[LLM Service]
     allocation -.-> |Manages| constraints[(Resource Constraints)]
     
@@ -264,7 +267,7 @@ flowchart TD
     classDef external fill:#ddd,stroke:#333,stroke-width:1px;
     
     class orch primary;
-    class data,journey,treatment,allocation secondary;
+    class trigger,data,journey,treatment,allocation secondary;
     class db,llm,constraints external;
 ```
 
@@ -277,13 +280,22 @@ sequenceDiagram
     title Customer Value Management (CVM) Multi-Agent Workflow
     
     participant Client
+    participant Trigger as TriggerAgent
     participant Orchestrator as OrchestratorAgent
     participant Data as DataAgent
     participant Journey as JourneyAgent
     participant Treatment as TreatmentAgent
     participant Allocation as AllocationAgent
 
-    Client->>Orchestrator: process_customer(customer_id)
+    alt Direct Customer Processing
+        Client->>Orchestrator: process_customer(customer_id)
+    else Triggered Customer Processing
+        Client->>Trigger: trigger_customers(customer_ids, trigger_type, custom_trigger)
+        Note over Trigger: Analyzes customer interactions<br/>to identify those matching<br/>specific criteria
+        Trigger-->>Client: {matches: [matching customers], total_matches}
+        
+        Client->>Orchestrator: process_batch(matching_customer_ids)
+    end
     
     %% Data Collection Phase
     Orchestrator->>Data: process({type: "get_customer_data", customer_id})
@@ -331,7 +343,17 @@ sequenceDiagram
 
 ### Agent Responsibilities
 
-#### 1. Orchestrator Agent
+#### 1. Trigger Agent
+
+The Trigger Agent identifies customers who match specific criteria and need attention:
+
+- Uses both rule-based and LLM-powered analysis to identify customers
+- Supports predefined trigger types (network issues, billing disputes, churn risk, etc.)
+- Enables custom semantic triggers using natural language descriptions
+- Analyzes customer interactions from multiple channels (calls, chat sessions)
+- Provides evidence and reasoning for matches
+
+#### 2. Orchestrator Agent
 
 The Orchestrator Agent is the central coordinator that manages the entire workflow:
 
@@ -348,7 +370,7 @@ The orchestrator follows a clear step-by-step process for each customer:
 5. Allocate resources using the Allocation Agent
 6. Handle fallback scenarios when primary treatments aren't available
 
-#### 2. Data Agent
+#### 3. Data Agent
 
 The Data Agent is responsible for all data access operations:
 
@@ -361,7 +383,7 @@ The Data Agent supports operations such as:
 - `get_customer_data`: Retrieves all data for a specific customer
 - `clear_cache`: Clears the data cache when needed
 
-#### 3. Journey Agent
+#### 4. Journey Agent
 
 The Journey Agent builds and analyzes customer journeys:
 
@@ -375,7 +397,7 @@ The Journey Agent supports operations such as:
 - `analyze_journey`: Extracts insights from a journey
 - `summarize_journey`: Creates a condensed version of a journey
 
-#### 4. Treatment Agent
+#### 5. Treatment Agent
 
 The Treatment Agent determines the optimal treatment for customers:
 
@@ -388,7 +410,7 @@ The Treatment Agent supports operations such as:
 - `recommend_treatment`: Recommends optimal treatment based on customer journey
 - `find_alternative_treatment`: Finds alternatives when primary treatment is unavailable
 
-#### 5. Allocation Agent
+#### 6. Allocation Agent
 
 The Allocation Agent manages resource allocation and constraints:
 

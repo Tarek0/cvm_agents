@@ -11,18 +11,21 @@ flowchart TD
     client[Client Application] --> orch
     
     subgraph "Multi-Agent System"
-        orch[Orchestrator Agent] --> data
+        orch[Orchestrator Agent] --> trigger
+        orch --> data
         orch --> journey
         orch --> treatment
         orch --> allocation
         
+        trigger[Trigger Agent] --> |Identified Customers| data
         data[Data Agent] --> |Raw Customer Data| journey
         journey[Journey Agent] --> |Customer Journey| treatment
         treatment[Treatment Agent] --> |Treatment Recommendation| allocation
         allocation[Allocation Agent] --> |Resource Availability| treatment
     end
     
-    data -.-> |Fetches Data| db[(Data Sources)]
+    trigger -.-> |Analyzes| db[(Data Sources)]
+    data -.-> |Fetches Data| db
     treatment -.-> |Uses| llm[LLM Service]
     allocation -.-> |Manages| constraints[(Resource Constraints)]
     
@@ -31,13 +34,28 @@ flowchart TD
     classDef external fill:#ddd,stroke:#333,stroke-width:1px;
     
     class orch primary;
-    class data,journey,treatment,allocation secondary;
+    class trigger,data,journey,treatment,allocation secondary;
     class db,llm,constraints external;
 ```
 
 ## Agent Responsibilities
 
-### 1. Orchestrator Agent
+### 1. Trigger Agent
+
+The Trigger Agent is responsible for identifying customers who match specific criteria:
+
+- Uses both rule-based and LLM-powered analysis to identify customers that need attention
+- Supports predefined trigger types for common scenarios (network issues, billing disputes, etc.)
+- Enables custom semantic triggers using natural language descriptions
+- Analyzes customer interactions from multiple channels (calls, chat sessions)
+- Provides evidence and reasoning for why customers match specific criteria
+
+The Trigger Agent supports operations such as:
+- `trigger_customers`: Identifies customers matching specified criteria
+- `list_triggers`: Returns available trigger types
+- Various specialized trigger functions for common scenarios
+
+### 2. Orchestrator Agent
 
 The Orchestrator Agent is the central coordinator that manages the entire workflow:
 
@@ -54,7 +72,7 @@ The orchestrator follows a clear step-by-step process for each customer:
 5. Allocate resources using the Allocation Agent
 6. Handle fallback scenarios when primary treatments aren't available
 
-### 2. Data Agent
+### 3. Data Agent
 
 The Data Agent is responsible for all data access operations:
 
@@ -67,7 +85,7 @@ The Data Agent supports operations such as:
 - `get_customer_data`: Retrieves all data for a specific customer
 - `clear_cache`: Clears the data cache when needed
 
-### 3. Journey Agent
+### 4. Journey Agent
 
 The Journey Agent builds and analyzes customer journeys:
 
@@ -81,7 +99,7 @@ The Journey Agent supports operations such as:
 - `analyze_journey`: Extracts insights from a journey
 - `summarize_journey`: Creates a condensed version of a journey
 
-### 4. Treatment Agent
+### 5. Treatment Agent
 
 The Treatment Agent determines the optimal treatment for customers:
 
@@ -94,7 +112,7 @@ The Treatment Agent supports operations such as:
 - `recommend_treatment`: Recommends optimal treatment based on customer journey
 - `find_alternative_treatment`: Finds alternatives when primary treatment is unavailable
 
-### 5. Allocation Agent
+### 6. Allocation Agent
 
 The Allocation Agent manages resource allocation and constraints:
 
@@ -123,6 +141,74 @@ This approach allows for:
 - Easy testing of individual agents
 - Future extension to distributed messaging systems
 
+## System Workflow
+
+```mermaid
+sequenceDiagram
+    title Customer Value Management (CVM) Multi-Agent System Workflow
+    
+    participant Client
+    participant Trigger as TriggerAgent
+    participant Orchestrator as OrchestratorAgent
+    participant Data as DataAgent
+    participant Journey as JourneyAgent
+    participant Treatment as TreatmentAgent
+    participant Allocation as AllocationAgent
+
+    alt Direct Customer Processing
+        Client->>Orchestrator: process_customer(customer_id)
+    else Triggered Customer Processing
+        Client->>Trigger: trigger_customers(customer_ids, trigger_type, custom_trigger)
+        Note over Trigger: Analyzes customer interactions<br/>to identify those matching<br/>specific criteria
+        Trigger-->>Client: {matches: [matching customers], total_matches}
+        
+        Client->>Orchestrator: process_batch(matching_customer_ids)
+    end
+    
+    %% Data Collection Phase
+    Orchestrator->>Data: process({type: "get_customer_data", customer_id})
+    Note over Data: Retrieves and caches<br/>customer data from<br/>various sources
+    Data-->>Orchestrator: customer_data
+    
+    %% Journey Building Phase
+    Orchestrator->>Journey: process({type: "build_journey", customer_id, customer_data})
+    Note over Journey: Constructs customer journey<br/>from raw data and<br/>identifies patterns
+    Journey-->>Orchestrator: {journey: customer_journey}
+    
+    %% Permissions Retrieval
+    Orchestrator->>Orchestrator: _get_customer_permissions(customer_id)
+    Note over Orchestrator: Loads customer contact<br/>permissions from<br/>permissions.json
+    
+    %% Treatment Recommendation Phase
+    Orchestrator->>Treatment: process({type: "recommend_treatment", journey, treatments, constraints, permissions})
+    Note over Treatment: Uses LLM to analyze<br/>customer journey and<br/>recommend best treatment<br/>based on business rules
+    Treatment-->>Orchestrator: {selected_treatment, explanation}
+    
+    %% Resource Allocation Phase
+    alt selected_treatment != "ignore"
+        Orchestrator->>Allocation: process({type: "allocate_resource", treatment_key, customer_id})
+        Note over Allocation: Thread-safe allocation<br/>of limited resources<br/>based on availability
+        
+        alt allocation successful
+            Allocation-->>Orchestrator: {status: "success", allocated: true}
+        else allocation failed
+            Allocation-->>Orchestrator: {status: "error", message}
+            
+            %% Find Alternative Treatment
+            Orchestrator->>Treatment: process({type: "find_alternative", journey, excluded_treatment, treatments, constraints, permissions})
+            Note over Treatment: Finds alternative treatment<br/>when primary is unavailable
+            Treatment-->>Orchestrator: {selected_treatment, explanation}
+            
+            %% Try Allocating Alternative
+            Orchestrator->>Allocation: process({type: "allocate_resource", treatment_key, customer_id})
+            Allocation-->>Orchestrator: Response
+        end
+    end
+    
+    %% Result Creation
+    Orchestrator->>Client: {customer_id, selected_treatment, explanation, status: "success"}
+```
+
 ## Benefits of the Multi-Agent Architecture
 
 1. **Modularity**: Each agent focuses on a specific aspect of the overall system
@@ -138,7 +224,7 @@ This approach allows for:
 The current implementation can be extended with:
 
 1. **Evaluation Agent**: For assessing treatment effectiveness
-2. **Customer Segmentation Agent**: For advanced customer categorization
+2. **Learning Agent**: For improving treatments based on historical outcomes
 3. **Messaging Infrastructure**: Replace direct method calls with message queues
 4. **Distributed Processing**: Distribute agents across multiple servers
-5. **A/B Testing Framework**: Test different agent strategies in parallel 
+5. **A/B Testing Framework**: Test different agent strategies in parallel

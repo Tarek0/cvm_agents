@@ -3,13 +3,22 @@ sequenceDiagram
     title Customer Value Management (CVM) Multi-Agent System Workflow
     
     participant Client
+    participant Trigger as TriggerAgent
     participant Orchestrator as OrchestratorAgent
     participant Data as DataAgent
     participant Journey as JourneyAgent
     participant Treatment as TreatmentAgent
     participant Allocation as AllocationAgent
 
-    Client->>Orchestrator: process_customer(customer_id)
+    alt Direct Customer Processing
+        Client->>Orchestrator: process_customer(customer_id)
+    else Triggered Customer Processing
+        Client->>Trigger: trigger_customers(customer_ids, trigger_type, custom_trigger)
+        Note over Trigger: Analyzes customer interactions<br/>to identify those matching<br/>specific criteria
+        Trigger-->>Client: {matches: [matching customers], total_matches}
+        
+        Client->>Orchestrator: process_batch(matching_customer_ids)
+    end
     
     %% Data Collection Phase
     Orchestrator->>Data: process({type: "get_customer_data", customer_id})
