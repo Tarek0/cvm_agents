@@ -378,5 +378,43 @@
             "last_updated": "2024-03-03",
             "follow_up_scheduled": "2024-03-06"
         }
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-04",
+        "recommended_offers": [
+            {
+                "type": "new_product",
+                "name": "PetTracker Beta Access",
+                "description": "Early access to upcoming pet GPS tracker system with special pricing for beta testers",
+                "discount": 30,
+                "duration_months": 6,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "loyalty_reward",
+                "name": "Pet Lover Bundle",
+                "description": "Special pricing on pet-related accessories including GPS collar for dog",
+                "value": "50% off pet accessories",
+                "duration_months": 1,
+                "value_per_month": 20.00
+            },
+            {
+                "type": "service_feature",
+                "name": "Product Launch Notification",
+                "description": "Priority notification and pre-order opportunity for PetTracker when launched",
+                "value": "VIP notification",
+                "duration_months": 6,
+                "value_per_month": 0.00
+            }
+        ],
+        "total_value": 170.00,
+        "priority": "medium",
+        "expiration_date": "2024-03-18",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-04",
+            "follow_up_scheduled": "2024-03-08"
+        }
     }
 ] 

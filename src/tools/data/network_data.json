@@ -52,5 +52,14 @@
         "upload_speed_mbps": 24.5,
         "latency_ms": 30,
         "packet_loss_percent": 0.3
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-02",
+        "connection_quality": "excellent",
+        "download_speed_mbps": 95.3,
+        "upload_speed_mbps": 28.7,
+        "latency_ms": 22,
+        "packet_loss_percent": 0.1
     }
 ] 

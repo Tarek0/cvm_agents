@@ -110,5 +110,21 @@
         "summary": "Customer called regarding confusion about data sharing between team members and requested clarification on how to monitor usage across different lines.",
         "sentiment": "neutral",
         "duration_minutes": 15
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-02-25",
+        "type": "call",
+        "summary": "Customer called inquiring about any pet tracking devices or services offered by the company. They mentioned their dog Gromit recently escaped from their yard and they're interested in GPS tracking options to prevent losing him again. The customer was informed about upcoming pet tracking products in development.",
+        "sentiment": "neutral",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-04",
+        "type": "call",
+        "summary": "Follow-up call where customer inquired about the release date of the pet tracking product they had previously discussed. They expressed great interest in the product specifically for their dog Gromit who tends to wander. Customer was very appreciative of the service representative's help and expressed overall satisfaction with their current plan and services.",
+        "sentiment": "positive",
+        "duration_minutes": 8
     }
 ] 

@@ -134,5 +134,21 @@
         "summary": "Customer inquired about additional business features available for their plan and expressed satisfaction with the service so far. They requested information about upgrading their data sharing capabilities.",
         "sentiment": "positive",
         "duration_minutes": 20
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-01",
+        "channel": "web_chat",
+        "summary": "Customer inquired about pet tracking devices through the web chat. They mentioned their dog Gromit had escaped twice in the last month and were looking for a GPS collar solution. They asked if any current plans included pet tracking features or if they could add it as a service. The customer was informed about upcoming pet tracking products.",
+        "sentiment": "neutral",
+        "duration_minutes": 10
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-05",
+        "channel": "web_chat",
+        "summary": "Customer followed up about pet tracking devices, specifically asking if they could be notified when the product for dogs becomes available. They shared that their dog Gromit is a Border Collie who likes to explore the neighborhood. Customer praised the support representative for their helpful attitude and mentioned being very happy with their current services and connection quality.",
+        "sentiment": "positive",
+        "duration_minutes": 15
     }
 ] 

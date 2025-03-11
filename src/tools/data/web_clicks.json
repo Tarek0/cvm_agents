@@ -82,5 +82,26 @@
         "page": "/support/business-features",
         "duration_seconds": 360,
         "device": "tablet"
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-01",
+        "page": "/products/upcoming-releases",
+        "duration_seconds": 240,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-03",
+        "page": "/products/pet-tracker-info",
+        "duration_seconds": 420,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-04",
+        "page": "/support/product-notify",
+        "duration_seconds": 180,
+        "device": "mobile"
     }
 ] 

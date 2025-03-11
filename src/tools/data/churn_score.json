@@ -46,5 +46,13 @@
         "risk_factors": ["new_customer", "service_complexity"],
         "customer_lifetime_months": 1,
         "recent_satisfaction_score": 4
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-03",
+        "churn_probability": 0.12,
+        "risk_factors": ["product_interest"],
+        "customer_lifetime_months": 36,
+        "recent_satisfaction_score": 5
     }
 ] 

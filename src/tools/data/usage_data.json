@@ -94,5 +94,21 @@
         "voice_minutes": 510,
         "sms_count": 422,
         "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-02-28",
+        "data_usage_gb": 12.4,
+        "voice_minutes": 240,
+        "sms_count": 95,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U130",
+        "date": "2024-03-02",
+        "data_usage_gb": 14.8,
+        "voice_minutes": 220,
+        "sms_count": 110,
+        "roaming_data_gb": 0.0
     }
 ] 
