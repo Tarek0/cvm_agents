@@ -1,6 +1,6 @@
-# CVM (Customer Value Management) System for Telecommunications
+# CVM (Customer Value Management) System for a Telecommunications Company
 
-This is a proof of concept for a CVM (Customer Value Management) system for a telecommunications company. The goal of this project is to explore the use of AI to optimize customer-centric marketing strategies. This project is for educational purposes only and is not intended for real-world deployment.
+This is a proof of concept for a Agentic CVM system for a telecommunications company. The goal of this project is to explore the use of Agentic AI to optimise and completely automate customer marketing decision making.
 
 ## Quick Start
 
@@ -22,10 +22,88 @@ cp .env.example .env
 # Edit .env with your API keys and configuration
 ```
 
-### Run Example
+## Key Features
+
+### Customer Triggering and Processing
+The system uses advanced LLM-based analysis to identify and process customers based on various criteria:
+
+1. **Built-in Triggers**:
+   - Network quality issues
+   - Billing disputes
+   - High churn risk
+   - High-value customers
+   - Roaming issues
+
+2. **Custom Triggers**:
+   - Create custom triggers using natural language descriptions
+   - LLM-powered semantic analysis of customer interactions
+   - Flexible matching based on context and intent
+
+3. **Treatment Application**:
+   - Automated treatment selection
+   - Resource constraint management
+   - Permission-aware processing
+
+### Multi-Agent Architecture
+
+The system employs a sophisticated multi-agent architecture:
+
+1. **OrchestratorAgent**: Coordinates the overall workflow
+2. **DataAgent**: Handles data access and caching
+3. **JourneyAgent**: Builds and analyzes customer journeys
+4. **TreatmentAgent**: Determines optimal treatments
+5. **AllocationAgent**: Manages resource constraints
+
+## Usage Examples
+
+### Trigger Customers
+```bash
+# Trigger customers with network issues
+poetry run python src/trigger_customers_cli.py trigger --trigger-type network_issues --all-customers
+
+# Use custom trigger with semantic analysis
+poetry run python src/trigger_customers_cli.py trigger --trigger-type custom --description "Customers experiencing poor video call quality during business hours" --all-customers
+```
+
+### Process Customers
+```bash
+# Process triggered customers with a specific treatment
+poetry run python src/trigger_customers_cli.py process --trigger-type network_issues --all-customers --treatment service_sms
+
+# Process with custom trigger and treatment
+poetry run python src/trigger_customers_cli.py process --trigger-type custom --description "Customers with billing disputes over international charges" --all-customers --treatment retention_email
+```
+
+### View Customer Data
 ```bash
 poetry run python src/machine_says.py --customer_id U124
 ```
+
+## Configuration
+
+The system is highly configurable through:
+- `.env` file for environment variables
+- `config/cvm_config.yaml` for system settings
+- Custom treatment definitions
+- Resource constraints
+
+## Development
+
+### Running Tests
+```bash
+poetry run pytest
+```
+
+### Adding New Features
+- Custom triggers can be added through the CLI
+- New treatments can be defined in the configuration
+- System is extensible through the multi-agent architecture
+
+## Documentation
+For more detailed information about the system architecture and capabilities, see:
+- `diagram.md`: System workflow diagrams
+- `agent_architecture.md`: Detailed agent architecture
+- `production_recommendations.md`: Scaling guidelines
 
 ## Project Structure
 ```
@@ -384,3 +462,195 @@ This project is for educational and research purposes only.
 - Creator assumes no liability for any losses.
 - Consult a professional for real-world applications.
 - By using this software, you agree to use it solely for learning purposes.
+
+## Dynamic Treatment Management
+
+The CVM system now supports creating dynamic, bespoke treatments through text input. This allows users to define custom treatments on-the-fly without modifying the configuration files.
+
+### Dynamic Treatment CLI
+
+A command-line interface is provided to manage custom treatments:
+
+```bash
+# Get help on treatment format
+poetry run python src/dynamic_treatment_cli.py help
+
+# Add a new custom treatment
+poetry run python src/dynamic_treatment_cli.py add "Send personalized video message to customer with limit 10 and priority 2"
+
+# Add a custom treatment with JSON format
+poetry run python src/dynamic_treatment_cli.py add '{
+  "display_name": "VIP Gift Basket",
+  "description": "Send a premium gift basket to high-value customers",
+  "constraints": {
+    "max_per_day": 5,
+    "cost_per_contact_pounds": 50.0,
+    "priority": 1
+  }
+}'
+
+# List all treatments (both standard and custom)
+poetry run python src/dynamic_treatment_cli.py list
+
+# List only custom treatments
+poetry run python src/dynamic_treatment_cli.py list --custom-only
+
+# Output in JSON format
+poetry run python src/dynamic_treatment_cli.py list --output json
+
+# Update an existing custom treatment
+poetry run python src/dynamic_treatment_cli.py update custom_send_personalized_vide_12345678 "Updated description with new limit 20"
+
+# Get details for a specific treatment
+poetry run python src/dynamic_treatment_cli.py get custom_send_personalized_vide_12345678
+
+# Remove a custom treatment
+poetry run python src/dynamic_treatment_cli.py remove custom_send_personalized_vide_12345678
+
+# Process a customer using all available treatments (including custom ones)
+poetry run python src/dynamic_treatment_cli.py process U124
+
+# Process a batch of customers
+poetry run python src/dynamic_treatment_cli.py batch "U124,U125,U126"
+```
+
+### Customer Triggering and Targeted Treatments
+
+The system now provides tools to identify customers meeting specific criteria and apply targeted treatments to them. This is particularly useful for identifying and addressing issues like network problems.
+
+#### Trigger Customers CLI
+
+A command-line interface is provided to trigger treatments for customers based on various criteria:
+
+```bash
+# List available trigger types
+poetry run python src/trigger_customers_cli.py list-triggers
+
+# Find customers with network issues
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type network_issues
+
+# Find customers with network issues and output to CSV
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type network_issues --output csv --output-file network_issues.csv
+
+# Find customers with custom criteria
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type custom --keywords "signal,drop,poor coverage" --data-types "call_transcripts,web_transcripts"
+
+# Trigger and process customers with a specific treatment
+poetry run python src/trigger_customers_cli.py process --all-customers --trigger-type network_issues --treatment network_signal_booster
+```
+
+#### Network-Specific Treatment Tool
+
+A specialized tool is available for managing network-related treatments:
+
+```bash
+# Find customers with network issues and apply treatments
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type network_issues
+
+# Find customers with network issues and output to CSV
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type network_issues --output csv --output-file network_issues.csv
+
+# Find customers with custom network-related criteria
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type custom --description "Customers experiencing poor signal quality or frequent call drops in business areas"
+
+# Trigger and process customers with network issues using a specific treatment
+poetry run python src/trigger_customers_cli.py process --all-customers --trigger-type network_issues --treatment service_sms
+
+# Add a new network-specific treatment using the dynamic treatment CLI
+poetry run python src/dynamic_treatment_cli.py add '{
+  "display_name": "Cell Tower Upgrade",
+  "description": "Prioritize tower upgrade for customers most used locations",
+  "constraints": {
+    "max_per_day": 5,
+    "cost_per_contact_pounds": 15.0,
+    "priority": 3
+  }
+}'
+
+# Process customers with the new treatment
+poetry run python src/trigger_customers_cli.py process --all-customers --trigger-type network_issues --treatment custom_cell_tower_upgr_12345678
+```
+
+#### Available Trigger Types
+
+The system includes several predefined triggers:
+
+1. **network_issues**: Identifies customers with network connection problems
+2. **billing_disputes**: Identifies customers with billing-related issues
+3. **churn_risk**: Identifies customers with high probability of leaving
+4. **high_value**: Identifies high-value customers based on usage and payments
+5. **roaming_issues**: Identifies customers with international roaming problems
+6. **custom**: Allows defining custom keyword-based triggers
+
+#### Programmatic Usage
+
+You can also trigger treatments for customers programmatically:
+
+```python
+from src.agents.orchestrator_agent import OrchestratorAgent
+from src.tools.api_v2 import get_all_customer_ids
+
+# Initialize the orchestrator agent
+orchestrator = OrchestratorAgent()
+
+# Get all customer IDs
+customer_ids = get_all_customer_ids()
+
+# Trigger customers with network issues
+trigger_result = orchestrator.process({
+    "type": "trigger_customers",
+    "customer_ids": customer_ids,
+    "trigger_type": "network_issues"
+})
+
+# Process triggered customers with a specific treatment
+for match in trigger_result.get("matches", []):
+    customer_id = match.get("customer_id")
+    
+    # Apply network signal booster treatment
+    result = orchestrator.process({
+        "type": "process_customer_with_treatment",
+        "customer_id": customer_id,
+        "treatment_id": "network_signal_booster"
+    })
+    
+    print(f"Customer {customer_id}: {result['status']}")
+
+# Trigger and process in a single call
+result = orchestrator.process({
+    "type": "trigger_and_process",
+    "customer_ids": customer_ids,
+    "trigger_type": "network_issues",
+    "treatment_id": "network_signal_booster"
+})
+
+print(f"Matched: {result['matches']}, Processed: {result['processed']}")
+```
+
+### Dynamic Treatment Format
+
+Custom treatments can be defined in two ways:
+
+1. **Free text description**:
+   The system will extract meaningful information from the text, such as display name, limits, and priorities.
+   
+   Example: "Send a personalized gift basket to high-value customers with limit 10 and priority 1"
+
+2. **Structured JSON**:
+   For more precise control, you can provide a JSON object with all treatment parameters.
+   
+   Example:
+   ```json
+   {
+     "display_name": "Gift Basket",
+     "description": "Send a personalized gift basket to high-value customers",
+     "enabled": true,
+     "constraints": {
+       "max_per_day": 10,
+       "cost_per_contact_pounds": 50.0,
+       "priority": 1
+     }
+   }
+   ```
+
+Custom treatments are automatically persisted to `config/custom_treatments.json` and will be available for future runs of the application.

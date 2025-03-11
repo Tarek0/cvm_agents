@@ -9,35 +9,60 @@ class BaseAgent(ABC):
     """
     Abstract base class for all CVM agents.
     
-    Attributes:
-        name (str): The name of the agent
-        config (dict): Configuration settings for the agent
-        logger: Logger instance for the agent
+    This class defines the common interface and functionality that
+    all specialized agents must implement.
     """
+    
     def __init__(self, name, config=None):
+        """
+        Initialize the base agent.
+        
+        Args:
+            name: Agent name
+            config: Configuration object
+        """
         self.name = name
-        self.config = config or {}
-        self.logger = logging.getLogger(f"agent.{name}")
+        self.config = config
+        self.logger = logging.getLogger(f"agent.{name.lower()}")
     
     @abstractmethod
     def process(self, message):
         """
-        Process an incoming message and return a response.
+        Process a message.
+        
+        This is the main entry point for all agent functionality.
+        Each agent must implement this method to handle its specific
+        responsibilities.
         
         Args:
-            message (dict): The message to process
+            message: Message to process
             
         Returns:
-            dict: The response message
+            Processing result
         """
         pass
     
     def log(self, level, message):
         """
-        Standardized logging for all agents.
+        Log a message with standard formatting.
         
         Args:
-            level (str): Logging level (debug, info, warning, error, critical)
-            message (str): Log message
+            level: Log level (debug, info, warning, error, critical)
+            message: Message to log
         """
-        getattr(self.logger, level)(f"[{self.name}] {message}") 
+        # Normalize the log level to lowercase
+        level = level.lower()
+        
+        if level == "debug":
+            self.logger.debug(f"[{self.name}] {message}")
+        elif level == "info":
+            self.logger.info(f"[{self.name}] {message}")
+        elif level == "warning":
+            self.logger.warning(f"[{self.name}] {message}")
+        elif level == "error":
+            self.logger.error(f"[{self.name}] {message}")
+        elif level == "critical":
+            self.logger.critical(f"[{self.name}] {message}")
+        else:
+            # Default to info
+            self.logger.info(f"[{self.name}] {message} (unknown level: {level})") 

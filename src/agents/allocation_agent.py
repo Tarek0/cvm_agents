@@ -6,21 +6,43 @@ from src.agents.base_agent import BaseAgent
 import threading
 import json
 import logging
+import copy
 
 class AllocationAgent(BaseAgent):
     """
-    Agent responsible for managing resource allocation and constraints.
+    Agent responsible for resource allocation and constraint management.
     
-    This agent handles the allocation of limited resources,
-    enforces constraints, and resolves conflicts between
-    competing treatment recommendations.
+    This agent manages the allocation of limited resources, ensures
+    thread-safety, and enforces constraint limits.
     """
+    
     def __init__(self, config=None):
-        super().__init__("allocation_agent", config)
-        self.constraints = config.get("constraints", {})
-        self.lock = threading.Lock()  # For thread-safe operations
-        self.allocation_history = []  # Track allocation decisions
-        self.log("info", "Allocation Agent initialized")
+        """
+        Initialize the AllocationAgent.
+        
+        Args:
+            config: Configuration object
+        """
+        super().__init__("Allocation", config)
+        
+        # Initialize constraints
+        if hasattr(config, 'constraints') and config.constraints:
+            # It's a CVMConfig object with constraints
+            self.constraints = copy.deepcopy(config.constraints)
+        elif isinstance(config, dict) and "constraints" in config:
+            # It's a dictionary with constraints
+            self.constraints = copy.deepcopy(config["constraints"])
+        else:
+            # Default empty constraints
+            self.constraints = {}
+        
+        # Thread safety for resource allocation
+        self.lock = threading.RLock()
+        
+        # Allocation history
+        self.allocation_history = []
+        
+        self.log("INFO", "AllocationAgent initialized")
     
     def process(self, message):
         """

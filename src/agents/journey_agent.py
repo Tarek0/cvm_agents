@@ -9,15 +9,36 @@ class JourneyAgent(BaseAgent):
     """
     Agent responsible for building and analyzing customer journeys.
     
-    This agent creates comprehensive customer journeys and extracts
-    key insights and patterns from customer behavior data.
+    This agent transforms raw customer data into structured journey
+    representations and provides analysis capabilities.
     """
     def __init__(self, config=None):
-        super().__init__("journey_agent", config)
-        self.journey_cache = {}  # Cache for analyzed journeys
-        self.cache_enabled = config.get("enable_cache", True)
-        self.max_journey_events = config.get("max_journey_events", 50)
-        self.log("info", "Journey Agent initialized")
+        """
+        Initialize the JourneyAgent.
+        
+        Args:
+            config: Configuration object
+        """
+        super().__init__("Journey", config)
+        
+        # Initialize cache and settings
+        self.journey_cache = {}
+        
+        # Check if config is a dictionary or a CVMConfig object
+        if hasattr(config, 'settings') and isinstance(config.settings, dict):
+            # It's a CVMConfig object
+            self.cache_enabled = config.settings.get("enable_cache", True)
+            self.max_journey_events = config.settings.get("max_journey_events", 50)
+        elif isinstance(config, dict):
+            # It's a dictionary
+            self.cache_enabled = config.get("enable_cache", True)
+            self.max_journey_events = config.get("max_journey_events", 50)
+        else:
+            # Default values
+            self.cache_enabled = True
+            self.max_journey_events = 50
+        
+        self.log("INFO", "JourneyAgent initialized")
     
     def process(self, message):
         """

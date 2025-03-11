@@ -78,7 +78,7 @@ settings:
 
 # Model settings
 model:
-  id: "gpt-4o"
+  id: "gpt-4-turbo-preview"
   temperature: 0.7
   max_tokens: 1000
   planning_interval: 3

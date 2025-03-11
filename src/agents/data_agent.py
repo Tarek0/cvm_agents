@@ -7,16 +7,35 @@ from src.tools.api_v2 import load_customer_data
 
 class DataAgent(BaseAgent):
     """
-    Agent responsible for all data access operations.
+    Agent responsible for data access operations.
     
-    This agent handles loading customer data from various sources
-    and provides caching capabilities for improved performance.
+    This agent handles retrieving and caching customer data from various sources.
     """
+    
     def __init__(self, config=None):
-        super().__init__("data_agent", config)
-        self.data_cache = {}  # Simple in-memory cache
-        self.cache_enabled = config.get("enable_cache", True)
-        self.log("info", "Data Agent initialized")
+        """
+        Initialize the DataAgent.
+        
+        Args:
+            config: Configuration object
+        """
+        super().__init__("Data", config)
+        
+        # Initialize cache
+        self.cache = {}
+        
+        # Check if config is a dictionary or a CVMConfig object
+        if hasattr(config, 'settings') and isinstance(config.settings, dict):
+            # It's a CVMConfig object
+            self.cache_enabled = config.settings.get("enable_cache", True)
+        elif isinstance(config, dict):
+            # It's a dictionary
+            self.cache_enabled = config.get("enable_cache", True)
+        else:
+            # Default
+            self.cache_enabled = True
+            
+        self.log("INFO", f"DataAgent initialized with cache {'enabled' if self.cache_enabled else 'disabled'}")
     
     def process(self, message):
         """
@@ -44,25 +63,25 @@ class DataAgent(BaseAgent):
     
     def get_customer_data(self, customer_id):
         """
-        Fetch customer data, using cache if available.
+        Retrieve customer data for a specific customer.
         
         Args:
-            customer_id (str): The customer ID to fetch data for
+            customer_id: ID of the customer
             
         Returns:
-            dict: Customer data
+            Customer data in a standardized format
         """
-        if self.cache_enabled and customer_id in self.data_cache:
+        if self.cache_enabled and customer_id in self.cache:
             self.log("info", f"Cache hit for customer {customer_id}")
-            return self.data_cache[customer_id]
+            return {"customer_data": self.cache[customer_id]}
         
         self.log("info", f"Loading data for customer {customer_id}")
         data = load_customer_data(customer_id)
         
         if self.cache_enabled:
-            self.data_cache[customer_id] = data
+            self.cache[customer_id] = data
             
-        return data
+        return {"customer_data": data}
     
     def clear_cache(self):
         """
@@ -71,7 +90,7 @@ class DataAgent(BaseAgent):
         Returns:
             dict: Status message
         """
-        cache_size = len(self.data_cache)
-        self.data_cache = {}
+        cache_size = len(self.cache)
+        self.cache = {}
         self.log("info", f"Cache cleared ({cache_size} entries)")
         return {"status": "success", "message": f"Cache cleared ({cache_size} entries)"} 

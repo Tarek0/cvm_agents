@@ -1,0 +1,28 @@
+{
+  "id": "network_signal_booster",
+  "display_name": "Network Signal Booster",
+  "description": "Provide a free signal booster device to customers experiencing network problems at home",
+  "enabled": true,
+  "custom": true,
+  "created_at": "2023-11-01T10:00:00.000000",
+  "criteria": {
+    "mentions_network_issues": true,
+    "signal_quality_below": 3,
+    "call_drops_above": 5,
+    "billing_status": "good_standing"
+  },
+  "business_case": "Customers with poor network experience are at high risk of churn. A signal booster device costs much less than acquiring a new customer and improves lifetime value.",
+  "constraints": {
+    "max_per_day": 10,
+    "remaining_availability": 100,
+    "cost_per_contact_pounds": 35.0,
+    "priority": 2
+  },
+  "attributes": {
+    "category": "retention",
+    "channel": "direct_mail",
+    "duration_days": 0,
+    "followup_required": true,
+    "testing_percentage": 0.0
+  }
+} 

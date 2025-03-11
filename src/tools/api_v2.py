@@ -177,6 +177,20 @@ def build_customer_journey(customer_id: str, all_data: Optional[Dict[str, List[D
     
     return events
 
+def get_all_customer_ids() -> list:
+    """
+    Returns a list of all customer IDs found in the data files.
+    """
+    # Load customer IDs from call_transcripts.json as it should contain all customers
+    filepath = os.path.join(data_root, 'call_transcripts.json')
+    records = load_json_file(filepath)
+    
+    # Extract unique customer IDs
+    customer_ids = list(set(record.get("customer_id") for record in records 
+                           if isinstance(record, dict) and "customer_id" in record))
+    
+    return sorted(customer_ids)
+
 if __name__ == "__main__":
     # For customer 'U123', retrieve data using the latest functions from the adjusted data_root folder.
     customer_id = "U123"
