@@ -103,5 +103,40 @@
         "page": "/support/product-notify",
         "duration_seconds": 180,
         "device": "mobile"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-06",
+        "page": "/products/smart-home",
+        "duration_seconds": 245,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-06",
+        "page": "/products/accessories",
+        "duration_seconds": 180,
+        "device": "desktop"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-12",
+        "page": "/innovation/upcoming-products",
+        "duration_seconds": 320,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-12",
+        "page": "/search?q=pet+technology",
+        "duration_seconds": 210,
+        "device": "mobile"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-15",
+        "page": "/innovation/labs",
+        "duration_seconds": 280,
+        "device": "tablet"
     }
 ] 

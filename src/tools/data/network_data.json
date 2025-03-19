@@ -61,5 +61,14 @@
         "upload_speed_mbps": 28.7,
         "latency_ms": 22,
         "packet_loss_percent": 0.1
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-02",
+        "connection_quality": "excellent",
+        "download_speed_mbps": 95.2,
+        "upload_speed_mbps": 32.5,
+        "latency_ms": 22,
+        "packet_loss_percent": 0.2
     }
 ] 

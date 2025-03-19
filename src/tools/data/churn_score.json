@@ -54,5 +54,13 @@
         "risk_factors": ["product_interest"],
         "customer_lifetime_months": 36,
         "recent_satisfaction_score": 5
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-18",
+        "churn_probability": 0.15,
+        "risk_factors": ["limited_products", "interest_in_innovation"],
+        "customer_lifetime_months": 24,
+        "recent_satisfaction_score": 4
     }
 ] 

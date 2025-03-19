@@ -150,5 +150,29 @@
         "summary": "Customer followed up about pet tracking devices, specifically asking if they could be notified when the product for dogs becomes available. They shared that their dog Gromit is a Border Collie who likes to explore the neighborhood. Customer praised the support representative for their helpful attitude and mentioned being very happy with their current services and connection quality.",
         "sentiment": "positive",
         "duration_minutes": 15
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-07",
+        "channel": "web_chat",
+        "summary": "Customer initiated chat asking about pet-focused technology solutions. They explained they have a new golden retriever named Scooby and are interested in ways to monitor him while they're at work. They specifically asked if we offer any pet monitoring or communication devices.",
+        "sentiment": "positive",
+        "duration_minutes": 10
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-12",
+        "channel": "web_chat",
+        "summary": "Customer searched through smart home and IoT accessories, then initiated chat to ask specifically about the possibility of a 'pet phone' product. They described wanting a device that would let them video call their dog Scooby and perhaps dispense treats remotely. Customer mentioned they saw similar products online but would prefer to bundle with their current plan.",
+        "sentiment": "positive",
+        "duration_minutes": 14
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-18",
+        "channel": "web_chat",
+        "summary": "Customer browsed the innovation section of the website and asked if there were any upcoming products for pet owners. They shared that their dog Scooby gets anxious when left alone and they're seeking technology solutions to interact with him remotely. Customer expressed interest in being notified when any pet-related products become available.",
+        "sentiment": "neutral",
+        "duration_minutes": 9
     }
 ] 

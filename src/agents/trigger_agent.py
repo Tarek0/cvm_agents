@@ -127,15 +127,6 @@ class TriggerAgent(BaseAgent):
                     "available_triggers": list(self.predefined_triggers.keys()) + ["custom"]
                 }
             
-            # For backward compatibility
-            elif message_type == "filter_customers":
-                self.log("WARNING", "Using deprecated 'filter_customers' message type. Use 'trigger_customers' instead.")
-                return self.trigger_customers(
-                    message.get("customer_ids", []),
-                    message.get("filter_type", ""),
-                    message.get("custom_filter", {})
-                )
-            
             else:
                 self.log("WARNING", f"Unknown message type: {message_type}")
                 return {"status": "error", "message": f"Unknown message type: {message_type}"}

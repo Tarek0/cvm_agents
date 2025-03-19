@@ -126,5 +126,29 @@
         "summary": "Follow-up call where customer inquired about the release date of the pet tracking product they had previously discussed. They expressed great interest in the product specifically for their dog Gromit who tends to wander. Customer was very appreciative of the service representative's help and expressed overall satisfaction with their current plan and services.",
         "sentiment": "positive",
         "duration_minutes": 8
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-05",
+        "type": "call",
+        "summary": "Customer called to inquire about adding a new line to their existing family plan. They mentioned they recently adopted a dog named Scooby and were wondering if there are any pet-friendly features or accessories available through the company.",
+        "sentiment": "positive",
+        "duration_minutes": 8
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-10",
+        "type": "call",
+        "summary": "Customer called to discuss the possibility of a pet tracking device for their dog Scooby. They expressed interest in a potential 'pet phone' that would allow them to monitor and communicate with their pet when they're away from home. They were particularly interested in features like GPS tracking and remote treat dispensing capabilities.",
+        "sentiment": "positive",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-17",
+        "type": "call",
+        "summary": "Follow-up call where customer inquired about the status of pet-focused devices in development. They mentioned their dog Scooby has separation anxiety and they're looking for ways to stay connected with him while at work. Customer expressed willingness to join a pilot program for any pet communication products being developed.",
+        "sentiment": "neutral",
+        "duration_minutes": 12
     }
 ] 

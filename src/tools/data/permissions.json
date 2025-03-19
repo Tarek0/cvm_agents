@@ -229,5 +229,38 @@
         "preferred_contact_time": "evening",
         "preferred_language": "en",
         "do_not_disturb": "22:30-07:00"
+    },
+    {
+        "customer_id": "U999",
+        "last_updated": "2024-03-05",
+        "permissions": {
+            "email": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-05"
+            },
+            "sms": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-05"
+            },
+            "call": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-05"
+            },
+            "push_notifications": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-05"
+            }
+        },
+        "preferred_contact_time": "evening",
+        "do_not_disturb": "22:00-08:00",
+        "preferred_language": "English"
     }
 ] 

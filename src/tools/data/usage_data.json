@@ -110,5 +110,21 @@
         "voice_minutes": 220,
         "sms_count": 110,
         "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-02-28",
+        "data_usage_gb": 22.8,
+        "voice_minutes": 145,
+        "sms_count": 68,
+        "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-15",
+        "data_usage_gb": 25.3,
+        "voice_minutes": 180,
+        "sms_count": 75,
+        "roaming_data_gb": 0.0
     }
 ] 

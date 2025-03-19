@@ -416,5 +416,40 @@
             "last_updated": "2024-03-04",
             "follow_up_scheduled": "2024-03-08"
         }
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-15",
+        "recommended_offers": [
+            {
+                "type": "innovation_program",
+                "name": "PetConnect Beta Program",
+                "description": "Early access to our upcoming pet communication and monitoring devices",
+                "discount": 0,
+                "duration_months": 6,
+                "value_per_month": 15.00
+            },
+            {
+                "type": "service_feature",
+                "name": "Smart Home & Pet Bundle",
+                "description": "Bundle of smart home features with compatibility for future pet monitoring devices",
+                "discount": 10,
+                "duration_months": 12,
+                "value_per_month": 12.00
+            },
+            {
+                "type": "accessory",
+                "name": "GPS Pet Tracker",
+                "description": "GPS tracker compatible with our mobile network for real-time pet location",
+                "discount": 15,
+                "value": 85.00
+            }
+        ],
+        "total_value": 229.00,
+        "priority": "high",
+        "expiration_date": "2024-04-15",
+        "outcome": {
+            "status": "pending"
+        }
     }
 ] 

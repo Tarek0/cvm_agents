@@ -146,7 +146,7 @@ def build_customer_journey(customer_id: str, all_data: Optional[Dict[str, List[D
 
     Args:
         customer_id: The customer ID to build journey for
-        all_data: Optional pre-loaded data for all customers
+        all_data: Pre-loaded data for all customers
 
     Returns:
         List of events in chronological order
@@ -154,15 +154,21 @@ def build_customer_journey(customer_id: str, all_data: Optional[Dict[str, List[D
     events = []
     
     if all_data is None:
-        # Legacy mode - load data individually
-        events.extend(get_call_transcripts(customer_id))
-        events.extend(get_web_transcripts(customer_id))
-        events.extend(get_web_clicks(customer_id))
-        events.extend(get_network_data(customer_id))
-        events.extend(get_offer_recommendations(customer_id))
-        events.extend(get_churn_scores(customer_id))
-        events.extend(get_usage_data(customer_id))
-        events.extend(get_billing_data(customer_id))
+        # Load all data for this customer
+        all_data = {
+            'call_transcripts': get_call_transcripts(customer_id),
+            'web_transcripts': get_web_transcripts(customer_id),
+            'web_clicks': get_web_clicks(customer_id),
+            'network_data': get_network_data(customer_id),
+            'offer_recommendations': get_offer_recommendations(customer_id),
+            'churn_scores': get_churn_scores(customer_id),
+            'usage_data': get_usage_data(customer_id),
+            'billing_data': get_billing_data(customer_id)
+        }
+        
+        # Combine all data sources
+        for data_source in all_data.values():
+            events.extend(data_source)
     else:
         # Use pre-loaded data
         for data_type, records in all_data.items():

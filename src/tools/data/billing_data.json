@@ -110,5 +110,21 @@
         "monthly_charge": 55.99,
         "additional_charges": 0.00,
         "payment_status": "paid"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-02-01",
+        "plan_name": "Family Plus",
+        "monthly_charge": 79.99,
+        "additional_charges": 0.00,
+        "payment_status": "paid"
+    },
+    {
+        "customer_id": "U999",
+        "date": "2024-03-01",
+        "plan_name": "Family Plus",
+        "monthly_charge": 79.99,
+        "additional_charges": 12.50,
+        "payment_status": "paid"
     }
 ] 
