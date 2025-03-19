@@ -32,13 +32,13 @@ Process individual customers or a batch of customers using the multi-agent archi
 
 ```bash
 # Process a single customer
-poetry run python src/machine_says_multi_agent.py --customer_ids U124
+poetry run python src/cvm_processor_cli.py --customer_ids U124
 
 # Process multiple customers
-poetry run python src/machine_says_multi_agent.py --customer_ids "U123,U124,U125" --output_file results.json
+poetry run python src/cvm_processor_cli.py --customer_ids "U123,U124,U125" --output_file results.json
 
 # Set custom log level
-poetry run python src/machine_says_multi_agent.py --customer_ids U124 --log_level DEBUG
+poetry run python src/cvm_processor_cli.py --customer_ids U124 --log_level DEBUG
 ```
 
 ### 2. Customer Triggering and Processing
@@ -109,7 +109,7 @@ Examine a customer's journey data:
 
 ```bash
 # View customer data
-poetry run python src/machine_says_multi_agent.py --customer_ids U124
+poetry run python src/cvm_processor_cli.py --customer_ids U124
 ```
 
 ## Key Features
@@ -168,7 +168,7 @@ poetry run python src/trigger_customers_cli.py process --trigger-type custom --d
 ### View Customer Data
 ```bash
 # View customer data
-poetry run python src/machine_says_multi_agent.py --customer_ids U124
+poetry run python src/cvm_processor_cli.py --customer_ids U124
 ```
 
 ## Configuration
@@ -242,7 +242,7 @@ cvm_agents/
 │   │   ├── config.py            # Configuration handler
 │   │   ├── treatment_manager.py # Treatment management
 │   │   └── treatment_parser.py  # Custom treatment parsing
-│   ├── machine_says_multi_agent.py   # Multi-agent entry point
+│   ├── cvm_processor_cli.py   # Multi-agent entry point
 │   ├── trigger_customers_cli.py      # Customer triggering CLI
 │   └── dynamic_treatment_cli.py      # Treatment management CLI
 ├── tests/                # Test suite
@@ -260,10 +260,10 @@ Several debug options are available:
 
 ```bash
 # Detailed debug output
-poetry run python src/machine_says_multi_agent.py --customer_ids U124 --log_level DEBUG
+poetry run python src/cvm_processor_cli.py --customer_ids U124 --log_level DEBUG
 
 # Minimal output
-poetry run python src/machine_says_multi_agent.py --customer_ids U124 --log_level WARNING
+poetry run python src/cvm_processor_cli.py --customer_ids U124 --log_level WARNING
 ```
 
 ### Debug logs
