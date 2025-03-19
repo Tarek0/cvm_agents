@@ -49,17 +49,6 @@ def setup_argparse() -> argparse.ArgumentParser:
         help="Description of what to look for in customer interactions (for custom triggers)"
     )
     trigger_parser.add_argument(
-        "--keywords", 
-        type=str, 
-        help="[Deprecated] Comma-separated keywords for custom trigger"
-    )
-    trigger_parser.add_argument(
-        "--data-types", 
-        type=str, 
-        default="call_transcripts,web_transcripts",
-        help="[Deprecated] Comma-separated data types to search in for custom trigger"
-    )
-    trigger_parser.add_argument(
         "--output", 
         type=str, 
         default="text",
@@ -95,17 +84,6 @@ def setup_argparse() -> argparse.ArgumentParser:
         "--description", 
         type=str, 
         help="Description of what to look for in customer interactions (for custom triggers)"
-    )
-    process_parser.add_argument(
-        "--keywords", 
-        type=str, 
-        help="[Deprecated] Comma-separated keywords for custom trigger"
-    )
-    process_parser.add_argument(
-        "--data-types", 
-        type=str, 
-        default="call_transcripts,web_transcripts",
-        help="[Deprecated] Comma-separated data types to search in for custom trigger"
     )
     process_parser.add_argument(
         "--treatment", 
@@ -231,9 +209,16 @@ def write_output(content: str, output_file: Optional[str] = None):
     """Write output to file or stdout."""
     if output_file:
         try:
-            with open(output_file, "w") as f:
+            # Create output directory if it doesn't exist
+            output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "output")
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Construct the full path in the output directory
+            output_path = os.path.join(output_dir, os.path.basename(output_file))
+            
+            with open(output_path, "w") as f:
                 f.write(content)
-            print(f"Results written to {output_file}")
+            print(f"Results written to {output_path}")
         except Exception as e:
             print(f"Error writing to output file: {str(e)}", file=sys.stderr)
             print(content)

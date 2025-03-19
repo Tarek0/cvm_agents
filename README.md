@@ -1,6 +1,6 @@
 # CVM (Customer Value Management) System for a Telecommunications Company
 
-This is a proof of concept for a Agentic CVM system for a telecommunications company. The goal of this project is to explore the use of Agentic AI to optimise and completely automate customer marketing decision making.
+This is a proof of concept for an Agentic CVM system for a telecommunications company. The goal of this project is to explore the use of Agentic AI to optimize and completely automate customer marketing decision making.
 
 ## Quick Start
 
@@ -20,6 +20,96 @@ poetry install
 # Set up environment variables
 cp .env.example .env
 # Edit .env with your API keys and configuration
+```
+
+## Core Functionality
+
+Here are the main ways to use the CVM system:
+
+### 1. Process Customer Journey with Multi-Agent System
+
+Process individual customers or a batch of customers using the multi-agent architecture:
+
+```bash
+# Process a single customer
+poetry run python src/machine_says_multi_agent.py --customer_ids U124
+
+# Process multiple customers
+poetry run python src/machine_says_multi_agent.py --customer_ids "U123,U124,U125" --output_file results.json
+
+# Set custom log level
+poetry run python src/machine_says_multi_agent.py --customer_ids U124 --log_level DEBUG
+```
+
+### 2. Customer Triggering and Processing
+
+Find customers meeting specific criteria and apply treatments to them:
+
+```bash
+# List available trigger types
+poetry run python src/trigger_customers_cli.py list-triggers
+
+# Find customers with network issues
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type network_issues
+
+# Find customers with custom criteria and output to CSV
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type custom --description "Customers experiencing poor video call quality during business hours" --output csv --output-file network_issues.csv
+
+# Process triggered customers with a specific treatment
+poetry run python src/trigger_customers_cli.py process --all-customers --trigger-type network_issues --treatment service_sms
+```
+
+All output files are automatically saved to the `output` directory in the project root. For example, when generating CSV output:
+
+```bash
+# Find customers with custom criteria and output to CSV in the output directory
+poetry run python src/trigger_customers_cli.py trigger --all-customers --trigger-type custom --description "Customers mentioning dogs or other pets" --output csv --output-file pet_interests.csv
+```
+
+This will create `output/pet_interests.csv` in the project root.
+
+### 3. Dynamic Treatment Management
+
+Create and manage custom treatments on-the-fly:
+
+```bash
+# Get help on treatment format
+poetry run python src/dynamic_treatment_cli.py help
+
+# Add a new custom treatment with simple text description
+poetry run python src/dynamic_treatment_cli.py add "Send personalized video message to customer with limit 10 and priority 2"
+
+# Add a custom treatment with JSON format
+poetry run python src/dynamic_treatment_cli.py add '{
+  "display_name": "VIP Gift Basket",
+  "description": "Send a premium gift basket to high-value customers",
+  "constraints": {
+    "max_per_day": 5,
+    "cost_per_contact_pounds": 50.0,
+    "priority": 1
+  }
+}'
+
+# List all treatments
+poetry run python src/dynamic_treatment_cli.py list
+
+# Update an existing custom treatment
+poetry run python src/dynamic_treatment_cli.py update custom_send_personalized_vide_12345678 "Updated description with new limit 20"
+
+# Remove a custom treatment
+poetry run python src/dynamic_treatment_cli.py remove custom_send_personalized_vide_12345678
+
+# Process a customer using all available treatments
+poetry run python src/dynamic_treatment_cli.py process U124
+```
+
+### 4. View Customer Data
+
+Examine a customer's journey data:
+
+```bash
+# View customer data
+poetry run python src/machine_says_multi_agent.py --customer_ids U124
 ```
 
 ## Key Features
@@ -53,6 +143,7 @@ The system employs a sophisticated multi-agent architecture:
 3. **JourneyAgent**: Builds and analyzes customer journeys
 4. **TreatmentAgent**: Determines optimal treatments
 5. **AllocationAgent**: Manages resource constraints
+6. **TriggerAgent**: Identifies customers matching specific criteria
 
 ## Usage Examples
 
@@ -76,7 +167,8 @@ poetry run python src/trigger_customers_cli.py process --trigger-type custom --d
 
 ### View Customer Data
 ```bash
-poetry run python src/machine_says.py --customer_id U124
+# View customer data
+poetry run python src/machine_says_multi_agent.py --customer_ids U124
 ```
 
 ## Configuration
@@ -88,45 +180,6 @@ The system is highly configurable through:
 - Resource constraints
 
 ## Development
-
-### Running Tests
-```bash
-poetry run pytest
-```
-
-### Adding New Features
-- Custom triggers can be added through the CLI
-- New treatments can be defined in the configuration
-- System is extensible through the multi-agent architecture
-
-## Documentation
-For more detailed information about the system architecture and capabilities, see:
-- `diagram.md`: System workflow diagrams
-- `agent_architecture.md`: Detailed agent architecture
-- `production_recommendations.md`: Scaling guidelines
-
-## Project Structure
-```
-cvm_agents/
-├── config/                 # Configuration files
-│   └── cvm_config.yaml    # Main configuration
-├── src/                   # Source code
-│   ├── tools/            # Utility tools and APIs
-│   │   └── api_v2.py    # Customer journey builder
-│   ├── utils/           # Helper functions
-│   │   └── config.py    # Configuration handler
-│   └── machine_says.py   # Main entry point
-├── tests/                # Test suite
-│   ├── utils/           # Utility tests
-│   │   └── test_config.py  # Configuration tests
-│   └── conftest.py      # Test configuration
-├── .env.example         # Example environment variables
-├── poetry.lock         # Lock file for dependencies
-├── pyproject.toml      # Project metadata and dependencies
-└── README.md          # This file
-```
-
-## Developer Guide
 
 ### Development Setup
 1. Clone the repository
@@ -143,6 +196,23 @@ cvm_agents/
    poetry run pre-commit install
    ```
 
+### Running Tests
+The project uses pytest for testing. To run the tests:
+
+```bash
+# Run all tests
+poetry run pytest
+
+# Run tests with verbose output
+poetry run pytest -v
+
+# Run tests with coverage report
+poetry run pytest --cov=src
+
+# Run tests for a specific module
+poetry run pytest tests/utils/test_config.py
+```
+
 ### Environment Variables
 The following environment variables are required:
 ```
@@ -151,71 +221,53 @@ MODEL_ID=gpt-4o
 LOG_LEVEL=INFO
 ```
 
-### Running Tests
-The project uses pytest for testing. To run the tests:
-
-```bash
-# Run all tests
-poetry run pytest tests/
-
-# Run tests with verbose output
-poetry run pytest tests/ -v
-
-# Run tests with coverage report
-poetry run pytest tests/ --cov=src
-
-# Run tests for a specific module
-poetry run pytest tests/utils/test_config.py
-
-# Generate HTML coverage report
-poetry run pytest tests/ --cov=src --cov-report=html
+### Project Structure
+```
+cvm_agents/
+├── config/                 # Configuration files
+│   ├── cvm_config.yaml    # Main configuration
+│   └── custom_treatments.json # Custom treatment definitions
+├── src/                   # Source code
+│   ├── agents/           # Multi-agent architecture components 
+│   │   ├── base_agent.py           # Base agent class
+│   │   ├── orchestrator_agent.py   # Central coordinator
+│   │   ├── data_agent.py           # Data retrieval
+│   │   ├── journey_agent.py        # Journey building
+│   │   ├── treatment_agent.py      # Treatment recommendations
+│   │   ├── allocation_agent.py     # Resource allocation
+│   │   └── trigger_agent.py        # Customer identification
+│   ├── tools/            # Utility tools and APIs
+│   │   └── api_v2.py     # Customer journey builder
+│   ├── utils/           # Helper functions
+│   │   ├── config.py            # Configuration handler
+│   │   ├── treatment_manager.py # Treatment management
+│   │   └── treatment_parser.py  # Custom treatment parsing
+│   ├── machine_says_multi_agent.py   # Multi-agent entry point
+│   ├── trigger_customers_cli.py      # Customer triggering CLI
+│   └── dynamic_treatment_cli.py      # Treatment management CLI
+├── tests/                # Test suite
+│   ├── agents/          # Agent tests
+│   ├── utils/           # Utility tests
+│   └── conftest.py      # Test configuration
+├── .env.example         # Example environment variables
+├── poetry.lock         # Lock file for dependencies
+├── pyproject.toml      # Project metadata and dependencies
+└── README.md          # This file
 ```
 
-### Test Structure
-- `tests/` - Root test directory
-  - `conftest.py` - Pytest configuration and fixtures
-  - `utils/` - Tests for utility modules
-    - `test_config.py` - Configuration module tests
-
-### Configuration
-The system uses YAML configuration files located in the `config/` directory:
-- `cvm_config.yaml` - Main configuration file containing:
-  - Treatment definitions
-  - Constraints
-  - Model settings
-  - Validation rules
-  - Global settings
-
-### Code Style
-- The project follows PEP 8 guidelines
-- Type hints are required for all new code
-- Docstrings should follow Google style
-- Maximum line length is 88 characters (Black formatter)
-
-### Development Workflow
-1. Create a new branch for your feature/fix
-2. Write tests for new functionality
-3. Implement your changes
-4. Ensure all tests pass
-5. Run pre-commit hooks
-6. Submit a pull request
-
-### Debugging
+## Debugging
 Several debug options are available:
 
-#### Debug Logging
 ```bash
 # Detailed debug output
-poetry run python src/machine_says.py --customer_id U124 --log_level DEBUG
+poetry run python src/machine_says_multi_agent.py --customer_ids U124 --log_level DEBUG
 
 # Minimal output
-poetry run python src/machine_says.py --customer_id U124 --log_level WARNING
+poetry run python src/machine_says_multi_agent.py --customer_ids U124 --log_level WARNING
 ```
 
-#### Debugging Tools
-- Use `pytest -pdb` for debugging tests
-- VSCode launch configurations are provided in `.vscode/launch.json`
-- Debug logs are written to `logs/cvm.log`
+### Debug logs
+Debug logs are written to `logs/cvm.log` by default.
 
 ## System Overview
 

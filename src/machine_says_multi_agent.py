@@ -62,16 +62,37 @@ def main() -> None:
         })
         
         # Write results to output file
-        with open(args.output_file, "w") as outfile:
-            json.dump(result_data, outfile, indent=2)
-        logger.info(f"Results written to {args.output_file}")
+        # Create output directory if it doesn't exist
+        output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "output")
+        os.makedirs(output_dir, exist_ok=True)
         
-        # Print summary
-        summary = result_data["summary"]
-        logger.info("Processing complete:")
-        logger.info(f"  Total customers: {summary['total_processed']}")
-        logger.info(f"  Successful: {summary['successful']}")
-        logger.info(f"  Failed: {summary['failed']}")
+        # Construct the full path in the output directory
+        output_path = os.path.join(output_dir, os.path.basename(args.output_file))
+        
+        with open(output_path, "w") as outfile:
+            json.dump(result_data, outfile, indent=2)
+        logger.info(f"Results written to {output_path}")
+        
+        # Print summary based on the actual structure of result_data
+        if isinstance(result_data, list):
+            # Count successes and failures
+            total = len(result_data)
+            failed = sum(1 for item in result_data if item.get("status") == "error")
+            successful = total - failed
+            
+            logger.info("Processing complete:")
+            logger.info(f"  Total customers: {total}")
+            logger.info(f"  Successful: {successful}")
+            logger.info(f"  Failed: {failed}")
+        elif isinstance(result_data, dict) and "summary" in result_data:
+            # Original logic for dict with summary
+            summary = result_data["summary"]
+            logger.info("Processing complete:")
+            logger.info(f"  Total customers: {summary['total_processed']}")
+            logger.info(f"  Successful: {summary['successful']}")
+            logger.info(f"  Failed: {summary['failed']}")
+        else:
+            logger.info("Processing complete. Results written to output file.")
         
     except Exception as e:
         logger.error(f"Failed to process customers: {str(e)}")
