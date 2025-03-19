@@ -223,17 +223,6 @@ class OrchestratorAgent(BaseAgent):
                     "help_text": self.treatment_manager.get_treatment_help()
                 }
             
-            # For backward compatibility
-            elif message_type == "filter_and_process":
-                self.log("WARNING", "Using deprecated 'filter_and_process' message type. Use 'trigger_and_process' instead.")
-                # Update message type and delegate
-                message["type"] = "trigger_and_process"
-                if "filter_type" in message:
-                    message["trigger_type"] = message.pop("filter_type")
-                if "custom_filter" in message:
-                    message["custom_trigger"] = message.pop("custom_filter")
-                return self.process(message)
-            
             else:
                 self.log("WARNING", f"Unknown message type: {message_type}")
                 return {"status": "error", "message": f"Unknown message type: {message_type}"}
@@ -264,7 +253,8 @@ class OrchestratorAgent(BaseAgent):
             return {
                 "customer_id": customer_id,
                 "status": "error",
-                "message": "Failed to retrieve customer data"
+                "message": "Failed to retrieve customer data",
+                "timestamp": datetime.now().isoformat()
             }
         
         customer_data = customer_data_response["customer_data"]
@@ -281,7 +271,8 @@ class OrchestratorAgent(BaseAgent):
             return {
                 "customer_id": customer_id,
                 "status": "error",
-                "message": "Failed to build customer journey"
+                "message": "Failed to build customer journey",
+                "timestamp": datetime.now().isoformat()
             }
         
         customer_journey = journey_response["journey"]
@@ -307,7 +298,8 @@ class OrchestratorAgent(BaseAgent):
             return {
                 "customer_id": customer_id,
                 "status": "error",
-                "message": "Failed to determine optimal treatment"
+                "message": "Failed to determine optimal treatment",
+                "timestamp": datetime.now().isoformat()
             }
         
         selected_treatment = treatment_response["selected_treatment"]
@@ -352,6 +344,7 @@ class OrchestratorAgent(BaseAgent):
             "customer_id": customer_id,
             "selected_treatment": selected_treatment,
             "explanation": explanation,
+            "timestamp": datetime.now().isoformat(),
             "status": "success"
         }
 
@@ -379,7 +372,8 @@ class OrchestratorAgent(BaseAgent):
             return {
                 "customer_id": customer_id,
                 "status": "error",
-                "message": "Failed to retrieve customer data"
+                "message": "Failed to retrieve customer data",
+                "timestamp": datetime.now().isoformat()
             }
         
         customer_data = customer_data_response["customer_data"]
@@ -396,7 +390,8 @@ class OrchestratorAgent(BaseAgent):
             return {
                 "customer_id": customer_id,
                 "status": "error",
-                "message": "Failed to build customer journey"
+                "message": "Failed to build customer journey",
+                "timestamp": datetime.now().isoformat()
             }
         
         # Get treatment details
@@ -406,7 +401,8 @@ class OrchestratorAgent(BaseAgent):
             return {
                 "customer_id": customer_id,
                 "status": "error",
-                "message": f"Treatment {treatment_id} not found"
+                "message": f"Treatment {treatment_id} not found",
+                "timestamp": datetime.now().isoformat()
             }
         
         selected_treatment = treatments[treatment_id]
@@ -424,7 +420,8 @@ class OrchestratorAgent(BaseAgent):
                 "selected_treatment": selected_treatment,
                 "status": "error",
                 "explanation": f"Unable to allocate resources for treatment {treatment_id}",
-                "allocation_error": allocation_response.get("message", "Resource allocation failed")
+                "allocation_error": allocation_response.get("message", "Resource allocation failed"),
+                "timestamp": datetime.now().isoformat()
             }
         
         # Step 4: Return the result
@@ -432,6 +429,7 @@ class OrchestratorAgent(BaseAgent):
             "customer_id": customer_id,
             "selected_treatment": selected_treatment,
             "explanation": f"Treatment {treatment_id} ({selected_treatment.get('display_name', 'Unknown')}) applied by direct selection",
+            "timestamp": datetime.now().isoformat(),
             "status": "success"
         }
 
@@ -457,7 +455,8 @@ class OrchestratorAgent(BaseAgent):
                 results.append({
                     "customer_id": customer_id,
                     "status": "error",
-                    "message": str(e)
+                    "message": str(e),
+                    "timestamp": datetime.now().isoformat()
                 })
         
         # Return summary with results
