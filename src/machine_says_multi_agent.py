@@ -45,13 +45,16 @@ def main() -> None:
     try:
         logger.info(f"Starting multi-agent CVM processing for {len(customer_ids)} customers")
         
-        # Initialize the orchestrator agent
-        config = {
-            "model_id": os.environ.get("MODEL_ID", "gpt-4o"),
-            "enable_cache": True,
-            "max_retries": 3,
-            "timeout": 30
-        }
+        # Initialize the orchestrator agent with proper config from YAML
+        # Use load_config from the utils.config module instead of a simple dictionary
+        config = load_config()
+        
+        # Add additional settings from command line/environment if needed
+        config.settings["model_id"] = os.environ.get("MODEL_ID", "gpt-4o")
+        config.settings["enable_cache"] = True
+        config.settings["max_retries"] = 3
+        config.settings["timeout"] = 30
+        
         orchestrator = OrchestratorAgent(config)
         
         # Process the customers
