@@ -16,7 +16,15 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.utils.config import load_config
 
-# Custom CSS for red branding
+# Set page configuration - MUST BE THE FIRST STREAMLIT COMMAND
+st.set_page_config(
+    page_title="CVM Control Center",
+    page_icon="🔴",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Custom CSS for red branding - added after set_page_config
 st.markdown("""
 <style>
     /* Main theme colors - red branding */
@@ -62,14 +70,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
-# Set page configuration
-st.set_page_config(
-    page_title="CVM Control Center",
-    page_icon="🔴",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # Initialize the orchestrator agent with proper config
 @st.cache_resource
