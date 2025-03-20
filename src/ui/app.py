@@ -1,5 +1,5 @@
 """
-CVM System Streamlit Application
+CVM Control Center Application
 
 A user interface for interacting with the CVM (Customer Value Management) System.
 """
@@ -16,10 +16,57 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.utils.config import load_config
 
+# Custom CSS for red branding
+st.markdown("""
+<style>
+    /* Main theme colors - red branding */
+    :root {
+        --primary-color: #e53935;
+        --secondary-color: #ffcdd2;
+        --background-color: #ffffff;
+        --text-color: #212121;
+    }
+    
+    /* Sidebar and header styling */
+    .css-1d391kg, .css-1lsmgbg {
+        background-color: #f8f8f8;
+    }
+    
+    /* Headers with red color */
+    h1, h2, h3 {
+        color: var(--primary-color) !important;
+    }
+    
+    /* Custom button styling */
+    .stButton>button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+    }
+    
+    .stButton>button:hover {
+        background-color: #c62828;
+    }
+    
+    /* Info boxes with red border */
+    .alert-info {
+        background-color: #ffebee;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    /* Metric styling */
+    .css-1wivap2 {
+        color: var(--primary-color);
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Set page configuration
 st.set_page_config(
-    page_title="CVM System",
-    page_icon="📊",
+    page_title="CVM Control Center",
+    page_icon="🔴",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -51,8 +98,12 @@ PAGES = {
 }
 
 # Sidebar navigation
-st.sidebar.title("CVM System")
-st.sidebar.image("https://img.icons8.com/fluency/96/analytics.png", width=100)
+st.sidebar.title("CVM Control Center")
+# Using a red-themed analytics icon
+st.sidebar.image("https://img.icons8.com/color/96/000000/combo-chart--v2.png", width=100)
+
+# Red separator below title
+st.sidebar.markdown('<hr style="border-top: 3px solid #e53935;">', unsafe_allow_html=True)
 
 # Get all available customer IDs for display throughout the app
 @st.cache_data(ttl=300)  # Cache for 5 minutes
@@ -70,12 +121,13 @@ def get_all_customer_ids():
 selected_page = st.sidebar.radio("Navigation", list(PAGES.keys()))
 
 # Display page heading
-st.title(f"CVM System - {selected_page}")
+st.title(f"CVM Control Center - {selected_page}")
+st.markdown('<hr style="border-top: 2px solid #e53935; margin-bottom: 20px;">', unsafe_allow_html=True)
 
 # Dashboard page
 def dashboard_page():
-    st.write("## Welcome to the CVM System")
-    st.write("This dashboard provides a centralized interface for managing the Customer Value Management system.")
+    st.write("## Welcome to the CVM Control Center")
+    st.write("This control center provides a centralized interface for managing the Customer Value Management system.")
 
     # Display overview cards in columns
     col1, col2, col3 = st.columns(3)
@@ -93,7 +145,9 @@ def dashboard_page():
     
     # Display recent activity or system status
     st.write("## System Status")
-    st.info("All agents are operational and ready to process requests.")
+    st.markdown('<div class="alert-info" style="padding: 20px; border-radius: 5px;">'
+               '<strong>All agents are operational and ready to process requests.</strong>'
+               '</div>', unsafe_allow_html=True)
     
     # Quick actions
     st.write("## Quick Actions")

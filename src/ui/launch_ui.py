@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Launch script for the CVM System Streamlit UI.
+Launch script for the CVM Control Center.
 
 This script starts the Streamlit server with the appropriate options.
 """
@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 def main():
-    """Launch the Streamlit UI for CVM System."""
+    """Launch the CVM Control Center UI."""
     # Get the directory containing this script
     script_dir = Path(__file__).parent.absolute()
     
@@ -35,7 +35,7 @@ def main():
         "--browser.gatherUsageStats", "false"
     ]
     
-    print(f"Starting CVM System UI...")
+    print(f"Starting CVM Control Center...")
     print(f"URL: http://localhost:8501")
     print(f"Press Ctrl+C to stop the server")
     
@@ -43,7 +43,7 @@ def main():
     try:
         subprocess.run(cmd, cwd=project_root)
     except KeyboardInterrupt:
-        print("\nShutting down CVM System UI...")
+        print("\nShutting down CVM Control Center...")
     except Exception as e:
         print(f"Error starting Streamlit server: {e}")
         sys.exit(1)

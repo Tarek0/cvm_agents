@@ -8,7 +8,7 @@ This is a proof of concept for an Agentic CVM system for a telecommunications co
 - [Multi-Agent Architecture](#multi-agent-architecture)
 - [Usage Examples](#usage-examples)
 - [Configuration](#configuration)
-- [Streamlit UI](#streamlit-ui)
+- [CVM Control Center](#cvm-control-center)
 - [Development](#development)
 - [Testing](#testing)
 - [Debugging](#debugging)
@@ -253,16 +253,16 @@ MODEL_ID=gpt-4o
 LOG_LEVEL=INFO
 ```
 
-## Streamlit UI
+## CVM Control Center
 
-The system includes a Streamlit-based web interface that provides an intuitive way to interact with the CVM system functionality.
+The system includes a Streamlit-based web interface called "CVM Control Center" that provides an intuitive way to interact with the CVM system functionality.
 
-### Running the UI
+### Running the Control Center
 
-To launch the Streamlit UI:
+To launch the CVM Control Center:
 
 ```bash
-# Start the UI on localhost:8501
+# Start the Control Center on localhost:8501
 poetry run python src/ui/launch_ui.py
 ```
 
@@ -272,9 +272,9 @@ Or directly with Streamlit:
 poetry run streamlit run src/ui/app.py
 ```
 
-### UI Features
+### Control Center Features
 
-The Streamlit UI provides the following capabilities:
+The CVM Control Center provides the following capabilities:
 
 1. **Dashboard** - Overview of the system status and key metrics
 2. **Customer Processing** - Process individual customers through the CVM system
@@ -282,9 +282,11 @@ The Streamlit UI provides the following capabilities:
 4. **Treatment Management** - Add, update, list and remove treatments
 5. **Batch Operations** - Process multiple customers with a selected treatment
 
-### UI Screenshots
+The control center features a distinctive red branding and intuitive interface for managing all CVM operations in one place.
 
-![Dashboard](https://example.com/screenshots/dashboard.png)
+### Screenshots
+
+![CVM Control Center Dashboard](https://example.com/screenshots/dashboard.png)
 ![Treatment Management](https://example.com/screenshots/treatments.png)
 
 ## Development
