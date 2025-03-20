@@ -84,7 +84,8 @@ def dashboard_page():
         st.metric(label="Total Customers", value=len(get_all_customer_ids()))
     
     with col2:
-        st.metric(label="Available Treatments", value=len(orchestrator.treatment_manager.list_treatments()))
+        treatments_count = len(orchestrator.treatment_manager.get_all_treatments())
+        st.metric(label="Available Treatments", value=treatments_count)
     
     with col3:
         # Just count the predefined triggers plus "custom"
