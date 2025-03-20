@@ -328,7 +328,7 @@ class TestOrchestratorAgent:
         agent._get_customer_permissions = MagicMock()
         agent._get_customer_permissions.return_value = {"permissions": {"email": {"marketing": "Y"}}}
         
-        # Process a batch of customers
+        # Test 1: Process a batch of customers without a specific treatment
         result = agent.process({
             "type": "process_batch", 
             "customer_ids": ["U123", "U124"]
@@ -353,6 +353,48 @@ class TestOrchestratorAgent:
         # Verify the treatment agent was called for each customer
         assert agent.treatment_agent.process.call_count == 2
         # Verify the allocation agent was called for each customer
+        assert agent.allocation_agent.process.call_count == 2
+        
+        # Reset mocks for the second test
+        agent.data_agent.reset_mock()
+        agent.journey_agent.reset_mock()
+        agent.treatment_agent.reset_mock()
+        agent.allocation_agent.reset_mock()
+        
+        # Test 2: Process a batch with a specific treatment
+        # Setup mock for treatment_manager.get_all_treatments
+        mock_treatment_manager.get_all_treatments.return_value = {
+            "service_sms": {
+                "id": "service_sms",
+                "display_name": "Service SMS",
+                "description": "Send a service SMS"
+            }
+        }
+        
+        result_with_treatment = agent.process({
+            "type": "process_batch", 
+            "customer_ids": ["U123", "U124"],
+            "treatment_id": "service_sms"
+        })
+        
+        # Verify the result with treatment
+        assert isinstance(result_with_treatment, list)
+        assert len(result_with_treatment) == 2
+        
+        # Verify each customer result with treatment
+        for customer_result in result_with_treatment:
+            assert customer_result["status"] == "success"
+            assert customer_result["customer_id"] in ["U123", "U124"] 
+            assert "selected_treatment" in customer_result
+            assert "explanation" in customer_result
+            assert "timestamp" in customer_result
+        
+        # Verify the data agent and journey agent were called for each customer
+        assert agent.data_agent.process.call_count == 2
+        assert agent.journey_agent.process.call_count == 2
+        # The treatment agent should not be called when a specific treatment is provided
+        assert agent.treatment_agent.process.call_count == 0
+        # The allocation agent should still be called for each customer
         assert agent.allocation_agent.process.call_count == 2
     
     @patch('src.agents.orchestrator_agent.TreatmentManager')
@@ -734,4 +776,118 @@ class TestOrchestratorAgent:
             # Test permissions retrieval for non-existent customer
             permissions = agent._get_customer_permissions("U999")
             
-            assert permissions == {} 
+            assert permissions == {}
+    
+    @patch('src.agents.orchestrator_agent.TreatmentManager')
+    def test_permission_validation(self, mock_treatment_manager_class, mock_config, mock_treatment_manager, 
+                               mock_customer_data, mock_journey):
+        """Test that permission validation works correctly."""
+        # Setup mocks
+        mock_treatment_manager_class.return_value = mock_treatment_manager
+        
+        # Setup agent with mocks for sub-agents
+        agent = OrchestratorAgent(config=mock_config)
+        
+        # Mock data agent
+        agent.data_agent = MagicMock()
+        agent.data_agent.process.return_value = {"customer_data": mock_customer_data}
+        
+        # Mock journey agent
+        agent.journey_agent = MagicMock()
+        agent.journey_agent.process.return_value = {"journey": mock_journey}
+        
+        # Setup email marketing treatment
+        email_marketing_treatment = {
+            "id": "email_offer",
+            "display_name": "Email Offer",
+            "description": "Email with special offer",
+            "channel": "email",
+            "type": "marketing"
+        }
+        
+        # Mock treatment_manager.get_all_treatments to return our treatment
+        mock_treatment_manager.get_all_treatments.return_value = {
+            "email_offer": email_marketing_treatment
+        }
+        
+        # Case 1: Customer with email marketing permission
+        agent._get_customer_permissions = MagicMock()
+        agent._get_customer_permissions.return_value = {
+            "permissions": {
+                "email": {"marketing": "Y", "service": "Y"},
+                "sms": {"marketing": "Y", "service": "Y"}
+            }
+        }
+        
+        # Test processing with permission
+        result_with_permission = agent.process({
+            "type": "process_customer_with_treatment",
+            "customer_id": "U123",
+            "treatment_id": "email_offer"
+        })
+        
+        # Verify success
+        assert result_with_permission["status"] == "success"
+        assert result_with_permission["customer_id"] == "U123"
+        assert result_with_permission["selected_treatment"] == email_marketing_treatment
+        
+        # Case 2: Customer without email marketing permission
+        agent._get_customer_permissions.return_value = {
+            "permissions": {
+                "email": {"marketing": "N", "service": "Y"},
+                "sms": {"marketing": "Y", "service": "Y"}
+            }
+        }
+        
+        # Test processing without permission
+        result_without_permission = agent.process({
+            "type": "process_customer_with_treatment",
+            "customer_id": "U124",
+            "treatment_id": "email_offer"
+        })
+        
+        # Verify error due to permission
+        assert result_without_permission["status"] == "error"
+        assert result_without_permission["customer_id"] == "U124"
+        assert "permission" in result_without_permission["explanation"].lower()
+        
+        # Case 3: Batch processing with mixed permissions
+        agent._get_customer_permissions.side_effect = [
+            # First customer has permission
+            {
+                "permissions": {
+                    "email": {"marketing": "Y", "service": "Y"},
+                }
+            },
+            # Second customer does not have permission
+            {
+                "permissions": {
+                    "email": {"marketing": "N", "service": "Y"},
+                }
+            }
+        ]
+        
+        # Mock allocation agent
+        agent.allocation_agent = MagicMock()
+        agent.allocation_agent.process.return_value = {
+            "status": "success",
+            "allocated": True
+        }
+        
+        # Process batch
+        batch_result = agent.process({
+            "type": "process_batch",
+            "customer_ids": ["U125", "U126"],
+            "treatment_id": "email_offer"
+        })
+        
+        # Verify batch results
+        assert isinstance(batch_result, list)
+        assert len(batch_result) == 2
+        # First customer should succeed
+        assert batch_result[0]["status"] == "success"
+        assert batch_result[0]["customer_id"] == "U125"
+        # Second customer should fail due to permissions
+        assert batch_result[1]["status"] == "error"
+        assert batch_result[1]["customer_id"] == "U126"
+        assert "permission" in batch_result[1]["explanation"].lower() 

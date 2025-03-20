@@ -1,0 +1,810 @@
+2025-03-20 21:21:18,904 - constraint_test - INFO - Starting constraint test with 15 customers
+2025-03-20 21:21:18,916 - constraint_test - INFO - Resetting constraints to initial values
+2025-03-20 21:21:18,916 - src.utils.config - INFO - Reset remaining availability for call_back to 2
+2025-03-20 21:21:18,916 - src.utils.config - INFO - Reset remaining availability for retention_email to 1000
+2025-03-20 21:21:18,916 - src.utils.config - INFO - Reset remaining availability for retention_sms to 1000
+2025-03-20 21:21:18,916 - src.utils.config - INFO - Reset remaining availability for service_sms to 10000
+2025-03-20 21:21:18,916 - src.utils.config - INFO - Reset remaining availability for loyalty_app to 10000
+2025-03-20 21:21:18,917 - agent.data - INFO - [Data] DataAgent initialized with cache enabled
+2025-03-20 21:21:18,917 - agent.journey - INFO - [Journey] JourneyAgent initialized
+2025-03-20 21:21:18,917 - agent.treatment - INFO - [Treatment] TreatmentAgent initialized with model gpt-4-turbo-preview
+2025-03-20 21:21:18,917 - agent.allocation - INFO - [Allocation] AllocationAgent initialized
+2025-03-20 21:21:18,930 - agent.trigger - INFO - [Trigger] TriggerAgent initialized
+2025-03-20 21:21:18,930 - agent.orchestrator - INFO - [Orchestrator] OrchestratorAgent initialized with all sub-agents
+2025-03-20 21:21:18,931 - constraint_test - INFO - Processing customer U101 (1/15)
+2025-03-20 21:21:18,931 - agent.orchestrator - INFO - [Orchestrator] Processing customer U101
+2025-03-20 21:21:18,931 - agent.data - INFO - [Data] Loading data for customer U101
+2025-03-20 21:21:18,954 - agent.journey - INFO - [Journey] Building journey for customer U101
+2025-03-20 21:21:18,955 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,955 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U101
+2025-03-20 21:21:18,955 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,955 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,955 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,955 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,955 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,955 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,955 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,955 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,955 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,955 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,955 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,955 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,956 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,956 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U101: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,956 - constraint_test - INFO - Recommended treatment for U101: ignore
+2025-03-20 21:21:18,956 - constraint_test - INFO - Processing customer U102 (2/15)
+2025-03-20 21:21:18,956 - agent.orchestrator - INFO - [Orchestrator] Processing customer U102
+2025-03-20 21:21:18,956 - agent.data - INFO - [Data] Loading data for customer U102
+2025-03-20 21:21:18,958 - agent.journey - INFO - [Journey] Building journey for customer U102
+2025-03-20 21:21:18,958 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,958 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U102
+2025-03-20 21:21:18,959 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,959 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,959 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,959 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,959 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,959 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,959 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,959 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,959 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,959 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,959 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,959 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,959 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,959 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,959 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U102: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,959 - constraint_test - INFO - Recommended treatment for U102: ignore
+2025-03-20 21:21:18,959 - constraint_test - INFO - Processing customer U103 (3/15)
+2025-03-20 21:21:18,959 - agent.orchestrator - INFO - [Orchestrator] Processing customer U103
+2025-03-20 21:21:18,959 - agent.data - INFO - [Data] Loading data for customer U103
+2025-03-20 21:21:18,961 - agent.journey - INFO - [Journey] Building journey for customer U103
+2025-03-20 21:21:18,961 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,961 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U103
+2025-03-20 21:21:18,961 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,961 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,961 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,961 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,961 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,961 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,962 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,962 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,962 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,962 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,962 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,962 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,962 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,962 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,962 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U103: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,962 - constraint_test - INFO - Recommended treatment for U103: ignore
+2025-03-20 21:21:18,962 - constraint_test - INFO - Processing customer U104 (4/15)
+2025-03-20 21:21:18,962 - agent.orchestrator - INFO - [Orchestrator] Processing customer U104
+2025-03-20 21:21:18,962 - agent.data - INFO - [Data] Loading data for customer U104
+2025-03-20 21:21:18,965 - agent.journey - INFO - [Journey] Building journey for customer U104
+2025-03-20 21:21:18,965 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,965 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U104
+2025-03-20 21:21:18,965 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,965 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,965 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,965 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,965 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,965 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,965 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,965 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,965 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,966 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,966 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,966 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,966 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,966 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,966 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U104: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,966 - constraint_test - INFO - Recommended treatment for U104: ignore
+2025-03-20 21:21:18,966 - constraint_test - INFO - Processing customer U105 (5/15)
+2025-03-20 21:21:18,966 - agent.orchestrator - INFO - [Orchestrator] Processing customer U105
+2025-03-20 21:21:18,966 - agent.data - INFO - [Data] Loading data for customer U105
+2025-03-20 21:21:18,968 - agent.journey - INFO - [Journey] Building journey for customer U105
+2025-03-20 21:21:18,968 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,968 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U105
+2025-03-20 21:21:18,969 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,969 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,969 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,969 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,969 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,969 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,969 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,969 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,969 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,969 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,969 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,969 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,969 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,969 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,969 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U105: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,969 - constraint_test - INFO - Recommended treatment for U105: ignore
+2025-03-20 21:21:18,969 - constraint_test - INFO - Processing customer U106 (6/15)
+2025-03-20 21:21:18,969 - agent.orchestrator - INFO - [Orchestrator] Processing customer U106
+2025-03-20 21:21:18,969 - agent.data - INFO - [Data] Loading data for customer U106
+2025-03-20 21:21:18,971 - agent.journey - INFO - [Journey] Building journey for customer U106
+2025-03-20 21:21:18,972 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,972 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U106
+2025-03-20 21:21:18,972 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,972 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,972 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,972 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,972 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,972 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,972 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,972 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,972 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,972 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,972 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,972 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,972 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,972 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,972 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U106: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,972 - constraint_test - INFO - Recommended treatment for U106: ignore
+2025-03-20 21:21:18,972 - constraint_test - INFO - Processing customer U107 (7/15)
+2025-03-20 21:21:18,972 - agent.orchestrator - INFO - [Orchestrator] Processing customer U107
+2025-03-20 21:21:18,972 - agent.data - INFO - [Data] Loading data for customer U107
+2025-03-20 21:21:18,974 - agent.journey - INFO - [Journey] Building journey for customer U107
+2025-03-20 21:21:18,974 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,974 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U107
+2025-03-20 21:21:18,974 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,975 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,975 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,975 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,975 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,975 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,975 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,975 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,975 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,975 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,975 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,975 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,975 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,975 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,975 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U107: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,975 - constraint_test - INFO - Recommended treatment for U107: ignore
+2025-03-20 21:21:18,975 - constraint_test - INFO - Processing customer U108 (8/15)
+2025-03-20 21:21:18,975 - agent.orchestrator - INFO - [Orchestrator] Processing customer U108
+2025-03-20 21:21:18,975 - agent.data - INFO - [Data] Loading data for customer U108
+2025-03-20 21:21:18,977 - agent.journey - INFO - [Journey] Building journey for customer U108
+2025-03-20 21:21:18,977 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,977 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U108
+2025-03-20 21:21:18,978 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,978 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,978 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,978 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,978 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,978 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,978 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,978 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,978 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,978 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,978 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,978 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,978 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,978 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,978 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U108: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,978 - constraint_test - INFO - Recommended treatment for U108: ignore
+2025-03-20 21:21:18,978 - constraint_test - INFO - Processing customer U109 (9/15)
+2025-03-20 21:21:18,978 - agent.orchestrator - INFO - [Orchestrator] Processing customer U109
+2025-03-20 21:21:18,978 - agent.data - INFO - [Data] Loading data for customer U109
+2025-03-20 21:21:18,980 - agent.journey - INFO - [Journey] Building journey for customer U109
+2025-03-20 21:21:18,980 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,980 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U109
+2025-03-20 21:21:18,980 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,980 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,980 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,980 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,980 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,980 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,980 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,980 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,980 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,981 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,981 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,981 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,981 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,981 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,981 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U109: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,981 - constraint_test - INFO - Recommended treatment for U109: ignore
+2025-03-20 21:21:18,981 - constraint_test - INFO - Processing customer U110 (10/15)
+2025-03-20 21:21:18,981 - agent.orchestrator - INFO - [Orchestrator] Processing customer U110
+2025-03-20 21:21:18,981 - agent.data - INFO - [Data] Loading data for customer U110
+2025-03-20 21:21:18,983 - agent.journey - INFO - [Journey] Building journey for customer U110
+2025-03-20 21:21:18,983 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,983 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U110
+2025-03-20 21:21:18,984 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,984 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,984 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,984 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,984 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,984 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,984 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,984 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,984 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,984 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,984 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,984 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,984 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,984 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,984 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U110: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,984 - constraint_test - INFO - Recommended treatment for U110: ignore
+2025-03-20 21:21:18,984 - constraint_test - INFO - Processing customer U111 (11/15)
+2025-03-20 21:21:18,984 - agent.orchestrator - INFO - [Orchestrator] Processing customer U111
+2025-03-20 21:21:18,984 - agent.data - INFO - [Data] Loading data for customer U111
+2025-03-20 21:21:18,986 - agent.journey - INFO - [Journey] Building journey for customer U111
+2025-03-20 21:21:18,986 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,986 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U111
+2025-03-20 21:21:18,986 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,986 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,986 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,986 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,986 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,986 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,986 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,986 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,986 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,986 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,986 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,986 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,986 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,986 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,986 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U111: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,986 - constraint_test - INFO - Recommended treatment for U111: ignore
+2025-03-20 21:21:18,986 - constraint_test - INFO - Processing customer U112 (12/15)
+2025-03-20 21:21:18,986 - agent.orchestrator - INFO - [Orchestrator] Processing customer U112
+2025-03-20 21:21:18,987 - agent.data - INFO - [Data] Loading data for customer U112
+2025-03-20 21:21:18,988 - agent.journey - INFO - [Journey] Building journey for customer U112
+2025-03-20 21:21:18,988 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,988 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U112
+2025-03-20 21:21:18,988 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,988 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,989 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,989 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,989 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,989 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,989 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,989 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,989 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,989 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,989 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,989 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,989 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,989 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,989 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U112: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,989 - constraint_test - INFO - Recommended treatment for U112: ignore
+2025-03-20 21:21:18,989 - constraint_test - INFO - Processing customer U113 (13/15)
+2025-03-20 21:21:18,989 - agent.orchestrator - INFO - [Orchestrator] Processing customer U113
+2025-03-20 21:21:18,989 - agent.data - INFO - [Data] Loading data for customer U113
+2025-03-20 21:21:18,991 - agent.journey - INFO - [Journey] Building journey for customer U113
+2025-03-20 21:21:18,991 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,991 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U113
+2025-03-20 21:21:18,991 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,991 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,991 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,991 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,991 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,991 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,991 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,991 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,991 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,991 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,991 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,991 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,991 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,992 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,992 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U113: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,992 - constraint_test - INFO - Recommended treatment for U113: ignore
+2025-03-20 21:21:18,992 - constraint_test - INFO - Processing customer U114 (14/15)
+2025-03-20 21:21:18,992 - agent.orchestrator - INFO - [Orchestrator] Processing customer U114
+2025-03-20 21:21:18,992 - agent.data - INFO - [Data] Loading data for customer U114
+2025-03-20 21:21:18,994 - agent.journey - INFO - [Journey] Building journey for customer U114
+2025-03-20 21:21:18,994 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,994 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U114
+2025-03-20 21:21:18,994 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,994 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,994 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,994 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,994 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,994 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,994 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,994 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,994 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,994 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,994 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,994 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,994 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,994 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,994 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U114: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,994 - constraint_test - INFO - Recommended treatment for U114: ignore
+2025-03-20 21:21:18,994 - constraint_test - INFO - Processing customer U115 (15/15)
+2025-03-20 21:21:18,994 - agent.orchestrator - INFO - [Orchestrator] Processing customer U115
+2025-03-20 21:21:18,994 - agent.data - INFO - [Data] Loading data for customer U115
+2025-03-20 21:21:18,996 - agent.journey - INFO - [Journey] Building journey for customer U115
+2025-03-20 21:21:18,996 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:21:18,996 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U115
+2025-03-20 21:21:18,996 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:21:18,996 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:21:18,996 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:21:18,996 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:21:18,996 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:21:18,996 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:21:18,996 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,996 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:21:18,996 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,996 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:21:18,996 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:21:18,996 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:21:18,996 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:21:18,997 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:21:18,997 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U115: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:21:18,997 - constraint_test - INFO - Recommended treatment for U115: ignore
+2025-03-20 21:21:18,997 - agent.allocation - INFO - [Allocation] Returning current constraints
+2025-03-20 21:21:18,998 - constraint_test - INFO - Test completed. Results saved to output/constraint_test_results.json
+2025-03-20 21:28:38,550 - constraint_test - INFO - Starting constraint test with 15 customers
+2025-03-20 21:28:38,560 - constraint_test - INFO - Resetting constraints to initial values
+2025-03-20 21:28:38,560 - src.utils.config - INFO - Reset remaining availability for call_back to 2
+2025-03-20 21:28:38,560 - src.utils.config - INFO - Reset remaining availability for retention_email to 1000
+2025-03-20 21:28:38,561 - src.utils.config - INFO - Reset remaining availability for retention_sms to 1000
+2025-03-20 21:28:38,561 - src.utils.config - INFO - Reset remaining availability for service_sms to 10000
+2025-03-20 21:28:38,561 - src.utils.config - INFO - Reset remaining availability for loyalty_app to 10000
+2025-03-20 21:28:38,562 - agent.data - INFO - [Data] DataAgent initialized with cache enabled
+2025-03-20 21:28:38,562 - agent.journey - INFO - [Journey] JourneyAgent initialized
+2025-03-20 21:28:38,562 - agent.treatment - INFO - [Treatment] TreatmentAgent initialized with model gpt-4-turbo-preview
+2025-03-20 21:28:38,562 - agent.allocation - INFO - [Allocation] AllocationAgent initialized
+2025-03-20 21:28:38,573 - agent.trigger - INFO - [Trigger] TriggerAgent initialized
+2025-03-20 21:28:38,573 - agent.orchestrator - INFO - [Orchestrator] OrchestratorAgent initialized with all sub-agents
+2025-03-20 21:28:38,573 - constraint_test - INFO - Processing customer U101 (1/15)
+2025-03-20 21:28:38,573 - agent.orchestrator - INFO - [Orchestrator] Processing customer U101
+2025-03-20 21:28:38,573 - agent.data - INFO - [Data] Loading data for customer U101
+2025-03-20 21:28:38,576 - agent.journey - INFO - [Journey] Building journey for customer U101
+2025-03-20 21:28:38,576 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,576 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U101
+2025-03-20 21:28:38,576 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,576 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,576 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,576 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,576 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,576 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,576 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,576 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,576 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,576 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,576 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,576 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,576 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,577 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U101: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,577 - constraint_test - INFO - Recommended treatment for U101: ignore
+2025-03-20 21:28:38,577 - constraint_test - INFO - Processing customer U102 (2/15)
+2025-03-20 21:28:38,577 - agent.orchestrator - INFO - [Orchestrator] Processing customer U102
+2025-03-20 21:28:38,577 - agent.data - INFO - [Data] Loading data for customer U102
+2025-03-20 21:28:38,579 - agent.journey - INFO - [Journey] Building journey for customer U102
+2025-03-20 21:28:38,579 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,579 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U102
+2025-03-20 21:28:38,579 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,579 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,579 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,579 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,579 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,579 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,579 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,579 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,579 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,580 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,580 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,580 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,580 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,580 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,580 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U102: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,580 - constraint_test - INFO - Recommended treatment for U102: ignore
+2025-03-20 21:28:38,580 - constraint_test - INFO - Processing customer U103 (3/15)
+2025-03-20 21:28:38,580 - agent.orchestrator - INFO - [Orchestrator] Processing customer U103
+2025-03-20 21:28:38,580 - agent.data - INFO - [Data] Loading data for customer U103
+2025-03-20 21:28:38,582 - agent.journey - INFO - [Journey] Building journey for customer U103
+2025-03-20 21:28:38,582 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,582 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U103
+2025-03-20 21:28:38,582 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,582 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,582 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,582 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,582 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,582 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,582 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,582 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,582 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,582 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,582 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,582 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,582 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,582 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,582 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U103: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,582 - constraint_test - INFO - Recommended treatment for U103: ignore
+2025-03-20 21:28:38,582 - constraint_test - INFO - Processing customer U104 (4/15)
+2025-03-20 21:28:38,583 - agent.orchestrator - INFO - [Orchestrator] Processing customer U104
+2025-03-20 21:28:38,583 - agent.data - INFO - [Data] Loading data for customer U104
+2025-03-20 21:28:38,585 - agent.journey - INFO - [Journey] Building journey for customer U104
+2025-03-20 21:28:38,585 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,585 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U104
+2025-03-20 21:28:38,585 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,585 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,585 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,585 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,585 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,585 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,585 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,585 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,585 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,585 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,585 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,585 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,586 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,586 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,586 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U104: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,586 - constraint_test - INFO - Recommended treatment for U104: ignore
+2025-03-20 21:28:38,586 - constraint_test - INFO - Processing customer U105 (5/15)
+2025-03-20 21:28:38,586 - agent.orchestrator - INFO - [Orchestrator] Processing customer U105
+2025-03-20 21:28:38,586 - agent.data - INFO - [Data] Loading data for customer U105
+2025-03-20 21:28:38,588 - agent.journey - INFO - [Journey] Building journey for customer U105
+2025-03-20 21:28:38,588 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,588 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U105
+2025-03-20 21:28:38,588 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,588 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,588 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,588 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,588 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,588 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,588 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,588 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,588 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,588 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,588 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,589 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,589 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,589 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,589 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U105: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,589 - constraint_test - INFO - Recommended treatment for U105: ignore
+2025-03-20 21:28:38,589 - constraint_test - INFO - Processing customer U106 (6/15)
+2025-03-20 21:28:38,589 - agent.orchestrator - INFO - [Orchestrator] Processing customer U106
+2025-03-20 21:28:38,589 - agent.data - INFO - [Data] Loading data for customer U106
+2025-03-20 21:28:38,591 - agent.journey - INFO - [Journey] Building journey for customer U106
+2025-03-20 21:28:38,591 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,591 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U106
+2025-03-20 21:28:38,591 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,591 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,591 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,591 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,591 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,591 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,591 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,591 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,591 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,591 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,591 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,591 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,591 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,591 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,591 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U106: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,591 - constraint_test - INFO - Recommended treatment for U106: ignore
+2025-03-20 21:28:38,591 - constraint_test - INFO - Processing customer U107 (7/15)
+2025-03-20 21:28:38,591 - agent.orchestrator - INFO - [Orchestrator] Processing customer U107
+2025-03-20 21:28:38,591 - agent.data - INFO - [Data] Loading data for customer U107
+2025-03-20 21:28:38,593 - agent.journey - INFO - [Journey] Building journey for customer U107
+2025-03-20 21:28:38,593 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,594 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U107
+2025-03-20 21:28:38,594 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,594 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,594 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,594 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,594 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,594 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,594 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,594 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,594 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,594 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,594 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,594 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,595 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,595 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,595 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U107: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,595 - constraint_test - INFO - Recommended treatment for U107: ignore
+2025-03-20 21:28:38,595 - constraint_test - INFO - Processing customer U108 (8/15)
+2025-03-20 21:28:38,595 - agent.orchestrator - INFO - [Orchestrator] Processing customer U108
+2025-03-20 21:28:38,595 - agent.data - INFO - [Data] Loading data for customer U108
+2025-03-20 21:28:38,597 - agent.journey - INFO - [Journey] Building journey for customer U108
+2025-03-20 21:28:38,597 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,597 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U108
+2025-03-20 21:28:38,597 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,597 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,597 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,597 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,597 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,597 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,597 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,597 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,597 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,597 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,597 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,597 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,597 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,597 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,597 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U108: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,598 - constraint_test - INFO - Recommended treatment for U108: ignore
+2025-03-20 21:28:38,598 - constraint_test - INFO - Processing customer U109 (9/15)
+2025-03-20 21:28:38,598 - agent.orchestrator - INFO - [Orchestrator] Processing customer U109
+2025-03-20 21:28:38,598 - agent.data - INFO - [Data] Loading data for customer U109
+2025-03-20 21:28:38,599 - agent.journey - INFO - [Journey] Building journey for customer U109
+2025-03-20 21:28:38,599 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,599 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U109
+2025-03-20 21:28:38,600 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,600 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,600 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,600 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,600 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,600 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,600 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,600 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,600 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,600 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,600 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,600 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,600 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,600 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,600 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U109: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,600 - constraint_test - INFO - Recommended treatment for U109: ignore
+2025-03-20 21:28:38,600 - constraint_test - INFO - Processing customer U110 (10/15)
+2025-03-20 21:28:38,600 - agent.orchestrator - INFO - [Orchestrator] Processing customer U110
+2025-03-20 21:28:38,600 - agent.data - INFO - [Data] Loading data for customer U110
+2025-03-20 21:28:38,602 - agent.journey - INFO - [Journey] Building journey for customer U110
+2025-03-20 21:28:38,602 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,602 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U110
+2025-03-20 21:28:38,602 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,602 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,602 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,602 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,602 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,602 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,602 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,603 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,603 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,603 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,603 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,603 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,603 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,603 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,603 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U110: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,603 - constraint_test - INFO - Recommended treatment for U110: ignore
+2025-03-20 21:28:38,603 - constraint_test - INFO - Processing customer U111 (11/15)
+2025-03-20 21:28:38,603 - agent.orchestrator - INFO - [Orchestrator] Processing customer U111
+2025-03-20 21:28:38,603 - agent.data - INFO - [Data] Loading data for customer U111
+2025-03-20 21:28:38,605 - agent.journey - INFO - [Journey] Building journey for customer U111
+2025-03-20 21:28:38,605 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,605 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U111
+2025-03-20 21:28:38,605 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,605 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,605 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,605 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,605 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,605 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,605 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,605 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,605 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,605 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,605 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,605 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,605 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,605 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,605 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U111: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,606 - constraint_test - INFO - Recommended treatment for U111: ignore
+2025-03-20 21:28:38,606 - constraint_test - INFO - Processing customer U112 (12/15)
+2025-03-20 21:28:38,606 - agent.orchestrator - INFO - [Orchestrator] Processing customer U112
+2025-03-20 21:28:38,606 - agent.data - INFO - [Data] Loading data for customer U112
+2025-03-20 21:28:38,608 - agent.journey - INFO - [Journey] Building journey for customer U112
+2025-03-20 21:28:38,608 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,608 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U112
+2025-03-20 21:28:38,608 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,608 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,608 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,608 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,608 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,608 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,608 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,608 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,608 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,608 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,608 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,608 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,608 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,608 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,608 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U112: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,608 - constraint_test - INFO - Recommended treatment for U112: ignore
+2025-03-20 21:28:38,608 - constraint_test - INFO - Processing customer U113 (13/15)
+2025-03-20 21:28:38,608 - agent.orchestrator - INFO - [Orchestrator] Processing customer U113
+2025-03-20 21:28:38,609 - agent.data - INFO - [Data] Loading data for customer U113
+2025-03-20 21:28:38,610 - agent.journey - INFO - [Journey] Building journey for customer U113
+2025-03-20 21:28:38,611 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,611 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U113
+2025-03-20 21:28:38,611 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,611 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,611 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,611 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,611 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,611 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,611 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,611 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,611 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,611 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,611 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,611 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,611 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,611 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,611 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U113: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,612 - constraint_test - INFO - Recommended treatment for U113: ignore
+2025-03-20 21:28:38,612 - constraint_test - INFO - Processing customer U114 (14/15)
+2025-03-20 21:28:38,612 - agent.orchestrator - INFO - [Orchestrator] Processing customer U114
+2025-03-20 21:28:38,612 - agent.data - INFO - [Data] Loading data for customer U114
+2025-03-20 21:28:38,614 - agent.journey - INFO - [Journey] Building journey for customer U114
+2025-03-20 21:28:38,614 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,614 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U114
+2025-03-20 21:28:38,614 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,614 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,614 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,614 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,614 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,614 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,614 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,614 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,614 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,614 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,614 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,614 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,614 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,614 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,614 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U114: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,614 - constraint_test - INFO - Recommended treatment for U114: ignore
+2025-03-20 21:28:38,614 - constraint_test - INFO - Processing customer U115 (15/15)
+2025-03-20 21:28:38,614 - agent.orchestrator - INFO - [Orchestrator] Processing customer U115
+2025-03-20 21:28:38,614 - agent.data - INFO - [Data] Loading data for customer U115
+2025-03-20 21:28:38,616 - agent.journey - INFO - [Journey] Building journey for customer U115
+2025-03-20 21:28:38,616 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:28:38,616 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U115
+2025-03-20 21:28:38,616 - agent.allocation - INFO - [Allocation] Checked availability for call_back: 2/2 remaining
+2025-03-20 21:28:38,616 - agent.allocation - INFO - [Allocation] Checked availability for retention_email: 1000/1000 remaining
+2025-03-20 21:28:38,616 - agent.allocation - INFO - [Allocation] Checked availability for retention_sms: 1000/1000 remaining
+2025-03-20 21:28:38,616 - agent.allocation - INFO - [Allocation] Checked availability for service_sms: 10000/10000 remaining
+2025-03-20 21:28:38,616 - agent.allocation - INFO - [Allocation] Checked availability for loyalty_app: 10000/10000 remaining
+2025-03-20 21:28:38,617 - agent.allocation - ERROR - [Allocation] Treatment key 'ignore' not found in constraints
+2025-03-20 21:28:38,617 - agent.orchestrator - INFO - [Orchestrator] Treatment ignore is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,617 - agent.allocation - ERROR - [Allocation] Treatment key 'custom_send_a_personalized__218a7bc1' not found in constraints
+2025-03-20 21:28:38,617 - agent.orchestrator - INFO - [Orchestrator] Treatment custom_send_a_personalized__218a7bc1 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,617 - agent.allocation - ERROR - [Allocation] Treatment key 'custom___display_name____vi_38d68709' not found in constraints
+2025-03-20 21:28:38,617 - agent.orchestrator - INFO - [Orchestrator] Treatment custom___display_name____vi_38d68709 is unavailable or at capacity for today (max_per_day constraint)
+2025-03-20 21:28:38,617 - agent.treatment - INFO - [Treatment] Recommending treatment based on customer journey
+2025-03-20 21:28:38,617 - agent.treatment - INFO - [Treatment] Available treatments for recommendation: ['call_back', 'retention_email', 'retention_sms', 'service_sms', 'loyalty_app']
+2025-03-20 21:28:38,617 - agent.treatment - INFO - [Treatment] Cached treatment no longer available, generating new recommendation
+2025-03-20 21:28:38,617 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U115: treatment=ignore, channel=unknown, type=unknown
+2025-03-20 21:28:38,617 - constraint_test - INFO - Recommended treatment for U115: ignore
+2025-03-20 21:28:38,617 - agent.allocation - INFO - [Allocation] Returning current constraints
+2025-03-20 21:28:38,618 - constraint_test - INFO - Test completed. Results saved to output/constraint_test_results.json
+2025-03-20 21:29:32,744 - constraint_test - INFO - Starting constraint test with 5 customers, test type: forced
+2025-03-20 21:29:32,750 - constraint_test - INFO - Resetting constraints to initial values
+2025-03-20 21:29:32,750 - src.utils.config - INFO - Reset remaining availability for call_back to 2
+2025-03-20 21:29:32,750 - src.utils.config - INFO - Reset remaining availability for retention_email to 1000
+2025-03-20 21:29:32,751 - src.utils.config - INFO - Reset remaining availability for retention_sms to 1000
+2025-03-20 21:29:32,751 - src.utils.config - INFO - Reset remaining availability for service_sms to 10000
+2025-03-20 21:29:32,751 - src.utils.config - INFO - Reset remaining availability for loyalty_app to 10000
+2025-03-20 21:29:32,751 - agent.data - INFO - [Data] DataAgent initialized with cache enabled
+2025-03-20 21:29:32,751 - agent.journey - INFO - [Journey] JourneyAgent initialized
+2025-03-20 21:29:32,751 - agent.treatment - INFO - [Treatment] TreatmentAgent initialized with model gpt-4-turbo-preview
+2025-03-20 21:29:32,751 - agent.allocation - INFO - [Allocation] AllocationAgent initialized
+2025-03-20 21:29:32,761 - agent.trigger - INFO - [Trigger] TriggerAgent initialized
+2025-03-20 21:29:32,761 - agent.orchestrator - INFO - [Orchestrator] OrchestratorAgent initialized with all sub-agents
+2025-03-20 21:29:32,761 - agent.allocation - INFO - [Allocation] Returning current constraints
+2025-03-20 21:29:32,761 - constraint_test - INFO - call_back max_per_day: 2
+2025-03-20 21:29:32,761 - constraint_test - INFO - Attempting to force call_back for customer U201 (1/5)
+2025-03-20 21:29:32,761 - agent.orchestrator - INFO - [Orchestrator] Processing customer U201 with forced treatment call_back
+2025-03-20 21:29:32,761 - agent.data - INFO - [Data] Loading data for customer U201
+2025-03-20 21:29:32,768 - agent.journey - INFO - [Journey] Building journey for customer U201
+2025-03-20 21:29:32,768 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:29:32,768 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U201
+2025-03-20 21:29:32,768 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U201: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:29:32,768 - agent.orchestrator - WARNING - [Orchestrator] Customer U201 does not have permission for treatment call_back
+2025-03-20 21:29:32,768 - constraint_test - INFO - Allocation for U201: error
+2025-03-20 21:29:32,768 - constraint_test - INFO - Attempting to force call_back for customer U202 (2/5)
+2025-03-20 21:29:32,768 - agent.orchestrator - INFO - [Orchestrator] Processing customer U202 with forced treatment call_back
+2025-03-20 21:29:32,768 - agent.data - INFO - [Data] Loading data for customer U202
+2025-03-20 21:29:32,772 - agent.journey - INFO - [Journey] Building journey for customer U202
+2025-03-20 21:29:32,772 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:29:32,772 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U202
+2025-03-20 21:29:32,772 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U202: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:29:32,772 - agent.orchestrator - WARNING - [Orchestrator] Customer U202 does not have permission for treatment call_back
+2025-03-20 21:29:32,772 - constraint_test - INFO - Allocation for U202: error
+2025-03-20 21:29:32,772 - constraint_test - INFO - Attempting to force call_back for customer U203 (3/5)
+2025-03-20 21:29:32,772 - agent.orchestrator - INFO - [Orchestrator] Processing customer U203 with forced treatment call_back
+2025-03-20 21:29:32,772 - agent.data - INFO - [Data] Loading data for customer U203
+2025-03-20 21:29:32,775 - agent.journey - INFO - [Journey] Building journey for customer U203
+2025-03-20 21:29:32,775 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:29:32,775 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U203
+2025-03-20 21:29:32,775 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U203: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:29:32,775 - agent.orchestrator - WARNING - [Orchestrator] Customer U203 does not have permission for treatment call_back
+2025-03-20 21:29:32,775 - constraint_test - INFO - Allocation for U203: error
+2025-03-20 21:29:32,775 - constraint_test - INFO - Attempting to force call_back for customer U204 (4/5)
+2025-03-20 21:29:32,775 - agent.orchestrator - INFO - [Orchestrator] Processing customer U204 with forced treatment call_back
+2025-03-20 21:29:32,775 - agent.data - INFO - [Data] Loading data for customer U204
+2025-03-20 21:29:32,777 - agent.journey - INFO - [Journey] Building journey for customer U204
+2025-03-20 21:29:32,777 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:29:32,777 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U204
+2025-03-20 21:29:32,777 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U204: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:29:32,777 - agent.orchestrator - WARNING - [Orchestrator] Customer U204 does not have permission for treatment call_back
+2025-03-20 21:29:32,777 - constraint_test - INFO - Allocation for U204: error
+2025-03-20 21:29:32,777 - constraint_test - INFO - Attempting to force call_back for customer U205 (5/5)
+2025-03-20 21:29:32,777 - agent.orchestrator - INFO - [Orchestrator] Processing customer U205 with forced treatment call_back
+2025-03-20 21:29:32,777 - agent.data - INFO - [Data] Loading data for customer U205
+2025-03-20 21:29:32,780 - agent.journey - INFO - [Journey] Building journey for customer U205
+2025-03-20 21:29:32,780 - agent.data - WARNING - [Data] Unknown message type: get_customer_permissions
+2025-03-20 21:29:32,780 - agent.orchestrator - WARNING - [Orchestrator] No permissions found for customer U205
+2025-03-20 21:29:32,781 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U205: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:29:32,781 - agent.orchestrator - WARNING - [Orchestrator] Customer U205 does not have permission for treatment call_back
+2025-03-20 21:29:32,781 - constraint_test - INFO - Allocation for U205: error
+2025-03-20 21:29:32,781 - agent.allocation - INFO - [Allocation] Returning current constraints
+2025-03-20 21:29:32,782 - constraint_test - INFO - Test completed. Results saved to output/constraint_test_results.json
+2025-03-20 21:30:07,332 - constraint_test - INFO - Starting constraint test with 5 customers, test type: forced
+2025-03-20 21:30:07,339 - constraint_test - INFO - Resetting constraints to initial values
+2025-03-20 21:30:07,339 - src.utils.config - INFO - Reset remaining availability for call_back to 2
+2025-03-20 21:30:07,339 - src.utils.config - INFO - Reset remaining availability for retention_email to 1000
+2025-03-20 21:30:07,339 - src.utils.config - INFO - Reset remaining availability for retention_sms to 1000
+2025-03-20 21:30:07,339 - src.utils.config - INFO - Reset remaining availability for service_sms to 10000
+2025-03-20 21:30:07,339 - src.utils.config - INFO - Reset remaining availability for loyalty_app to 10000
+2025-03-20 21:30:07,339 - agent.data - INFO - [Data] DataAgent initialized with cache enabled
+2025-03-20 21:30:07,339 - agent.journey - INFO - [Journey] JourneyAgent initialized
+2025-03-20 21:30:07,340 - agent.treatment - INFO - [Treatment] TreatmentAgent initialized with model gpt-4-turbo-preview
+2025-03-20 21:30:07,340 - agent.allocation - INFO - [Allocation] AllocationAgent initialized
+2025-03-20 21:30:07,350 - agent.trigger - INFO - [Trigger] TriggerAgent initialized
+2025-03-20 21:30:07,350 - agent.orchestrator - INFO - [Orchestrator] OrchestratorAgent initialized with all sub-agents
+2025-03-20 21:30:07,350 - agent.allocation - INFO - [Allocation] Returning current constraints
+2025-03-20 21:30:07,350 - constraint_test - INFO - call_back max_per_day: 2
+2025-03-20 21:30:07,350 - constraint_test - INFO - Attempting to force call_back for customer U201 (1/5)
+2025-03-20 21:30:07,350 - agent.orchestrator - INFO - [Orchestrator] Processing customer U201 with forced treatment call_back
+2025-03-20 21:30:07,350 - agent.data - INFO - [Data] Loading data for customer U201
+2025-03-20 21:30:07,353 - agent.journey - INFO - [Journey] Building journey for customer U201
+2025-03-20 21:30:07,353 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U201: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:30:07,353 - agent.allocation - INFO - [Allocation] Allocation request for call_back: max_per_day=2, remaining=2
+2025-03-20 21:30:07,353 - agent.allocation - INFO - [Allocation] Allocated call_back for customer U201 (used: 1/2, remaining: 1, usage: 50.0%)
+2025-03-20 21:30:07,353 - constraint_test - INFO - Allocation for U201: success
+2025-03-20 21:30:07,353 - constraint_test - INFO - Attempting to force call_back for customer U202 (2/5)
+2025-03-20 21:30:07,353 - agent.orchestrator - INFO - [Orchestrator] Processing customer U202 with forced treatment call_back
+2025-03-20 21:30:07,353 - agent.data - INFO - [Data] Loading data for customer U202
+2025-03-20 21:30:07,355 - agent.journey - INFO - [Journey] Building journey for customer U202
+2025-03-20 21:30:07,355 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U202: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:30:07,355 - agent.allocation - INFO - [Allocation] Allocation request for call_back: max_per_day=2, remaining=1
+2025-03-20 21:30:07,355 - agent.allocation - INFO - [Allocation] Allocated call_back for customer U202 (used: 2/2, remaining: 0, usage: 100.0%)
+2025-03-20 21:30:07,355 - constraint_test - INFO - Allocation for U202: success
+2025-03-20 21:30:07,355 - constraint_test - INFO - Attempting to force call_back for customer U203 (3/5)
+2025-03-20 21:30:07,355 - agent.orchestrator - INFO - [Orchestrator] Processing customer U203 with forced treatment call_back
+2025-03-20 21:30:07,355 - agent.data - INFO - [Data] Loading data for customer U203
+2025-03-20 21:30:07,357 - agent.journey - INFO - [Journey] Building journey for customer U203
+2025-03-20 21:30:07,357 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U203: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:30:07,357 - agent.allocation - INFO - [Allocation] Allocation request for call_back: max_per_day=2, remaining=0
+2025-03-20 21:30:07,357 - agent.allocation - WARNING - [Allocation] No availability left for call_back (max_per_day=2, remaining=0)
+2025-03-20 21:30:07,357 - constraint_test - INFO - Allocation for U203: error
+2025-03-20 21:30:07,357 - constraint_test - INFO -   Error reason: Unable to allocate resources for treatment call_back
+2025-03-20 21:30:07,357 - constraint_test - INFO - Attempting to force call_back for customer U204 (4/5)
+2025-03-20 21:30:07,357 - agent.orchestrator - INFO - [Orchestrator] Processing customer U204 with forced treatment call_back
+2025-03-20 21:30:07,357 - agent.data - INFO - [Data] Loading data for customer U204
+2025-03-20 21:30:07,359 - agent.journey - INFO - [Journey] Building journey for customer U204
+2025-03-20 21:30:07,359 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U204: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:30:07,359 - agent.allocation - INFO - [Allocation] Allocation request for call_back: max_per_day=2, remaining=0
+2025-03-20 21:30:07,359 - agent.allocation - WARNING - [Allocation] No availability left for call_back (max_per_day=2, remaining=0)
+2025-03-20 21:30:07,359 - constraint_test - INFO - Allocation for U204: error
+2025-03-20 21:30:07,359 - constraint_test - INFO -   Error reason: Unable to allocate resources for treatment call_back
+2025-03-20 21:30:07,359 - constraint_test - INFO - Attempting to force call_back for customer U205 (5/5)
+2025-03-20 21:30:07,359 - agent.orchestrator - INFO - [Orchestrator] Processing customer U205 with forced treatment call_back
+2025-03-20 21:30:07,359 - agent.data - INFO - [Data] Loading data for customer U205
+2025-03-20 21:30:07,361 - agent.journey - INFO - [Journey] Building journey for customer U205
+2025-03-20 21:30:07,361 - agent.orchestrator - INFO - [Orchestrator] Checking permissions for customer U205: treatment=call_back, channel=call, type=marketing
+2025-03-20 21:30:07,361 - agent.allocation - INFO - [Allocation] Allocation request for call_back: max_per_day=2, remaining=0
+2025-03-20 21:30:07,361 - agent.allocation - WARNING - [Allocation] No availability left for call_back (max_per_day=2, remaining=0)
+2025-03-20 21:30:07,361 - constraint_test - INFO - Allocation for U205: error
+2025-03-20 21:30:07,361 - constraint_test - INFO -   Error reason: Unable to allocate resources for treatment call_back
+2025-03-20 21:30:07,361 - agent.allocation - INFO - [Allocation] Returning current constraints
+2025-03-20 21:30:07,362 - constraint_test - INFO - Test completed. Results saved to output/constraint_test_results.json
