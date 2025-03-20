@@ -143,7 +143,7 @@ def dashboard_page():
     st.write("This control center provides a centralized interface for managing the Customer Value Management system.")
 
     # Add a descriptive explanation of the dashboard
-    with st.expander("About the Dashboard", expanded=True):
+    with st.expander("About the Dashboard", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>About the Dashboard</strong>
@@ -200,7 +200,7 @@ def process_customer_page():
     st.write("Select a customer to process through the CVM system.")
     
     # Add a descriptive explanation of the customer processing
-    with st.expander("What is Customer Processing?", expanded=True):
+    with st.expander("What is Customer Processing?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Customer Processing?</strong>
@@ -239,7 +239,7 @@ def trigger_management_page():
     st.write("Identify customers based on specific trigger criteria.")
     
     # Add a descriptive explanation of trigger management
-    with st.expander("What is Trigger Management?", expanded=True):
+    with st.expander("What is Trigger Management?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Trigger Management?</strong>
@@ -332,7 +332,7 @@ def treatment_management_page():
     st.write("## Treatment Management")
     
     # Add a descriptive explanation of treatment management
-    with st.expander("What is Treatment Management?", expanded=True):
+    with st.expander("What is Treatment Management?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Treatment Management?</strong>
@@ -508,7 +508,7 @@ def batch_operations_page():
     st.write("Process multiple customers at once.")
     
     # Add a descriptive explanation of what this tab does
-    with st.expander("What is Batch Operations?", expanded=True):
+    with st.expander("What is Batch Operations?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Batch Operations?</strong>
