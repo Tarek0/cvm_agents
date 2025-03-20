@@ -143,20 +143,21 @@ def dashboard_page():
     st.write("This control center provides a centralized interface for managing the Customer Value Management system.")
 
     # Add a descriptive explanation of the dashboard
-    st.markdown("""
-    <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-        <strong>About the Dashboard</strong>
-        <p>The Dashboard provides a real-time overview of your CVM system status and key metrics. Here you can:</p>
-        <ul>
-            <li>View the total number of customers in your database</li>
-            <li>See the count of available treatments that can be applied</li>
-            <li>Monitor the number of trigger types available for customer identification</li>
-            <li>Check the operational status of all system components</li>
-            <li>Access quick links to frequently used functions</li>
-        </ul>
-        <p>This dashboard is designed to give you a quick snapshot of system capabilities and health at a glance.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("About the Dashboard", expanded=True):
+        st.markdown("""
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+            <strong>About the Dashboard</strong>
+            <p>The Dashboard provides a real-time overview of your CVM system status and key metrics. Here you can:</p>
+            <ul>
+                <li>View the total number of customers in your database</li>
+                <li>See the count of available treatments that can be applied</li>
+                <li>Monitor the number of trigger types available for customer identification</li>
+                <li>Check the operational status of all system components</li>
+                <li>Access quick links to frequently used functions</li>
+            </ul>
+            <p>This dashboard is designed to give you a quick snapshot of system capabilities and health at a glance.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Display overview cards in columns
     col1, col2, col3 = st.columns(3)
@@ -199,20 +200,21 @@ def process_customer_page():
     st.write("Select a customer to process through the CVM system.")
     
     # Add a descriptive explanation of the customer processing
-    st.markdown("""
-    <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-        <strong>What is Customer Processing?</strong>
-        <p>This feature allows you to process an individual customer through the CVM system for personalized treatment. With Customer Processing, you can:</p>
-        <ul>
-            <li>Select any customer from your database</li>
-            <li>Analyze their customer journey data</li>
-            <li>Have the system intelligently determine the best treatment</li>
-            <li>View detailed processing results including selected treatment justification</li>
-            <li>Get insights into the customer's journey and treatment history</li>
-        </ul>
-        <p>This is ideal for handling individual customer cases, testing treatment selection logic, or examining how the system evaluates specific customer profiles.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("What is Customer Processing?", expanded=True):
+        st.markdown("""
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+            <strong>What is Customer Processing?</strong>
+            <p>This feature allows you to process an individual customer through the CVM system for personalized treatment. With Customer Processing, you can:</p>
+            <ul>
+                <li>Select any customer from your database</li>
+                <li>Analyze their customer journey data</li>
+                <li>Have the system intelligently determine the best treatment</li>
+                <li>View detailed processing results including selected treatment justification</li>
+                <li>Get insights into the customer's journey and treatment history</li>
+            </ul>
+            <p>This is ideal for handling individual customer cases, testing treatment selection logic, or examining how the system evaluates specific customer profiles.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Get all customer IDs
     customer_ids = get_all_customer_ids()
@@ -237,20 +239,21 @@ def trigger_management_page():
     st.write("Identify customers based on specific trigger criteria.")
     
     # Add a descriptive explanation of trigger management
-    st.markdown("""
-    <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-        <strong>What is Trigger Management?</strong>
-        <p>Trigger Management lets you identify customers who match specific criteria or exhibit particular behaviors. You can:</p>
-        <ul>
-            <li>Use predefined triggers like network issues, billing disputes, or churn risk</li>
-            <li>Create custom triggers using natural language descriptions</li>
-            <li>Apply triggers to your entire customer base or a specific subset</li>
-            <li>Export results in various formats (text, JSON, CSV)</li>
-            <li>Instantly process matched customers with appropriate treatments</li>
-        </ul>
-        <p>This feature is essential for proactive customer management, allowing you to identify and address issues before they escalate, target specific customer segments, or launch targeted marketing campaigns.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("What is Trigger Management?", expanded=True):
+        st.markdown("""
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+            <strong>What is Trigger Management?</strong>
+            <p>Trigger Management lets you identify customers who match specific criteria or exhibit particular behaviors. You can:</p>
+            <ul>
+                <li>Use predefined triggers like network issues, billing disputes, or churn risk</li>
+                <li>Create custom triggers using natural language descriptions</li>
+                <li>Apply triggers to your entire customer base or a specific subset</li>
+                <li>Export results in various formats (text, JSON, CSV)</li>
+                <li>Instantly process matched customers with appropriate treatments</li>
+            </ul>
+            <p>This feature is essential for proactive customer management, allowing you to identify and address issues before they escalate, target specific customer segments, or launch targeted marketing campaigns.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Trigger type selection
     trigger_types = ["network_issues", "billing_disputes", "churn_risk", 
@@ -329,20 +332,21 @@ def treatment_management_page():
     st.write("## Treatment Management")
     
     # Add a descriptive explanation of treatment management
-    st.markdown("""
-    <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-        <strong>What is Treatment Management?</strong>
-        <p>Treatment Management provides complete control over the actions your CVM system can take with customers. With this feature, you can:</p>
-        <ul>
-            <li>View all available treatments in the system</li>
-            <li>Add custom treatments with specific parameters and constraints</li>
-            <li>Update existing treatment descriptions and properties</li>
-            <li>Remove custom treatments that are no longer needed</li>
-            <li>Set resource limits and priorities for each treatment</li>
-        </ul>
-        <p>This capability ensures your CVM system has the right set of actions available to address customer needs, launch new initiatives, or support marketing campaigns. All treatments can be configured with resource constraints to prevent overuse.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("What is Treatment Management?", expanded=True):
+        st.markdown("""
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+            <strong>What is Treatment Management?</strong>
+            <p>Treatment Management provides complete control over the actions your CVM system can take with customers. With this feature, you can:</p>
+            <ul>
+                <li>View all available treatments in the system</li>
+                <li>Add custom treatments with specific parameters and constraints</li>
+                <li>Update existing treatment descriptions and properties</li>
+                <li>Remove custom treatments that are no longer needed</li>
+                <li>Set resource limits and priorities for each treatment</li>
+            </ul>
+            <p>This capability ensures your CVM system has the right set of actions available to address customer needs, launch new initiatives, or support marketing campaigns. All treatments can be configured with resource constraints to prevent overuse.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Create tabs for different treatment operations
     tab1, tab2, tab3, tab4 = st.tabs(["List Treatments", "Add Treatment", "Update Treatment", "Remove Treatment"])
@@ -504,20 +508,21 @@ def batch_operations_page():
     st.write("Process multiple customers at once.")
     
     # Add a descriptive explanation of what this tab does
-    st.markdown("""
-    <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-        <strong>What is Batch Operations?</strong>
-        <p>This feature allows you to apply a single treatment to multiple customers simultaneously, saving time and ensuring consistent processing. You can:</p>
-        <ul>
-            <li>Select customers individually from the dropdown</li>
-            <li>Use the "Select All" button to process your entire customer base</li>
-            <li>Enter specific customer IDs manually</li>
-            <li>Choose any available treatment to apply to all selected customers</li>
-            <li>View individual processing results for each customer</li>
-        </ul>
-        <p>This is ideal for running marketing campaigns, applying service improvements, or processing customers from trigger criteria.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.expander("What is Batch Operations?", expanded=True):
+        st.markdown("""
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+            <strong>What is Batch Operations?</strong>
+            <p>This feature allows you to apply a single treatment to multiple customers simultaneously, saving time and ensuring consistent processing. You can:</p>
+            <ul>
+                <li>Select customers individually from the dropdown</li>
+                <li>Use the "Select All" button to process your entire customer base</li>
+                <li>Enter specific customer IDs manually</li>
+                <li>Choose any available treatment to apply to all selected customers</li>
+                <li>View individual processing results for each customer</li>
+            </ul>
+            <p>This is ideal for running marketing campaigns, applying service improvements, or processing customers from trigger criteria.</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Get all customer IDs
     all_customer_ids = get_all_customer_ids()
