@@ -97,6 +97,10 @@ PAGES = {
     "Batch Operations": "batch_operations"
 }
 
+# Initialize session state for navigation if not already set
+if "page" not in st.session_state:
+    st.session_state.page = "dashboard"
+
 # Sidebar navigation
 st.sidebar.title("CVM Control Center")
 # Using a red-themed analytics icon
@@ -117,11 +121,20 @@ def get_all_customer_ids():
         st.error(f"Error loading customer IDs: {str(e)}")
         return []
 
-# Navigation selection
-selected_page = st.sidebar.radio("Navigation", list(PAGES.keys()))
+# Check if we need to change pages based on session state
+page_to_display = st.session_state.page
+# Find the key (page name) that maps to the current page value
+current_page_key = next((key for key, value in PAGES.items() if value == page_to_display), "Dashboard")
+
+# Navigation selection with the current page pre-selected
+selected_page = st.sidebar.radio("Navigation", list(PAGES.keys()), index=list(PAGES.keys()).index(current_page_key))
+
+# Update session state if sidebar selection changes
+if PAGES[selected_page] != st.session_state.page:
+    st.session_state.page = PAGES[selected_page]
 
 # Display page heading
-st.title(f"CVM Control Center - {selected_page}")
+st.title(f"CVM Control Center - {current_page_key}")
 st.markdown('<hr style="border-top: 2px solid #e53935; margin-bottom: 20px;">', unsafe_allow_html=True)
 
 # Dashboard page
@@ -631,14 +644,14 @@ def batch_operations_page():
     else:
         st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
 
-# Display the selected page
-if PAGES[selected_page] == "dashboard":
+# Display the selected page based on session state
+if st.session_state.page == "dashboard":
     dashboard_page()
-elif PAGES[selected_page] == "process_customer":
+elif st.session_state.page == "process_customer":
     process_customer_page()
-elif PAGES[selected_page] == "trigger_management":
+elif st.session_state.page == "trigger_management":
     trigger_management_page()
-elif PAGES[selected_page] == "treatment_management":
+elif st.session_state.page == "treatment_management":
     treatment_management_page()
-elif PAGES[selected_page] == "batch_operations":
+elif st.session_state.page == "batch_operations":
     batch_operations_page() 
