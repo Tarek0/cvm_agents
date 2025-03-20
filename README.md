@@ -1,4 +1,4 @@
-# CVM (Customer Value Management) System for a Telecommunications Company
+# An Agentic CVM System for a Telecommunications Company
 
 This is a proof of concept for an Agentic CVM system for a telecommunications company. The goal of this project is to explore the use of Agentic AI to optimize and completely automate customer marketing decision making.
 
@@ -8,6 +8,7 @@ This is a proof of concept for an Agentic CVM system for a telecommunications co
 - [Multi-Agent Architecture](#multi-agent-architecture)
 - [Usage Examples](#usage-examples)
 - [Configuration](#configuration)
+- [Streamlit UI](#streamlit-ui)
 - [Development](#development)
 - [Testing](#testing)
 - [Debugging](#debugging)
@@ -251,6 +252,40 @@ OPENAI_API_KEY=your_api_key_here
 MODEL_ID=gpt-4o
 LOG_LEVEL=INFO
 ```
+
+## Streamlit UI
+
+The system includes a Streamlit-based web interface that provides an intuitive way to interact with the CVM system functionality.
+
+### Running the UI
+
+To launch the Streamlit UI:
+
+```bash
+# Start the UI on localhost:8501
+poetry run python src/ui/launch_ui.py
+```
+
+Or directly with Streamlit:
+
+```bash
+poetry run streamlit run src/ui/app.py
+```
+
+### UI Features
+
+The Streamlit UI provides the following capabilities:
+
+1. **Dashboard** - Overview of the system status and key metrics
+2. **Customer Processing** - Process individual customers through the CVM system
+3. **Trigger Management** - Identify customers based on specific trigger criteria
+4. **Treatment Management** - Add, update, list and remove treatments
+5. **Batch Operations** - Process multiple customers with a selected treatment
+
+### UI Screenshots
+
+![Dashboard](https://example.com/screenshots/dashboard.png)
+![Treatment Management](https://example.com/screenshots/treatments.png)
 
 ## Development
 
