@@ -483,34 +483,57 @@ def batch_operations_page():
                 st.error("Please select at least one customer to process")
             else:
                 with st.spinner(f"Processing {len(ids_to_process)} customers..."):
-                    # Use process_batch with specific treatment
-                    results = []
-                    for customer_id in ids_to_process:
-                        result = orchestrator.process({
-                            "type": "process_customer_with_treatment",
-                            "customer_id": customer_id,
-                            "treatment_id": selected_treatment_id
-                        })
-                        results.append(result)
+                    # Use process_batch with specific treatment instead of individual calls
+                    result = orchestrator.process({
+                        "type": "process_batch",
+                        "customer_ids": ids_to_process,
+                        "treatment_id": selected_treatment_id
+                    })
                     
-                    # Show summary of results
-                    successful = sum(1 for r in results if r.get("status") == "success")
-                    failed = len(results) - successful
-                    
-                    st.success(f"Batch processing complete: {successful} successful, {failed} failed")
-                    
-                    # Display results in a table
-                    result_data = []
-                    for i, r in enumerate(results):
-                        result_data.append({
-                            "Customer ID": ids_to_process[i],
-                            "Status": r.get("status"),
-                            "Message": r.get("message", ""),
-                            "Treatment": selected_treatment_name
-                        })
-                    
-                    st.write("### Processing Results")
-                    st.table(result_data)
+                    # Check if we got a proper batch result
+                    if result.get("status") == "success" and "results" in result:
+                        results = result.get("results", [])
+                        
+                        # Show summary of results
+                        successful = sum(1 for r in results if r.get("status") == "success")
+                        failed = len(results) - successful
+                        
+                        if failed > 0:
+                            st.warning(f"Batch processing complete: {successful} successful, {failed} failed")
+                        else:
+                            st.success(f"Batch processing complete: All {successful} customers processed successfully")
+                        
+                        # Display results in a table
+                        result_data = []
+                        for r in results:
+                            customer_id = r.get("customer_id", "unknown")
+                            status = r.get("status", "unknown")
+                            # Get appropriate message based on status
+                            message = r.get("message", "")
+                            if status == "error" and "error" in r:
+                                message = r.get("error", "")
+                            elif status == "success" and "result" in r:
+                                message = "Success"
+                            
+                            # Get the actually applied treatment
+                            applied_treatment = r.get("treatment", {}).get("display_name", selected_treatment_name) if r.get("treatment") else selected_treatment_name
+                            
+                            result_data.append({
+                                "Customer ID": customer_id,
+                                "Status": status,
+                                "Message": message,
+                                "Treatment": applied_treatment
+                            })
+                        
+                        st.write("### Processing Results")
+                        st.table(result_data)
+                    else:
+                        # Handle case where batch processing failed entirely
+                        st.error(f"Batch processing failed: {result.get('message', 'Unknown error')}")
+                        if "results" in result:
+                            # Try to show individual results if available
+                            st.write("### Processing Results")
+                            st.json(result.get("results", []))
     else:
         st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
 
