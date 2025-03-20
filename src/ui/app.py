@@ -231,6 +231,8 @@ def trigger_management_page():
             # Add customer IDs
             if use_all_customers:
                 message["use_all_customers"] = True
+                # Also include the actual customer IDs
+                message["customer_ids"] = get_all_customer_ids()
             else:
                 message["customer_ids"] = specific_customers
             
