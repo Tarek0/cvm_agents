@@ -426,28 +426,52 @@ def batch_operations_page():
     st.write("## Batch Operations")
     st.write("Process multiple customers at once.")
     
+    # Add a descriptive explanation of what this tab does
+    st.markdown("""
+    <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+        <strong>What is Batch Operations?</strong>
+        <p>This feature allows you to apply a single treatment to multiple customers simultaneously, saving time and ensuring consistent processing. You can:</p>
+        <ul>
+            <li>Select customers individually from the dropdown</li>
+            <li>Use the "Select All" button to process your entire customer base</li>
+            <li>Enter specific customer IDs manually</li>
+            <li>Choose any available treatment to apply to all selected customers</li>
+            <li>View individual processing results for each customer</li>
+        </ul>
+        <p>This is ideal for running marketing campaigns, applying service improvements, or processing customers from trigger criteria.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Get all customer IDs
     all_customer_ids = get_all_customer_ids()
     
+    # Initialize session state for selected customers if it doesn't exist
+    if "batch_selected_customers" not in st.session_state:
+        st.session_state.batch_selected_customers = []
+    
     # Check if we have pre-selected customers from trigger page
     if hasattr(st.session_state, 'triggered_customers') and st.session_state.triggered_customers:
-        selected_customers = st.multiselect("Select Customers", all_customer_ids, 
-                                          default=st.session_state.triggered_customers)
-        # Clear the session after using it
+        st.session_state.batch_selected_customers = st.session_state.triggered_customers
+        # Clear the triggered customers after using it
         st.session_state.triggered_customers = []
-    else:
-        selected_customers = st.multiselect("Select Customers", all_customer_ids)
+    
+    # Customer selection with session state
+    selected_customers = st.multiselect("Select Customers", all_customer_ids, 
+                                       default=st.session_state.batch_selected_customers)
+    
+    # Update session state when the selection changes
+    st.session_state.batch_selected_customers = selected_customers
     
     # Quick select buttons
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Select All"):
-            selected_customers = all_customer_ids
+            st.session_state.batch_selected_customers = all_customer_ids
             st.rerun()
     
     with col2:
         if st.button("Clear Selection"):
-            selected_customers = []
+            st.session_state.batch_selected_customers = []
             st.rerun()
     
     # Input field for customer IDs as text
@@ -490,8 +514,13 @@ def batch_operations_page():
                         "treatment_id": selected_treatment_id
                     })
                     
-                    # Check if we got a proper batch result
-                    if result.get("status") == "success" and "results" in result:
+                    # Handle response which might be a list or a dictionary
+                    if isinstance(result, list):
+                        # Direct list of results
+                        results = result
+                        st.success(f"Batch processing complete")
+                    elif isinstance(result, dict) and result.get("status") == "success" and "results" in result:
+                        # Dictionary with results key
                         results = result.get("results", [])
                         
                         # Show summary of results
@@ -502,7 +531,15 @@ def batch_operations_page():
                             st.warning(f"Batch processing complete: {successful} successful, {failed} failed")
                         else:
                             st.success(f"Batch processing complete: All {successful} customers processed successfully")
-                        
+                    else:
+                        # Error or unexpected format
+                        st.error(f"Batch processing failed: {result.get('message', 'Unknown error') if isinstance(result, dict) else 'Unexpected result format'}")
+                        st.json(result)  # Show the raw result for debugging
+                        # Skip further processing
+                        return
+                    
+                    # Only proceed if we have results to display
+                    if results:
                         # Display results in a table
                         result_data = []
                         for r in results:
@@ -527,13 +564,6 @@ def batch_operations_page():
                         
                         st.write("### Processing Results")
                         st.table(result_data)
-                    else:
-                        # Handle case where batch processing failed entirely
-                        st.error(f"Batch processing failed: {result.get('message', 'Unknown error')}")
-                        if "results" in result:
-                            # Try to show individual results if available
-                            st.write("### Processing Results")
-                            st.json(result.get("results", []))
     else:
         st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
 
