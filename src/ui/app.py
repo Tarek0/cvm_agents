@@ -18,7 +18,7 @@ from src.utils.config import load_config
 
 # Set page configuration - MUST BE THE FIRST STREAMLIT COMMAND
 st.set_page_config(
-    page_title="CVM Control Center",
+    page_title="CVM Expert",
     page_icon="🔴",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -90,11 +90,10 @@ orchestrator = get_orchestrator()
 
 # Define pages for navigation
 PAGES = {
-    "Dashboard": "dashboard",
-    "Customer Processing": "process_customer",
-    "Trigger Management": "trigger_management",
-    "Treatment Management": "treatment_management",
-    "Batch Operations": "batch_operations"
+    "Home Page": "dashboard",
+    "Agentic NBA": "process_customer",
+    "Gen AI Triggers": "trigger_management",
+    "Treatment Management": "treatment_management"
 }
 
 # Initialize session state for navigation if not already set
@@ -102,7 +101,7 @@ if "page" not in st.session_state:
     st.session_state.page = "dashboard"
 
 # Sidebar navigation
-st.sidebar.title("CVM Control Center")
+st.sidebar.title("CVM Expert: Control Center")
 # Using a red-themed analytics icon
 st.sidebar.image("https://img.icons8.com/color/96/000000/combo-chart--v2.png", width=100)
 
@@ -134,24 +133,24 @@ if PAGES[selected_page] != st.session_state.page:
     st.session_state.page = PAGES[selected_page]
 
 # Display page heading
-st.title(f"CVM Control Center - {current_page_key}")
+st.title(f"CVM Expert")
 st.markdown('<hr style="border-top: 2px solid #e53935; margin-bottom: 20px;">', unsafe_allow_html=True)
 
 # Dashboard page
 def dashboard_page():
-    st.write("## Welcome to the CVM Control Center")
-    st.write("This control center provides a centralized interface for managing the Customer Value Management system.")
+    st.write("## Welcome to the CVM Expert Control Center")
+    st.write("This CVM Expert - control center provides a centralized interface for managing the CVM activities.")
 
     # Add a descriptive explanation of the dashboard
-    with st.expander("About the Dashboard", expanded=False):
+    with st.expander("About the CVM Expert Control Center", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-            <strong>About the Dashboard</strong>
-            <p>The Dashboard provides a real-time overview of your CVM system status and key metrics. Here you can:</p>
+            <strong>About CVM Expert Control Center</strong>
+            <p>The Dashboard provides a overview of your Agentic CVM system and key metrics. Here you can:</p>
             <ul>
                 <li>View the total number of customers in your database</li>
                 <li>See the count of available treatments that can be applied</li>
-                <li>Monitor the number of trigger types available for customer identification</li>
+                <li>Monitor the number of Gen AI trigger types available for customer identification</li>
                 <li>Check the operational status of all system components</li>
                 <li>Access quick links to frequently used functions</li>
             </ul>
@@ -196,54 +195,318 @@ def dashboard_page():
 
 # Customer processing page
 def process_customer_page():
-    st.write("## Process Customer")
-    st.write("Select a customer to process through the CVM system.")
+    st.write("## Agentic NBA")
+    st.write("Process customers through the CVM system for personalized treatment recommendations.")
     
     # Add a descriptive explanation of the customer processing
-    with st.expander("What is Customer Processing?", expanded=False):
+    with st.expander("What is Agentic NBA?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-            <strong>What is Customer Processing?</strong>
-            <p>This feature allows you to process an individual customer through the CVM system for personalized treatment. With Customer Processing, you can:</p>
+            <strong>What is Agentic NBA?</strong>
+            <p>This feature allows you to process customers through the CVM system for personalized treatment recommendations. With Agentic NBA, you can:</p>
             <ul>
-                <li>Select any customer from your database</li>
-                <li>Analyze their customer journey data</li>
-                <li>Have the system intelligently determine the best treatment</li>
-                <li>View detailed processing results including selected treatment justification</li>
-                <li>Get insights into the customer's journey and treatment history</li>
+                <li>Process an individual customer or multiple customers at once</li>
+                <li>Have the system intelligently determine the best treatment for each customer</li>
+                <li>Limit which treatments the system can select from</li>
+                <li>Analyze customer journey data and context</li>
+                <li>View detailed processing results including treatment justification</li>
+                <li>Get insights into each customer's journey and optimal treatment path</li>
             </ul>
-            <p>This is ideal for handling individual customer cases, testing treatment selection logic, or examining how the system evaluates specific customer profiles.</p>
+            <p>The intelligent agent system evaluates each customer individually, respecting their permissions and considering resource constraints to determine the best possible treatment.</p>
         </div>
         """, unsafe_allow_html=True)
     
-    # Get all customer IDs
-    customer_ids = get_all_customer_ids()
+    # Get all available treatments to allow filtering
+    treatment_filter_expander = st.expander("Treatment Selection Options", expanded=False)
     
-    # Customer selection
-    selected_customer = st.selectbox("Select Customer ID", customer_ids)
-    
-    if st.button("Process Customer"):
-        with st.spinner("Processing customer..."):
-            result = orchestrator.process({
-                "type": "process_customer",
-                "customer_id": selected_customer
+    # Get all available treatments
+    with treatment_filter_expander:
+        st.write("### Limit Available Treatments")
+        st.write("Select which treatments the system can choose from. If none are selected, all treatments will be available.")
+        
+        with st.spinner("Loading treatments..."):
+            treatments_result = orchestrator.process({
+                "type": "list_treatments"
             })
             
-            # Display results
-            st.success(f"Customer {selected_customer} processed successfully!")
-            st.json(result)
+            if treatments_result.get("status") == "success":
+                all_treatments = treatments_result.get("treatments", [])
+                
+                # Store treatments by ID for lookup
+                treatments_by_id = {t.get("id"): t for t in all_treatments}
+                
+                # Create options for display with format "Display Name (ID)"
+                treatment_options = [f"{t.get('display_name', 'Unknown')} ({t.get('id')})" for t in all_treatments]
+                
+                # Initialize session state for selected treatments if it doesn't exist
+                if "selected_treatments" not in st.session_state:
+                    st.session_state.selected_treatments = []
+                
+                # Add Select All and Clear All buttons
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("Select All Treatments", key="select_all_treatments"):
+                        st.session_state.selected_treatments = treatment_options
+                        st.rerun()
+                
+                with col2:
+                    if st.button("Clear All Treatments", key="clear_all_treatments"):
+                        st.session_state.selected_treatments = []
+                        st.rerun()
+                
+                # Create filters for common channels/types
+                st.write("### Filter by Treatment Type")
+                
+                # Remove the checkboxes and directly categorize treatments
+                
+                # Group treatments by type
+                sms_options = [option for option in treatment_options if "sms" in option.lower()]
+                email_options = [option for option in treatment_options if "email" in option.lower()]
+                call_options = [option for option in treatment_options if "call" in option.lower()]
+                
+                # All other options
+                filtered_options = sms_options + email_options + call_options
+                other_options = [option for option in treatment_options if option not in filtered_options]
+                
+                # Display treatment categories with select buttons
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    if sms_options:
+                        st.write("#### SMS Treatments")
+                        if st.button("Select All SMS", key="select_all_sms"):
+                            current = set(st.session_state.selected_treatments)
+                            st.session_state.selected_treatments = list(current.union(set(sms_options)))
+                            st.rerun()
+                
+                with col2:
+                    if email_options:
+                        st.write("#### Email Treatments")
+                        if st.button("Select All Email", key="select_all_email"):
+                            current = set(st.session_state.selected_treatments)
+                            st.session_state.selected_treatments = list(current.union(set(email_options)))
+                            st.rerun()
+                
+                with col3:
+                    if call_options:
+                        st.write("#### Call Treatments")
+                        if st.button("Select All Call", key="select_all_call"):
+                            current = set(st.session_state.selected_treatments)
+                            st.session_state.selected_treatments = list(current.union(set(call_options)))
+                            st.rerun()
+                
+                # Other treatments section
+                if other_options:
+                    st.write("#### Other Treatments")
+                    if st.button("Select All Other", key="select_all_other"):
+                        current = set(st.session_state.selected_treatments)
+                        st.session_state.selected_treatments = list(current.union(set(other_options)))
+                        st.rerun()
+                
+                # Show count of selected treatments
+                if st.session_state.selected_treatments:
+                    st.write(f"### Selected Treatments: {len(st.session_state.selected_treatments)}/{len(treatment_options)}")
+                
+                # Let users select which treatments to enable
+                selected_treatment_options = st.multiselect(
+                    "Select Treatments to Include", 
+                    treatment_options,
+                    default=st.session_state.selected_treatments
+                )
+                
+                # Update session state
+                st.session_state.selected_treatments = selected_treatment_options
+                
+                # Extract treatment IDs from the selected options
+                selected_treatment_ids = []
+                for option in selected_treatment_options:
+                    # Extract ID from the format "Display Name (ID)"
+                    treatment_id = option.split("(")[-1].rstrip(")")
+                    selected_treatment_ids.append(treatment_id)
+                
+                # Show a warning if no treatments selected
+                if not selected_treatment_ids:
+                    st.info("No treatments selected. All available treatments will be considered.")
+                else:
+                    # Show selected treatments as a list - don't use an expander here since we're already in one
+                    st.write("### Selected Treatments")
+                    for treatment in selected_treatment_options:
+                        st.write(f"- {treatment}")
+            else:
+                st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
+                selected_treatment_ids = []
+    
+    # Customer Processing Section (combining functionality from both tabs)
+    st.write("## Customer Processing")
+    
+    # Get all customer IDs
+    all_customer_ids = get_all_customer_ids()
+    
+    # Initialize session state for selected customers if it doesn't exist
+    if "batch_selected_customers" not in st.session_state:
+        st.session_state.batch_selected_customers = []
+    
+    # Check if we have pre-selected customers from trigger page
+    if hasattr(st.session_state, 'triggered_customers') and st.session_state.triggered_customers:
+        st.session_state.batch_selected_customers = st.session_state.triggered_customers
+        # Clear the triggered customers after using it
+        st.session_state.triggered_customers = []
+    
+    # Customer selection with session state
+    selected_customers = st.multiselect("Select Customers", all_customer_ids, 
+                                        default=st.session_state.batch_selected_customers)
+    
+    # Update session state when the selection changes
+    st.session_state.batch_selected_customers = selected_customers
+    
+    # Quick select buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Select All", key="select_all_batch"):
+            st.session_state.batch_selected_customers = all_customer_ids
+            st.rerun()
+    
+    with col2:
+        if st.button("Clear Selection", key="clear_all_batch"):
+            st.session_state.batch_selected_customers = []
+            st.rerun()
+    
+    # Input field for customer IDs as text
+    custom_ids = st.text_input("Or Enter Customer IDs (comma-separated)")
+    
+    # Process button
+    if st.button("Process Customers with Agentic NBA", key="process_batch"):
+        # Combine selected IDs and custom IDs
+        ids_to_process = selected_customers
+        
+        if custom_ids:
+            custom_id_list = [cid.strip() for cid in custom_ids.split(",")]
+            ids_to_process.extend(custom_id_list)
+        
+        # Remove duplicates
+        ids_to_process = list(set(ids_to_process))
+        
+        if not ids_to_process:
+            st.error("Please select at least one customer to process")
+        else:
+            with st.spinner(f"Processing {len(ids_to_process)} customers..."):
+                # Process each customer with optimal treatment selection
+                results = []
+                progress_bar = st.progress(0)
+                
+                # Create API request for batch processing
+                api_request = {
+                    "type": "process_batch",
+                    "customer_ids": ids_to_process
+                }
+                
+                # Add treatment filtering if treatments are selected
+                if selected_treatment_ids:
+                    api_request["allowed_treatments"] = selected_treatment_ids
+                
+                # Process all customers in a single batch request
+                results = orchestrator.process(api_request)
+                
+                st.success(f"Batch processing complete: {len(ids_to_process)} customers processed")
+                
+                # Only proceed if we have results to display
+                if results:
+                    # Display results in a table
+                    result_data = []
+                    
+                    # Count different error types
+                    permission_errors = 0
+                    allocation_errors = 0
+                    other_errors = 0
+                    successful = 0
+                    
+                    # Process the list of results returned by the batch API call
+                    for r in results:
+                        customer_id = r.get("customer_id", "unknown")
+                        status = r.get("status", "unknown")
+                        
+                        if status == "success":
+                            successful += 1
+                        
+                        # Get appropriate message based on status
+                        message = r.get("message", "")
+                        explanation = r.get("explanation", "")
+                        
+                        if status == "error":
+                            if "error" in r:
+                                message = r.get("error", "")
+                            elif "permission" in explanation.lower():
+                                message = "Permission Error: " + explanation
+                                permission_errors += 1
+                            elif "allocat" in explanation.lower():
+                                message = "Allocation Error: " + explanation
+                                allocation_errors += 1
+                            else:
+                                message = explanation or message
+                                other_errors += 1
+                        elif status == "success":
+                            if "explanation" in r:
+                                message = r.get("explanation")[:100] + "..." if len(r.get("explanation", "")) > 100 else r.get("explanation", "")
+                            else:
+                                message = "Success"
+                        
+                        # Get the treatment information
+                        if isinstance(r.get("selected_treatment"), dict):
+                            treatment_name = r.get("selected_treatment", {}).get("display_name", "Unknown")
+                        elif isinstance(r.get("selected_treatment"), str):
+                            treatment_name = r.get("selected_treatment", "Unknown")
+                        else:
+                            treatment_name = "Unknown"
+                        
+                        result_data.append({
+                            "Customer ID": customer_id,
+                            "Status": status,
+                            "Treatment": treatment_name,
+                            "Explanation": message
+                        })
+                    
+                    # Show summary statistics
+                    st.write("### Processing Summary")
+                    summary_cols = st.columns(4)
+                    with summary_cols[0]:
+                        st.metric("Successful", successful)
+                    
+                    failed = len(results) - successful
+                    if failed > 0:
+                        with summary_cols[1]:
+                            st.metric("Failed", failed, delta=-failed, delta_color="inverse")
+                        if permission_errors > 0:
+                            with summary_cols[2]:
+                                st.metric("Permission Errors", permission_errors, delta=-permission_errors, delta_color="inverse")
+                        if allocation_errors > 0:
+                            with summary_cols[3]:
+                                st.metric("Allocation Errors", allocation_errors, delta=-allocation_errors, delta_color="inverse")
+                    
+                    # Display the results table
+                    st.write("### Processing Results")
+                    st.dataframe(result_data, use_container_width=True)
+                    
+                    # Offer download of results
+                    import json
+                    result_str = json.dumps(results, indent=2)
+                    st.download_button(
+                        label="Download Results (JSON)",
+                        data=result_str,
+                        file_name="agentic_nba_results.json",
+                        mime="application/json"
+                    )
 
 # Trigger management page
 def trigger_management_page():
-    st.write("## Trigger Management")
+    st.write("## Gen AI Triggers")
     st.write("Identify customers based on specific trigger criteria.")
     
     # Add a descriptive explanation of trigger management
-    with st.expander("What is Trigger Management?", expanded=False):
+    with st.expander("What is an Gen AI Trigger?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Trigger Management?</strong>
-            <p>Trigger Management lets you identify customers who match specific criteria or exhibit particular behaviors. You can:</p>
+            <p>AI Triggers lets you identify customers who match specific criteria or exhibit particular behaviors. You can:</p>
             <ul>
                 <li>Use predefined triggers like network issues, billing disputes, or churn risk</li>
                 <li>Create custom triggers using natural language descriptions</li>
@@ -322,7 +585,7 @@ def trigger_management_page():
                     # Option to process these customers
                     if st.button("Process These Customers"):
                         st.session_state.triggered_customers = [m.get("customer_id") for m in result.get("matches")]
-                        st.session_state.page = "batch_operations"
+                        st.session_state.page = "process_customer"
                         st.rerun()
             else:
                 st.error(f"Error: {result.get('message', 'Unknown error')}")
@@ -502,153 +765,6 @@ def treatment_management_page():
             else:
                 st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
 
-# Batch operations page
-def batch_operations_page():
-    st.write("## Batch Operations")
-    st.write("Process multiple customers at once.")
-    
-    # Add a descriptive explanation of what this tab does
-    with st.expander("What is Batch Operations?", expanded=False):
-        st.markdown("""
-        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-            <strong>What is Batch Operations?</strong>
-            <p>This feature allows you to apply a single treatment to multiple customers simultaneously, saving time and ensuring consistent processing. You can:</p>
-            <ul>
-                <li>Select customers individually from the dropdown</li>
-                <li>Use the "Select All" button to process your entire customer base</li>
-                <li>Enter specific customer IDs manually</li>
-                <li>Choose any available treatment to apply to all selected customers</li>
-                <li>View individual processing results for each customer</li>
-            </ul>
-            <p>This is ideal for running marketing campaigns, applying service improvements, or processing customers from trigger criteria.</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Get all customer IDs
-    all_customer_ids = get_all_customer_ids()
-    
-    # Initialize session state for selected customers if it doesn't exist
-    if "batch_selected_customers" not in st.session_state:
-        st.session_state.batch_selected_customers = []
-    
-    # Check if we have pre-selected customers from trigger page
-    if hasattr(st.session_state, 'triggered_customers') and st.session_state.triggered_customers:
-        st.session_state.batch_selected_customers = st.session_state.triggered_customers
-        # Clear the triggered customers after using it
-        st.session_state.triggered_customers = []
-    
-    # Customer selection with session state
-    selected_customers = st.multiselect("Select Customers", all_customer_ids, 
-                                       default=st.session_state.batch_selected_customers)
-    
-    # Update session state when the selection changes
-    st.session_state.batch_selected_customers = selected_customers
-    
-    # Quick select buttons
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("Select All"):
-            st.session_state.batch_selected_customers = all_customer_ids
-            st.rerun()
-    
-    with col2:
-        if st.button("Clear Selection"):
-            st.session_state.batch_selected_customers = []
-            st.rerun()
-    
-    # Input field for customer IDs as text
-    custom_ids = st.text_input("Or Enter Customer IDs (comma-separated)")
-    
-    # Treatment selection for batch processing
-    treatments_result = orchestrator.process({
-        "type": "list_treatments"
-    })
-    
-    if treatments_result.get("status") == "success":
-        treatments = treatments_result.get("treatments", [])
-        treatment_options = {t.get("display_name", "Unknown"): t.get("id") for t in treatments}
-        
-        selected_treatment_name = st.selectbox("Select Treatment", list(treatment_options.keys()))
-        selected_treatment_id = treatment_options.get(selected_treatment_name)
-        
-        # Process button
-        process_clicked = st.button("Process Batch")
-        
-        if process_clicked:
-            # Combine selected IDs and custom IDs
-            ids_to_process = selected_customers
-            
-            if custom_ids:
-                custom_id_list = [cid.strip() for cid in custom_ids.split(",")]
-                ids_to_process.extend(custom_id_list)
-            
-            # Remove duplicates
-            ids_to_process = list(set(ids_to_process))
-            
-            if not ids_to_process:
-                st.error("Please select at least one customer to process")
-            else:
-                with st.spinner(f"Processing {len(ids_to_process)} customers..."):
-                    # Use process_batch with specific treatment instead of individual calls
-                    result = orchestrator.process({
-                        "type": "process_batch",
-                        "customer_ids": ids_to_process,
-                        "treatment_id": selected_treatment_id
-                    })
-                    
-                    # Handle response which might be a list or a dictionary
-                    if isinstance(result, list):
-                        # Direct list of results
-                        results = result
-                        st.success(f"Batch processing complete")
-                    elif isinstance(result, dict) and result.get("status") == "success" and "results" in result:
-                        # Dictionary with results key
-                        results = result.get("results", [])
-                        
-                        # Show summary of results
-                        successful = sum(1 for r in results if r.get("status") == "success")
-                        failed = len(results) - successful
-                        
-                        if failed > 0:
-                            st.warning(f"Batch processing complete: {successful} successful, {failed} failed")
-                        else:
-                            st.success(f"Batch processing complete: All {successful} customers processed successfully")
-                    else:
-                        # Error or unexpected format
-                        st.error(f"Batch processing failed: {result.get('message', 'Unknown error') if isinstance(result, dict) else 'Unexpected result format'}")
-                        st.json(result)  # Show the raw result for debugging
-                        # Skip further processing
-                        return
-                    
-                    # Only proceed if we have results to display
-                    if results:
-                        # Display results in a table
-                        result_data = []
-                        for r in results:
-                            customer_id = r.get("customer_id", "unknown")
-                            status = r.get("status", "unknown")
-                            # Get appropriate message based on status
-                            message = r.get("message", "")
-                            if status == "error" and "error" in r:
-                                message = r.get("error", "")
-                            elif status == "success" and "result" in r:
-                                message = "Success"
-                            
-                            # Get the actually applied treatment
-                            applied_treatment = r.get("treatment", {}).get("display_name", selected_treatment_name) if r.get("treatment") else selected_treatment_name
-                            
-                            result_data.append({
-                                "Customer ID": customer_id,
-                                "Status": status,
-                                "Message": message,
-                                "Treatment": applied_treatment
-                            })
-                        
-                        st.write("### Processing Results")
-                        st.table(result_data)
-    else:
-        st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
-
 # Display the selected page based on session state
 if st.session_state.page == "dashboard":
     dashboard_page()
@@ -657,6 +773,4 @@ elif st.session_state.page == "process_customer":
 elif st.session_state.page == "trigger_management":
     trigger_management_page()
 elif st.session_state.page == "treatment_management":
-    treatment_management_page()
-elif st.session_state.page == "batch_operations":
-    batch_operations_page() 
+    treatment_management_page() 
