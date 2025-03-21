@@ -43,27 +43,37 @@ try:
                 if "service_sms" in treatments and treatments["service_sms"].get("enabled", True):
                     return "service_sms", "Poor network connectivity detected, recommend service update message."
             
-            # Default to loyalty app if available
-            if "loyalty_app" in treatments and treatments["loyalty_app"].get("enabled", True):
+            # Get all available treatments instead of defaulting to loyalty_app
+            available_treatments = [id for id, details in treatments.items() if details.get("enabled", True)]
+            
+            # Only recommend loyalty_app if it's in the filtered/available treatments list
+            if "loyalty_app" in treatments and treatments["loyalty_app"].get("enabled", True) and "loyalty_app" in available_treatments:
                 return "loyalty_app", "Recommend loyalty app update with personalized offers."
+            
+            # If we have treatments available, use the first one
+            if available_treatments:
+                return available_treatments[0], f"Recommend {available_treatments[0]} based on available treatments."
             
             # Default fallback
             return "ignore", "No specific treatment recommended based on available data."
             
         def find_alternative_recommendation(self, customer_journey, excluded_treatment, treatments, constraints, permissions):
             # Simple implementation that just picks another treatment
+            # Make sure to only consider treatments that are ENABLED (respecting the allowed treatments filter)
             all_enabled = [id for id, t in treatments.items() if t.get("enabled", True) and id != excluded_treatment]
+            
             if not all_enabled:
                 return "ignore", "No alternative treatments available."
                 
-            # Pick treatment with next highest priority
+            # Pick treatment with next highest priority - only from enabled treatments
             sorted_treatments = sorted(
                 [(tid, constraints.get(tid, {}).get("priority", 100)) for tid in all_enabled],
                 key=lambda x: x[1]
             )
             
             if sorted_treatments:
-                return sorted_treatments[0][0], f"Alternative to {excluded_treatment}."
+                # Return the highest priority available treatment
+                return sorted_treatments[0][0], f"Alternative to {excluded_treatment} based on priority ranking."
             
             return "ignore", "No suitable alternative treatments found."
 except ImportError:
@@ -183,20 +193,54 @@ class TreatmentAgent(BaseAgent):
         """
         self.log("INFO", "Recommending treatment based on customer journey")
         
+        # Log available treatments to help with debugging
+        treatment_keys = list(treatments.keys())
+        self.log("INFO", f"Available treatments for recommendation: {treatment_keys}")
+        
         # Check cache if enabled
         if self.cache_enabled:
             cache_key = self._get_cache_key(customer_journey, treatments, constraints)
             if cache_key in self.recommendation_cache:
-                self.log("INFO", "Using cached treatment recommendation")
-                return self.recommendation_cache[cache_key]
+                cached_recommendation = self.recommendation_cache[cache_key]
+                # Only use cache if the selected treatment is still in the available treatments
+                # This prevents using cached recommendations for treatments that have reached their max_per_day
+                if cached_recommendation["selected_treatment"] in treatments:
+                    self.log("INFO", "Using cached treatment recommendation")
+                    return cached_recommendation
+                else:
+                    self.log("INFO", "Cached treatment no longer available, generating new recommendation")
         
         # Generate treatment recommendation using the agent
         selected_treatment, explanation = self.agent.generate_recommendation(
             customer_journey, 
-            treatments, 
+            treatments,  # These are already pre-filtered for availability by the orchestrator
             constraints, 
             permissions
         )
+        
+        # Safety check: ensure the selected treatment is actually in the available treatments
+        if selected_treatment not in treatments and selected_treatment != "ignore":
+            self.log("WARNING", f"Agent recommended treatment '{selected_treatment}' but it's not in available treatments")
+            
+            # Fall back to any available treatment
+            if treatments:
+                # Sort by priority if possible
+                sorted_treatments = []
+                for tid, details in treatments.items():
+                    priority = constraints.get(tid, {}).get("priority", 100) if constraints else 100
+                    sorted_treatments.append((tid, priority))
+                
+                sorted_treatments.sort(key=lambda x: x[1])  # Sort by priority (lower is better)
+                
+                if sorted_treatments:
+                    selected_treatment = sorted_treatments[0][0]
+                    explanation = f"Recommending {selected_treatment} as the highest priority available treatment"
+                else:
+                    selected_treatment = "ignore"
+                    explanation = "No treatments available, recommending no action"
+            else:
+                selected_treatment = "ignore"
+                explanation = "No treatments available, recommending no action"
         
         # Apply permission filters
         permission_explanation = ""
@@ -208,8 +252,29 @@ class TreatmentAgent(BaseAgent):
                 # Check if the customer allows marketing messages in this channel
                 if not self._check_permission(permissions, channel, "marketing"):
                     self.log("INFO", f"Customer doesn't allow {channel} marketing, choosing alternative")
-                    selected_treatment = "loyalty_app"  # Use app instead
-                    permission_explanation = f"\nCustomer doesn't allow {channel} marketing, using loyalty app instead."
+                    
+                    # Get available treatments that are enabled - only considering those passed in
+                    available_ids = list(treatments.keys())
+                    
+                    # Check if loyalty_app is in the available treatments
+                    if "loyalty_app" in available_ids:
+                        selected_treatment = "loyalty_app"  # Use app instead
+                        permission_explanation = f"\nCustomer doesn't allow {channel} marketing, using loyalty app instead."
+                    elif available_ids:
+                        # If loyalty_app is not available, find any other available treatment
+                        # Prefer treatments with higher priority (lower number)
+                        sorted_treatments = []
+                        for tid in available_ids:
+                            priority = constraints.get(tid, {}).get("priority", 100) if constraints else 100
+                            sorted_treatments.append((tid, priority))
+                        
+                        sorted_treatments.sort(key=lambda x: x[1])  # Sort by priority
+                        
+                        selected_treatment = sorted_treatments[0][0]
+                        permission_explanation = f"\nCustomer doesn't allow {channel} marketing, using {selected_treatment} instead."
+                    else:
+                        selected_treatment = "ignore"
+                        permission_explanation = f"\nCustomer doesn't allow {channel} marketing and no alternative treatments are available."
         
         # Final recommendation
         result = {
@@ -239,8 +304,19 @@ class TreatmentAgent(BaseAgent):
         """
         self.log("INFO", f"Finding alternative to {excluded_treatment}")
         
-        # Remove the excluded treatment
-        available_treatments = {k: v for k, v in treatments.items() if k != excluded_treatment}
+        # Only include treatments that were in the original filtered list
+        # (This preserves the filtering done by the orchestrator)
+        available_treatments = {k: v for k, v in treatments.items() if k != excluded_treatment and v.get("enabled", True)}
+        
+        # If there are no available treatments after filtering, return ignore
+        if not available_treatments:
+            return {
+                "selected_treatment": "ignore",
+                "explanation": f"No alternative treatments available after excluding {excluded_treatment}."
+            }
+        
+        # Log the available treatments for debugging
+        self.log("INFO", f"Available alternatives: {list(available_treatments.keys())}")
         
         # Use the agent to find an alternative
         selected_treatment, explanation = self.agent.find_alternative_recommendation(
@@ -250,6 +326,17 @@ class TreatmentAgent(BaseAgent):
             constraints,
             permissions
         )
+        
+        # Double check that the selected alternative is in the available treatments
+        if selected_treatment not in available_treatments and selected_treatment != "ignore":
+            self.log("WARNING", f"Agent recommended alternative '{selected_treatment}' but it's not in available treatments")
+            if available_treatments:
+                # Get the first available treatment as a fallback
+                selected_treatment = next(iter(available_treatments.keys()))
+                explanation = f"Recommending {selected_treatment} as an available alternative to {excluded_treatment}"
+            else:
+                selected_treatment = "ignore"
+                explanation = f"No available alternatives to {excluded_treatment}"
         
         return {
             "selected_treatment": selected_treatment,

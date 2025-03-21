@@ -104,6 +104,11 @@ def setup_argparse() -> argparse.ArgumentParser:
         help="Comma-separated list of customer IDs"
     )
     batch_parser.add_argument(
+        "--treatment",
+        dest="treatment_id",
+        help="Optional treatment ID to apply to all customers"
+    )
+    batch_parser.add_argument(
         "--output", 
         choices=["text", "json"],
         default="text",
@@ -284,10 +289,16 @@ def main() -> None:
     
     elif args.command == "batch":
         customer_ids = [id.strip() for id in args.customer_ids.split(",")]
-        result = orchestrator.process({
+        request = {
             "type": "process_batch",
             "customer_ids": customer_ids
-        })
+        }
+        
+        # Add treatment_id if provided
+        if hasattr(args, 'treatment_id') and args.treatment_id:
+            request["treatment_id"] = args.treatment_id
+            
+        result = orchestrator.process(request)
         
         print(format_batch_results(result, args.output))
     
