@@ -7,6 +7,9 @@ import streamlit as st
 import sys
 import os
 import json
+import logging
+import io
+from datetime import datetime
 from pathlib import Path
 
 # Ensure we can import from the parent directory
@@ -15,6 +18,47 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 # Import orchestrator and necessary components
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.utils.config import load_config
+
+# Set up logging for the Streamlit UI
+class StreamlitLogHandler(logging.Handler):
+    def __init__(self):
+        super().__init__()
+        self.logs = []
+        self.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    
+    def emit(self, record):
+        log_entry = self.formatter.format(record)
+        self.logs.append(log_entry)
+        # Keep only the last 100 log entries to prevent the list from growing too large
+        if len(self.logs) > 100:
+            self.logs = self.logs[-100:]
+
+# Initialize the log handler if it doesn't exist in session state
+if 'log_handler' not in st.session_state:
+    st.session_state.log_handler = StreamlitLogHandler()
+    # Set up the root logger to use our custom handler
+    root_logger = logging.getLogger()
+    root_logger.addHandler(st.session_state.log_handler)
+    # Set the level based on environment or default to INFO
+    log_level = os.environ.get("LOG_LEVEL", "INFO")
+    root_logger.setLevel(getattr(logging, log_level))
+
+# Function to display logs in a collapsible box
+def display_logs(section_title="System Logs"):
+    # Add a horizontal rule to separate logs from content above
+    st.markdown("---")
+    st.write(f"## {section_title}")
+    with st.expander(section_title, expanded=False):
+        if not st.session_state.log_handler.logs:
+            st.info("No logs available yet.")
+        else:
+            # Create a text area with the logs
+            log_text = "\n".join(st.session_state.log_handler.logs)
+            st.text_area("Real-time logs", log_text, height=200)
+            # Add a button to clear logs
+            if st.button("Clear Logs"):
+                st.session_state.log_handler.logs = []
+                st.rerun()
 
 # Set page configuration - MUST BE THE FIRST STREAMLIT COMMAND
 st.set_page_config(
@@ -146,15 +190,7 @@ def dashboard_page():
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>About CVM Expert Control Center</strong>
-            <p>The Dashboard provides a overview of your Agentic CVM system and key metrics. Here you can:</p>
-            <ul>
-                <li>View the total number of customers in your database</li>
-                <li>See the count of available treatments that can be applied</li>
-                <li>Monitor the number of Gen AI trigger types available for customer identification</li>
-                <li>Check the operational status of all system components</li>
-                <li>Access quick links to frequently used functions</li>
-            </ul>
-            <p>This dashboard is designed to give you a quick snapshot of system capabilities and health at a glance.</p>
+            <p>A centralized dashboard providing key metrics and system status for your CVM operations. View customer counts, available treatments, system status, and access frequent actions all in one place.</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -185,13 +221,18 @@ def dashboard_page():
     
     with quick_col1:
         if st.button("View Available Treatments"):
+            logging.info("Navigating to Treatment Management page")
             st.session_state.page = "treatment_management"
             st.rerun()
     
     with quick_col2:
         if st.button("Process a Customer"):
+            logging.info("Navigating to Process Customer page")
             st.session_state.page = "process_customer"
             st.rerun()
+    
+    # Display system logs at the bottom of the page
+    display_logs()
 
 # Customer processing page
 def process_customer_page():
@@ -203,16 +244,7 @@ def process_customer_page():
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Agentic NBA?</strong>
-            <p>This feature allows you to process customers through the CVM system for personalized treatment recommendations. With Agentic NBA, you can:</p>
-            <ul>
-                <li>Process an individual customer or multiple customers at once</li>
-                <li>Have the system intelligently determine the best treatment for each customer</li>
-                <li>Limit which treatments the system can select from</li>
-                <li>Analyze customer journey data and context</li>
-                <li>View detailed processing results including treatment justification</li>
-                <li>Get insights into each customer's journey and optimal treatment path</li>
-            </ul>
-            <p>The intelligent agent system evaluates each customer individually, respecting their permissions and considering resource constraints to determine the best possible treatment.</p>
+            <p>Agentic NBA uses AI to automatically determine and apply the best next-best-action for each customer. Process individuals or batches, filter available treatments, and get detailed justifications for each recommendation.</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -223,13 +255,16 @@ def process_customer_page():
     with treatment_filter_expander:
         st.write("### Limit Available Treatments")
         st.write("Select which treatments the system can choose from. If none are selected, all treatments will be available.")
+        st.info("All treatments are selected by default. Use the buttons below to adjust your selection.")
         
         with st.spinner("Loading treatments..."):
+            logging.info("Loading available treatments")
             treatments_result = orchestrator.process({
                 "type": "list_treatments"
             })
             
             if treatments_result.get("status") == "success":
+                logging.info(f"Successfully loaded {len(treatments_result.get('treatments', []))} treatments")
                 all_treatments = treatments_result.get("treatments", [])
                 
                 # Store treatments by ID for lookup
@@ -240,17 +275,20 @@ def process_customer_page():
                 
                 # Initialize session state for selected treatments if it doesn't exist
                 if "selected_treatments" not in st.session_state:
-                    st.session_state.selected_treatments = []
+                    # Default to all treatments selected
+                    st.session_state.selected_treatments = treatment_options
                 
                 # Add Select All and Clear All buttons
                 col1, col2 = st.columns(2)
                 with col1:
                     if st.button("Select All Treatments", key="select_all_treatments"):
+                        logging.info("Selecting all treatments")
                         st.session_state.selected_treatments = treatment_options
                         st.rerun()
                 
                 with col2:
                     if st.button("Clear All Treatments", key="clear_all_treatments"):
+                        logging.info("Clearing all selected treatments")
                         st.session_state.selected_treatments = []
                         st.rerun()
                 
@@ -294,6 +332,9 @@ def process_customer_page():
                             current = set(st.session_state.selected_treatments)
                             st.session_state.selected_treatments = list(current.union(set(call_options)))
                             st.rerun()
+                
+                # Display count of selected treatments
+                st.write(f"### Selected Treatments: {len(st.session_state.selected_treatments)}/{len(treatment_options)}")
                 
                 # Other treatments section
                 if other_options:
@@ -388,7 +429,9 @@ def process_customer_page():
         
         if not ids_to_process:
             st.error("Please select at least one customer to process")
+            logging.error("No customers selected for processing")
         else:
+            logging.info(f"Starting to process {len(ids_to_process)} customers")
             with st.spinner(f"Processing {len(ids_to_process)} customers..."):
                 # Process each customer with optimal treatment selection
                 results = []
@@ -402,10 +445,13 @@ def process_customer_page():
                 
                 # Add treatment filtering if treatments are selected
                 if selected_treatment_ids:
+                    logging.info(f"Filtering to {len(selected_treatment_ids)} selected treatments")
                     api_request["allowed_treatments"] = selected_treatment_ids
                 
                 # Process all customers in a single batch request
+                logging.info(f"Sending batch processing request: {str(api_request)}")
                 results = orchestrator.process(api_request)
+                logging.info("Batch processing completed")
                 
                 st.success(f"Batch processing complete: {len(ids_to_process)} customers processed")
                 
@@ -460,7 +506,6 @@ def process_customer_page():
                         
                         result_data.append({
                             "Customer ID": customer_id,
-                            "Status": status,
                             "Treatment": treatment_name,
                             "Explanation": message
                         })
@@ -487,8 +532,8 @@ def process_customer_page():
                     st.dataframe(result_data, use_container_width=True)
                     
                     # Offer download of results
-                    import json
-                    result_str = json.dumps(results, indent=2)
+                    import json as json_module
+                    result_str = json_module.dumps(results, indent=2)
                     st.download_button(
                         label="Download Results (JSON)",
                         data=result_str,
@@ -496,33 +541,31 @@ def process_customer_page():
                         mime="application/json"
                     )
 
+    # Display system logs at the bottom of the page
+    display_logs()
+
 # Trigger management page
 def trigger_management_page():
     st.write("## Gen AI Triggers")
     st.write("Identify customers based on specific trigger criteria.")
     
     # Add a descriptive explanation of trigger management
-    with st.expander("What is an Gen AI Trigger?", expanded=False):
+    with st.expander("What is a Gen AI Trigger?", expanded=False):
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
-            <strong>What is Trigger Management?</strong>
-            <p>AI Triggers lets you identify customers who match specific criteria or exhibit particular behaviors. You can:</p>
-            <ul>
-                <li>Use predefined triggers like network issues, billing disputes, or churn risk</li>
-                <li>Create custom triggers using natural language descriptions</li>
-                <li>Apply triggers to your entire customer base or a specific subset</li>
-                <li>Export results in various formats (text, JSON, CSV)</li>
-                <li>Instantly process matched customers with appropriate treatments</li>
-            </ul>
-            <p>This feature is essential for proactive customer management, allowing you to identify and address issues before they escalate, target specific customer segments, or launch targeted marketing campaigns.</p>
+            <strong>What is a Gen AI Trigger?</strong>
+            <p>Identify customers matching specific criteria using AI-powered analysis. Use predefined triggers (network issues, billing disputes, churn risk) or create custom ones with natural language. Export results or immediately process matched customers with appropriate treatments.</p>
         </div>
         """, unsafe_allow_html=True)
+    
+    # Remove logs display from here
     
     # Trigger type selection
     trigger_types = ["network_issues", "billing_disputes", "churn_risk", 
                     "high_value", "roaming_issues", "custom"]
     
     selected_trigger = st.selectbox("Select Trigger Type", trigger_types)
+    logging.debug(f"Selected trigger type: {selected_trigger}")
     
     # For custom triggers, provide a description field
     custom_description = ""
@@ -543,6 +586,10 @@ def trigger_management_page():
     
     # Trigger button
     if st.button("Trigger Customers"):
+        logging.info(f"Starting customer triggering with trigger type: {selected_trigger}")
+        if selected_trigger == "custom":
+            logging.info(f"Custom trigger description: {custom_description}")
+        
         with st.spinner("Identifying customers..."):
             # Build request message
             message = {
@@ -559,16 +606,23 @@ def trigger_management_page():
             if use_all_customers:
                 message["use_all_customers"] = True
                 # Also include the actual customer IDs
-                message["customer_ids"] = get_all_customer_ids()
+                customer_ids = get_all_customer_ids()
+                message["customer_ids"] = customer_ids
+                logging.info(f"Using all {len(customer_ids)} customers")
             else:
                 message["customer_ids"] = specific_customers
+                logging.info(f"Using {len(specific_customers)} selected customers")
             
             # Process the trigger request
+            logging.info(f"Sending trigger request: {str(message)}")
             result = orchestrator.process(message)
+            logging.info("Trigger processing completed")
             
             # Display results
             if result.get("status") == "success":
-                st.success(f"Found {result.get('total_matches', 0)} matching customers")
+                match_count = result.get('total_matches', 0)
+                logging.info(f"Found {match_count} matching customers")
+                st.success(f"Found {match_count} matching customers")
                 
                 # Display matches in a table
                 if result.get("matches"):
@@ -584,11 +638,17 @@ def trigger_management_page():
                     
                     # Option to process these customers
                     if st.button("Process These Customers"):
+                        logging.info(f"Sending {match_count} matched customers to processing page")
                         st.session_state.triggered_customers = [m.get("customer_id") for m in result.get("matches")]
                         st.session_state.page = "process_customer"
                         st.rerun()
             else:
-                st.error(f"Error: {result.get('message', 'Unknown error')}")
+                error_msg = result.get('message', 'Unknown error')
+                logging.error(f"Error during trigger processing: {error_msg}")
+                st.error(f"Error: {error_msg}")
+
+    # Display system logs at the bottom of the page
+    display_logs()
 
 # Treatment management page
 def treatment_management_page():
@@ -599,17 +659,11 @@ def treatment_management_page():
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Treatment Management?</strong>
-            <p>Treatment Management provides complete control over the actions your CVM system can take with customers. With this feature, you can:</p>
-            <ul>
-                <li>View all available treatments in the system</li>
-                <li>Add custom treatments with specific parameters and constraints</li>
-                <li>Update existing treatment descriptions and properties</li>
-                <li>Remove custom treatments that are no longer needed</li>
-                <li>Set resource limits and priorities for each treatment</li>
-            </ul>
-            <p>This capability ensures your CVM system has the right set of actions available to address customer needs, launch new initiatives, or support marketing campaigns. All treatments can be configured with resource constraints to prevent overuse.</p>
+            <p>Control the actions your CVM system can take with customers. View, add, update, or remove treatments, and configure resource limits and priorities. Easily manage your marketing action inventory to meet evolving customer needs.</p>
         </div>
         """, unsafe_allow_html=True)
+    
+    # Remove logs display from here
     
     # Create tabs for different treatment operations
     tab1, tab2, tab3, tab4 = st.tabs(["List Treatments", "Add Treatment", "Update Treatment", "Remove Treatment"])
@@ -622,6 +676,7 @@ def treatment_management_page():
         
         # Get treatments
         with st.spinner("Loading treatments..."):
+            logging.info("Loading treatments" + (" (custom only)" if custom_only else ""))
             treatments_result = orchestrator.process({
                 "type": "list_treatments",
                 "custom_only": custom_only
@@ -629,6 +684,7 @@ def treatment_management_page():
             
             if treatments_result.get("status") == "success":
                 treatments = treatments_result.get("treatments", [])
+                logging.info(f"Successfully loaded {len(treatments)} treatments")
                 
                 # Display treatments in a table
                 if treatments:
@@ -644,8 +700,11 @@ def treatment_management_page():
                     st.table(treatment_data)
                 else:
                     st.info("No treatments found")
+                    logging.info("No treatments found with the current filter")
             else:
-                st.error(f"Error: {treatments_result.get('message', 'Unknown error')}")
+                error_msg = treatments_result.get('message', 'Unknown error')
+                logging.error(f"Error loading treatments: {error_msg}")
+                st.error(f"Error: {error_msg}")
     
     with tab2:
         st.write("### Add New Treatment")
@@ -664,7 +723,9 @@ def treatment_management_page():
         if st.button("Add Treatment"):
             if not treatment_name or not treatment_description:
                 st.error("Treatment name and description are required")
+                logging.error("Attempted to add treatment without name or description")
             else:
+                logging.info(f"Adding new treatment: {treatment_name}")
                 # Create treatment JSON
                 treatment_json = {
                     "display_name": treatment_name,
@@ -677,21 +738,27 @@ def treatment_management_page():
                 }
                 
                 with st.spinner("Adding treatment..."):
+                    logging.info(f"Sending add treatment request: {str(treatment_json)}")
                     result = orchestrator.process({
                         "type": "add_treatment",
                         "treatment_data": treatment_json
                     })
                     
                     if result.get("status") == "success":
-                        st.success(f"Treatment added successfully with ID: {result.get('treatment_id')}")
+                        treatment_id = result.get('treatment_id')
+                        logging.info(f"Treatment added successfully with ID: {treatment_id}")
+                        st.success(f"Treatment added successfully with ID: {treatment_id}")
                     else:
-                        st.error(f"Error: {result.get('message', 'Unknown error')}")
+                        error_msg = result.get('message', 'Unknown error')
+                        logging.error(f"Error adding treatment: {error_msg}")
+                        st.error(f"Error: {error_msg}")
     
     with tab3:
         st.write("### Update Treatment")
         
         # Get all treatment IDs
         with st.spinner("Loading treatments..."):
+            logging.info("Loading treatments for update")
             treatments_result = orchestrator.process({
                 "type": "list_treatments"
             })
@@ -699,6 +766,7 @@ def treatment_management_page():
             if treatments_result.get("status") == "success":
                 treatments = treatments_result.get("treatments", [])
                 treatment_ids = [t.get("id") for t in treatments]
+                logging.info(f"Loaded {len(treatments)} treatments for update selection")
                 
                 # Select treatment to update
                 selected_treatment_id = st.selectbox("Select Treatment", treatment_ids)
@@ -712,6 +780,7 @@ def treatment_management_page():
                 
                 # Update button
                 if st.button("Update Treatment"):
+                    logging.info(f"Updating treatment: {selected_treatment_id}")
                     with st.spinner("Updating treatment..."):
                         result = orchestrator.process({
                             "type": "update_treatment",
@@ -720,17 +789,23 @@ def treatment_management_page():
                         })
                         
                         if result.get("status") == "success":
+                            logging.info(f"Treatment {selected_treatment_id} updated successfully")
                             st.success(f"Treatment {selected_treatment_id} updated successfully!")
                         else:
-                            st.error(f"Error: {result.get('message', 'Unknown error')}")
+                            error_msg = result.get('message', 'Unknown error')
+                            logging.error(f"Error updating treatment: {error_msg}")
+                            st.error(f"Error: {error_msg}")
             else:
-                st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
+                error_msg = treatments_result.get('message', 'Unknown error')
+                logging.error(f"Error loading treatments for update: {error_msg}")
+                st.error(f"Error loading treatments: {error_msg}")
     
     with tab4:
         st.write("### Remove Treatment")
         
         # Get all treatment IDs
         with st.spinner("Loading treatments..."):
+            logging.info("Loading custom treatments for removal")
             treatments_result = orchestrator.process({
                 "type": "list_treatments",
                 "custom_only": True  # Only allow removing custom treatments
@@ -739,6 +814,7 @@ def treatment_management_page():
             if treatments_result.get("status") == "success":
                 treatments = treatments_result.get("treatments", [])
                 treatment_ids = [t.get("id") for t in treatments]
+                logging.info(f"Loaded {len(treatments)} custom treatments for potential removal")
                 
                 if treatment_ids:
                     # Select treatment to remove
@@ -750,6 +826,7 @@ def treatment_management_page():
                     
                     # Remove button
                     if st.button("Remove Treatment") and confirm:
+                        logging.info(f"Removing treatment: {selected_treatment_id}")
                         with st.spinner("Removing treatment..."):
                             result = orchestrator.process({
                                 "type": "remove_treatment",
@@ -757,13 +834,22 @@ def treatment_management_page():
                             })
                             
                             if result.get("status") == "success":
+                                logging.info(f"Treatment {selected_treatment_id} removed successfully")
                                 st.success(f"Treatment {selected_treatment_id} removed successfully!")
                             else:
-                                st.error(f"Error: {result.get('message', 'Unknown error')}")
+                                error_msg = result.get('message', 'Unknown error')
+                                logging.error(f"Error removing treatment: {error_msg}")
+                                st.error(f"Error: {error_msg}")
                 else:
                     st.info("No custom treatments available to remove")
+                    logging.info("No custom treatments available to remove")
             else:
-                st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
+                error_msg = treatments_result.get('message', 'Unknown error')
+                logging.error(f"Error loading treatments for removal: {error_msg}")
+                st.error(f"Error loading treatments: {error_msg}")
+
+    # Display system logs at the bottom of the page
+    display_logs()
 
 # Display the selected page based on session state
 if st.session_state.page == "dashboard":
