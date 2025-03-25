@@ -379,6 +379,11 @@ class OrchestratorAgent(BaseAgent):
                 if needs_alternative:
                     self.log("INFO", f"Finding alternative to {recommended_treatment}")
                     
+                    # Keep the original insights and summary
+                    original_insights = recommendation_response.get("journey_insights", [])
+                    original_summary = recommendation_response.get("customer_journey_summary", "")
+                    original_confidence = recommendation_response.get("confidence", 0.0)
+                    
                     alternative_response = self.treatment_agent.process({
                         "type": "find_alternative",
                         "journey": customer_journey,
@@ -387,6 +392,11 @@ class OrchestratorAgent(BaseAgent):
                         "constraints": constraints,
                         "permissions": permissions
                     })
+                    
+                    # Merge the responses, keeping the original insights and summary
+                    alternative_response["journey_insights"] = original_insights
+                    alternative_response["customer_journey_summary"] = original_summary
+                    alternative_response["confidence"] = original_confidence * 0.9  # Reduce confidence for alternative
                     
                     treatment_result = alternative_response
             
