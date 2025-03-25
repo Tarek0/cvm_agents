@@ -1,5 +1,39 @@
 [
     {
+        "customer_id": "U123",
+        "date": "2024-02-15",
+        "total_data_gb": 18.5,
+        "voice_minutes": 180,
+        "sms_count": 75,
+        "data_by_app": {
+            "streaming_video": 8.2,
+            "streaming_audio": 2.5,
+            "social_media": 3.8,
+            "web_browsing": 2.2,
+            "video_conferencing": 1.8
+        },
+        "peak_usage_hour": 20,
+        "weekend_usage_percent": 35,
+        "roaming_usage_gb": 0
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-01",
+        "total_data_gb": 22.8,
+        "voice_minutes": 210,
+        "sms_count": 95,
+        "data_by_app": {
+            "streaming_video": 9.5,
+            "streaming_audio": 2.8,
+            "social_media": 4.2,
+            "web_browsing": 2.5,
+            "video_conferencing": 3.8
+        },
+        "peak_usage_hour": 19,
+        "weekend_usage_percent": 40,
+        "roaming_usage_gb": 0
+    },
+    {
         "customer_id": "U124",
         "date": "2024-02-28",
         "data_usage_gb": 15.2,
@@ -126,5 +160,39 @@
         "voice_minutes": 180,
         "sms_count": 75,
         "roaming_data_gb": 0.0
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-02",
+        "data_usage_gb": 285.3,
+        "voice_minutes": 1250,
+        "sms_count": 450,
+        "roaming_data_gb": 0.0,
+        "data_by_app": {
+            "video_conferencing": 120.5,
+            "cloud_storage": 85.2,
+            "web_browsing": 45.8,
+            "email": 25.6,
+            "other": 8.2
+        },
+        "peak_usage_hour": 14,
+        "weekend_usage_percent": 15
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-02",
+        "data_usage_gb": 185.3,
+        "voice_minutes": 850,
+        "sms_count": 1250,
+        "roaming_data_gb": 0.0,
+        "data_by_app": {
+            "video_conferencing": 45.5,
+            "educational_apps": 65.2,
+            "web_browsing": 35.8,
+            "social_media": 25.6,
+            "other": 12.2
+        },
+        "peak_usage_hour": 14,
+        "weekend_usage_percent": 45
     }
 ] 

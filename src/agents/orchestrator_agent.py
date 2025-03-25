@@ -238,219 +238,230 @@ class OrchestratorAgent(BaseAgent):
             self.log("ERROR", f"Invalid message format: {type(message)}")
             return {"status": "error", "message": "Invalid message format"}
 
-    def process_customer(self, customer_id, allowed_treatments=None):
+    def process_customer(self, customer_id, treatment_id=None, allowed_treatments=None):
         """
         Process a single customer through the multi-agent workflow.
         
         Args:
             customer_id: ID of the customer to process
+            treatment_id: Specific treatment ID to use (optional)
             allowed_treatments: Optional list of treatment IDs to limit selection to
             
         Returns:
             Processing result
         """
-        self.log("INFO", f"Processing customer {customer_id}")
-        if allowed_treatments:
-            self.log("INFO", f"Limiting treatment selection to: {allowed_treatments}")
-        
-        # Step 1: Get customer data from Data Agent
-        customer_data_response = self.data_agent.process({
-            "type": "get_customer_data",
-            "customer_id": customer_id
-        })
-        
-        if not customer_data_response or "customer_data" not in customer_data_response:
-            self.log("ERROR", f"Failed to get data for customer {customer_id}")
-            return {
-                "customer_id": customer_id,
-                "status": "error",
-                "message": "Failed to retrieve customer data",
-                "timestamp": datetime.now().isoformat()
-            }
-        
-        customer_data = customer_data_response["customer_data"]
-        
-        # Step 2: Build customer journey using Journey Agent
-        journey_response = self.journey_agent.process({
-            "type": "build_journey",
-            "customer_id": customer_id,
-            "customer_data": customer_data
-        })
-        
-        if not journey_response or "journey" not in journey_response:
-            self.log("ERROR", f"Failed to build journey for customer {customer_id}")
-            return {
-                "customer_id": customer_id,
-                "status": "error",
-                "message": "Failed to build customer journey",
-                "timestamp": datetime.now().isoformat()
-            }
-        
-        customer_journey = journey_response["journey"]
-        
-        # Step 3: Get customer permissions
-        permissions = self._get_customer_permissions(customer_id)
-        
-        # Step 4: Get available treatments and constraints
-        all_treatments = self.treatment_manager.get_all_treatments()
-        constraints = self.treatment_manager.get_all_constraints()
-
-        # Filter treatments based on allowed_treatments parameter
-        enabled_treatments = {}
-        if allowed_treatments:
-            # Only include treatments that are in the allowed list and are enabled
-            for treatment_id, treatment in all_treatments.items():
-                if treatment_id in allowed_treatments and treatment.get("enabled", True):
-                    enabled_treatments[treatment_id] = treatment
-        else:
-            # Include all enabled treatments
-            enabled_treatments = {k: v for k, v in all_treatments.items() if v.get("enabled", True)}
-
-        # Step 5: Check availability for each treatment to filter out unavailable ones
-        available_treatments = {}
-        for treatment_id in enabled_treatments:
-            availability_response = self.allocation_agent.process({
-                "type": "check_availability",
-                "treatment_key": treatment_id
-            })
+        try:
+            self.log("INFO", f"Processing customer {customer_id}")
             
-            if availability_response and availability_response.get("status") == "success" and availability_response.get("available", False):
-                available_treatments[treatment_id] = enabled_treatments[treatment_id]
-            else:
-                self.log("INFO", f"Treatment {treatment_id} is unavailable or at capacity for today (max_per_day constraint)")
-
-        # If no treatments are available, use only the ignore treatment
-        if not available_treatments and "ignore" in enabled_treatments:
-            available_treatments["ignore"] = enabled_treatments["ignore"]
-        elif not available_treatments:
-            # If no treatments are available including ignore, return an error
-            self.log("WARNING", f"No available treatments for customer {customer_id}")
-            return {
-                "customer_id": customer_id,
-                "status": "error",
-                "message": "No available treatments (all treatments have reached max_per_day limits)",
-                "timestamp": datetime.now().isoformat()
-            }
-
-        # Step 6: Get treatment recommendation from Treatment Agent
-        treatment_response = self.treatment_agent.process({
-            "type": "recommend_treatment",
-            "journey": customer_journey,
-            "treatments": available_treatments,  # Only pass available treatments
-            "constraints": constraints,
-            "permissions": permissions
-        })
-        
-        if not treatment_response or "selected_treatment" not in treatment_response:
-            self.log("ERROR", f"Failed to get treatment recommendation for customer {customer_id}")
-            return {
-                "customer_id": customer_id,
-                "status": "error",
-                "message": "Failed to determine optimal treatment",
-                "timestamp": datetime.now().isoformat()
-            }
-        
-        selected_treatment = treatment_response["selected_treatment"]
-        explanation = treatment_response.get("explanation", "")
-        
-        # Get the actual treatment details
-        treatments = self.treatment_manager.get_all_treatments()
-        if selected_treatment in treatments:
-            treatment_details = treatments[selected_treatment]
-            
-            # Validate that the customer has permission for this treatment
-            has_permission = self._validate_treatment_permission(
-                customer_id, 
-                selected_treatment, 
-                treatment_details, 
-                permissions
-            )
-            
-            if not has_permission:
-                self.log("WARNING", f"Customer {customer_id} does not have permission for recommended treatment {selected_treatment}")
-                
-                # Try to find an alternative treatment that respects permissions
-                alternative_response = self.treatment_agent.process({
-                    "type": "find_alternative",
-                    "journey": customer_journey,
-                    "excluded_treatment": selected_treatment,
-                    "treatments": available_treatments,  # Use available_treatments instead of enabled_treatments
-                    "constraints": constraints,
-                    "permissions": permissions
-                })
-                
-                if alternative_response and "selected_treatment" in alternative_response:
-                    alternative_treatment = alternative_response["selected_treatment"]
-                    
-                    # Verify the alternative treatment is still available
-                    if alternative_treatment != "ignore":
-                        availability_response = self.allocation_agent.process({
-                            "type": "check_availability",
-                            "treatment_key": alternative_treatment
-                        })
-                        
-                        if (availability_response and 
-                            availability_response.get("status") == "success" and 
-                            availability_response.get("available", False)):
-                            # Alternative treatment is available
-                            selected_treatment = alternative_treatment
-                            explanation = f"Original treatment not permitted due to customer permissions. Alternative: {alternative_response.get('explanation', '')}"
-                        else:
-                            # Alternative treatment is not available
-                            self.log("WARNING", f"Alternative treatment {alternative_treatment} is not available, defaulting to ignore")
-                            selected_treatment = "ignore"
-                            explanation = "No suitable available treatment found respecting customer permissions and availability constraints"
-                    else:
-                        # Alternative is "ignore"
-                        selected_treatment = "ignore"
-                        explanation = f"Original treatment not permitted due to customer permissions. Alternative: {alternative_response.get('explanation', '')}"
-                else:
-                    # If no alternative found, use "ignore" treatment
-                    selected_treatment = "ignore"
-                    explanation = "No suitable treatment found respecting customer permissions"
-        
-        # Step 7: Allocate resources if needed
-        if selected_treatment != "ignore":
-            allocation_response = self.allocation_agent.process({
-                "type": "allocate_resource",
-                "treatment_key": selected_treatment,
+            # 1. Data Collection
+            # Get customer data using the data agent
+            data_response = self.data_agent.process({
+                "type": "get_customer_data",
                 "customer_id": customer_id
             })
             
-            # If allocation failed, try to find an alternative treatment
-            if not allocation_response or allocation_response.get("status") != "success":
-                self.log("WARNING", f"Failed to allocate {selected_treatment} for customer {customer_id}, finding alternative")
+            if "error" in data_response:
+                return {
+                    "customer_id": customer_id,
+                    "status": "error",
+                    "message": data_response["error"]
+                }
                 
-                # Get alternative treatment
-                alternative_response = self.treatment_agent.process({
-                    "type": "find_alternative",
+            customer_data = data_response.get("customer_data", [])
+            
+            # 2. Journey Analysis
+            # Use the journey agent to analyze the customer journey
+            journey_response = self.journey_agent.process({
+                "type": "build_journey",
+                "customer_data": customer_data,
+                "customer_id": customer_id
+            })
+            
+            if "error" in journey_response:
+                return {
+                    "customer_id": customer_id,
+                    "status": "error",
+                    "message": journey_response["error"]
+                }
+                
+            customer_journey = journey_response.get("journey", [])
+            
+            # 3. Get Customer Permissions
+            # Get latest permissions
+            permissions = self._get_customer_permissions(customer_id)
+            
+            # 4. Treatment Selection (Either recommended or specific)
+            if treatment_id:
+                # If a specific treatment was requested, use it (after filtering)
+                available_treatments = self._get_treatments(allowed_treatments)
+                
+                # Ensure the requested treatment is available
+                if treatment_id in available_treatments:
+                    treatment = available_treatments[treatment_id]
+                    if not treatment.get("enabled", True):
+                        return {
+                            "customer_id": customer_id,
+                            "status": "error",
+                            "message": f"Treatment {treatment_id} is disabled"
+                        }
+                        
+                    treatment_result = {
+                        "selected_treatment": treatment_id,
+                        "explanation": f"Treatment {treatment_id} was specifically requested",
+                        "confidence": 1.0,
+                        "timestamp": datetime.now().isoformat()
+                    }
+                else:
+                    return {
+                        "customer_id": customer_id,
+                        "status": "error",
+                        "message": f"Treatment {treatment_id} is not available"
+                    }
+            else:
+                # Use the treatment agent to recommend an optimal treatment
+                available_treatments = self._get_treatments(allowed_treatments)
+                
+                # Get the treatment constraints
+                constraints = self.config.constraints
+                
+                # Find which treatments are available based on capacity
+                available_after_capacity = {}
+                for tid, details in available_treatments.items():
+                    # Check allocation availability
+                    check_response = self.allocation_agent.process({
+                        "type": "check_availability",
+                        "treatment_key": tid
+                    })
+                    
+                    if check_response.get("status") == "success" and check_response.get("available", False):
+                        # Treatment is available
+                        available_after_capacity[tid] = details
+                    else:
+                        # Treatment is unavailable or at capacity
+                        self.log("INFO", f"Treatment {tid} is unavailable or at capacity for today (max_per_day constraint)")
+                    
+                if not available_after_capacity:
+                    return {
+                        "customer_id": customer_id,
+                        "status": "error",
+                        "message": "No treatments available (all at capacity or disabled)"
+                    }
+                    
+                # Get treatment recommendation
+                recommendation_response = self.treatment_agent.process({
+                    "type": "recommend_treatment",
                     "journey": customer_journey,
-                    "excluded_treatment": selected_treatment,
-                    "treatments": available_treatments,
+                    "treatments": available_after_capacity,
                     "constraints": constraints,
                     "permissions": permissions
                 })
                 
-                if alternative_response and "selected_treatment" in alternative_response:
-                    selected_treatment = alternative_response["selected_treatment"]
-                    explanation = f"{explanation}\n\nOriginal treatment unavailable. Alternative: {alternative_response.get('explanation', '')}"
+                # Check if the recommended treatment is permitted based on permissions
+                recommended_treatment = recommendation_response.get("selected_treatment")
+                treatment_result = recommendation_response
+                
+                # Verify treatment permissions
+                needs_alternative = False
+                if recommended_treatment != "ignore":
+                    # Get the treatment's channel and type
+                    channel, msg_type = self._get_treatment_channel_type(recommended_treatment)
                     
-                    # Try to allocate the alternative
-                    if selected_treatment != "ignore":
-                        allocation_response = self.allocation_agent.process({
-                            "type": "allocate_resource",
-                            "treatment_key": selected_treatment,
-                            "customer_id": customer_id
-                        })
-        
-        # Step 8: Return the result
-        return {
-            "customer_id": customer_id,
-            "selected_treatment": selected_treatment,
-            "explanation": explanation,
-            "timestamp": datetime.now().isoformat(),
-            "status": "success"
-        }
+                    # Check if permission is granted
+                    permission_granted = self._check_permission(
+                        customer_id, permissions, channel, msg_type, 
+                        treatment_id=recommended_treatment
+                    )
+                    
+                    if not permission_granted:
+                        needs_alternative = True
+                
+                # Find alternative if needed
+                if needs_alternative:
+                    self.log("INFO", f"Finding alternative to {recommended_treatment}")
+                    
+                    # Keep the original insights and summary
+                    original_insights = recommendation_response.get("journey_insights", [])
+                    original_summary = recommendation_response.get("customer_journey_summary", "")
+                    original_confidence = recommendation_response.get("confidence", 0.0)
+                    
+                    alternative_response = self.treatment_agent.process({
+                        "type": "find_alternative",
+                        "journey": customer_journey,
+                        "excluded_treatment": recommended_treatment,
+                        "treatments": available_after_capacity,
+                        "constraints": constraints,
+                        "permissions": permissions
+                    })
+                    
+                    # Merge the responses, keeping the original insights and summary
+                    alternative_response["journey_insights"] = original_insights
+                    alternative_response["customer_journey_summary"] = original_summary
+                    alternative_response["confidence"] = original_confidence * 0.9  # Reduce confidence for alternative
+                    
+                    treatment_result = alternative_response
+            
+            # 5. Treatment Allocation
+            selected_treatment = treatment_result.get("selected_treatment")
+            
+            # Skip allocation for "ignore" treatment
+            if selected_treatment != "ignore":
+                # Allocate the selected treatment
+                allocation_response = self.allocation_agent.process({
+                    "type": "allocate_resource",
+                    "treatment_key": selected_treatment,
+                    "customer_id": customer_id
+                })
+                
+                if allocation_response.get("status") != "success":
+                    # If allocation fails, try to fall back to "ignore"
+                    return {
+                        "customer_id": customer_id,
+                        "status": "error",
+                        "message": f"Failed to allocate treatment: {allocation_response.get('message', 'Unknown error')}"
+                    }
+                    
+                # Add allocation details to the result
+                treatment_result["allocation"] = {
+                    "timestamp": allocation_response.get("timestamp"),
+                    "remaining": allocation_response.get("remaining"),
+                    "max_per_day": allocation_response.get("max_per_day")
+                }
+            
+            # 6. Prepare result
+            # Create the final result with full details from treatment_result
+            result = {
+                "customer_id": customer_id,
+                "selected_treatment": selected_treatment,
+                "explanation": treatment_result.get("explanation", ""),
+                "timestamp": treatment_result.get("timestamp", datetime.now().isoformat()),
+                "status": "success"
+            }
+            
+            # Include additional explainability fields if available
+            if "journey_insights" in treatment_result:
+                result["journey_insights"] = treatment_result["journey_insights"]
+                
+            if "customer_journey_summary" in treatment_result:
+                result["journey_summary"] = treatment_result["customer_journey_summary"]
+                
+            if "confidence" in treatment_result:
+                result["confidence"] = treatment_result["confidence"]
+                
+            if "alternative_treatments" in treatment_result:
+                result["alternative_treatments"] = treatment_result["alternative_treatments"]
+                
+            if "exclusion_reason" in treatment_result:
+                result["exclusion_reason"] = treatment_result["exclusion_reason"]
+            
+            return result
+                
+        except Exception as e:
+            self.log("ERROR", f"Error processing customer {customer_id}: {str(e)}")
+            return {
+                "customer_id": customer_id,
+                "status": "error",
+                "message": str(e)
+            }
 
     def process_customer_with_treatment(self, customer_id, treatment_id):
         """
@@ -712,3 +723,86 @@ class OrchestratorAgent(BaseAgent):
                 })
 
         return results 
+
+    def _get_treatments(self, allowed_treatments=None):
+        """
+        Get available treatments, filtered by the allowed_treatments parameter if provided.
+        
+        Args:
+            allowed_treatments: Optional list of treatment IDs to limit selection to
+            
+        Returns:
+            Dictionary of available treatments
+        """
+        # Get all treatments from the configuration
+        all_treatments = self.config.treatments
+        
+        # Filter by allowed_treatments if provided
+        if allowed_treatments:
+            # Only include treatments that are in the allowed list and are enabled
+            filtered_treatments = {
+                tid: treatment for tid, treatment in all_treatments.items()
+                if tid in allowed_treatments and treatment.get("enabled", True)
+            }
+            return filtered_treatments
+        else:
+            # Include all enabled treatments
+            return {
+                tid: treatment for tid, treatment in all_treatments.items()
+                if treatment.get("enabled", True)
+            } 
+
+    def _get_treatment_channel_type(self, treatment_id):
+        """
+        Determine the channel and message type of a treatment.
+        
+        Args:
+            treatment_id: Treatment ID
+            
+        Returns:
+            Tuple of (channel, message_type)
+        """
+        # Map treatments to their channels and types
+        treatment_mapping = {
+            "call_back": ("call", "marketing"),
+            "retention_email": ("email", "marketing"),
+            "retention_sms": ("sms", "marketing"),
+            "service_sms": ("sms", "service"),
+            "loyalty_app": ("app", "marketing"),
+            "ignore": (None, None)
+        }
+        
+        # Look up the treatment or default to None, None
+        return treatment_mapping.get(treatment_id, (None, None))
+        
+    def _check_permission(self, customer_id, permissions, channel, msg_type, treatment_id=None):
+        """
+        Check if a customer has granted permission for a certain type of communication.
+        
+        Args:
+            customer_id: Customer ID
+            permissions: Permissions dictionary
+            channel: Communication channel (email, sms, call)
+            msg_type: Message type (marketing, service)
+            treatment_id: Optional treatment ID for logging
+            
+        Returns:
+            Boolean indicating if permission is granted
+        """
+        if not permissions or not channel or not msg_type:
+            return True  # Default to allowing if no permission data
+            
+        # Check if the channel permission exists
+        if channel in permissions:
+            # Check if the specific message type permission exists
+            if msg_type in permissions[channel]:
+                # Check if permission is granted (Y) or denied (N)
+                has_permission = permissions[channel][msg_type] == "Y"
+                
+                if not has_permission:
+                    self.log("WARNING", f"Customer {customer_id} does not have permission for recommended treatment {treatment_id}")
+                
+                return has_permission
+                
+        # Default to allowing if permission isn't specified
+        return True 

@@ -1,5 +1,29 @@
 [
     {
+        "customer_id": "U123",
+        "date": "2024-02-25",
+        "type": "call",
+        "summary": "Customer called to inquire about upgrading their current plan to include more data. They mentioned frequent streaming and video conferencing for work and expressed interest in unlimited data options.",
+        "sentiment": "neutral",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-02",
+        "type": "call",
+        "summary": "Customer called requesting information about the premium family plan offerings. They have 3 family members and want to consolidate their accounts to save money. They also inquired about international roaming for an upcoming trip to Canada.",
+        "sentiment": "positive",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-05",
+        "type": "call",
+        "summary": "Customer called to report intermittent connectivity issues in their home office area. They mentioned that the signal drops during important work calls. A troubleshooting session was conducted and they were advised about potential router placement improvements.",
+        "sentiment": "neutral",
+        "duration_minutes": 18
+    },
+    {
         "customer_id": "U124",
         "date": "2024-02-28",
         "type": "call",
@@ -150,5 +174,53 @@
         "summary": "Follow-up call where customer inquired about the status of pet-focused devices in development. They mentioned their dog Scooby has separation anxiety and they're looking for ways to stay connected with him while at work. Customer expressed willingness to join a pilot program for any pet communication products being developed.",
         "sentiment": "neutral",
         "duration_minutes": 12
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-02-28",
+        "type": "call",
+        "summary": "Customer called to discuss enterprise-level data plans for their growing tech startup. They have 25 employees and need reliable connectivity for remote work and video conferencing. They're particularly interested in our business fiber options and dedicated support lines.",
+        "sentiment": "positive",
+        "duration_minutes": 25
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-02",
+        "type": "call",
+        "summary": "Follow-up call about enterprise plan options. Customer requested detailed information about our business-grade fiber installation process and timeline. They mentioned having a tight deadline for their office expansion next month.",
+        "sentiment": "neutral",
+        "duration_minutes": 20
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-05",
+        "type": "call",
+        "summary": "Customer called to discuss adding 10 more lines to their enterprise plan. They're opening a new development office and need reliable connectivity for their engineering team. They also inquired about our business continuity features.",
+        "sentiment": "positive",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-02-28",
+        "type": "call",
+        "summary": "Customer called to inquire about family plan options for their household of 6. They have 4 children who need data for online schooling and two parents working from home. They're particularly interested in parental controls and data sharing features.",
+        "sentiment": "neutral",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-02",
+        "type": "call",
+        "summary": "Customer called to discuss setting up parental controls for their children's lines. They want to restrict certain apps during school hours and set data usage limits. They also inquired about educational content filtering.",
+        "sentiment": "positive",
+        "duration_minutes": 12
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-05",
+        "type": "call",
+        "summary": "Customer reported that one of their children's lines is experiencing slow data speeds during online classes. They requested information about our education priority data feature and inquired about upgrading their plan.",
+        "sentiment": "neutral",
+        "duration_minutes": 10
     }
 ] 

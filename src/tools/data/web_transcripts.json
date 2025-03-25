@@ -1,5 +1,29 @@
 [
     {
+        "customer_id": "U123",
+        "date": "2024-02-27",
+        "type": "web_chat",
+        "summary": "Customer initiated web chat to inquire about upgrading their current data plan. They asked about promotional offers and how to view their current usage patterns to determine the best plan for their needs.",
+        "sentiment": "neutral",
+        "resolution": "Provided information about available data plans and directed them to the account usage dashboard."
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-03",
+        "type": "web_chat",
+        "summary": "Customer asked about family plan options and how to add their spouse and teenage child to their account. They were particularly interested in data sharing features and parental controls for the teen's line.",
+        "sentiment": "positive",
+        "resolution": "Explained family plan features, data sharing options, and parental control settings. Customer indicated they would discuss with family and decide by end of week."
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-06",
+        "type": "web_chat",
+        "summary": "Customer reported connectivity issues in their home office and requested troubleshooting assistance. They mentioned trying router relocation as previously suggested but still experiencing intermittent signal drops.",
+        "sentiment": "negative",
+        "resolution": "Provided advanced troubleshooting steps and scheduled a technician visit for March 10th to assess home network environment."
+    },
+    {
         "customer_id": "U124",
         "date": "2024-02-15",
         "channel": "web_chat",
@@ -174,5 +198,53 @@
         "summary": "Customer browsed the innovation section of the website and asked if there were any upcoming products for pet owners. They shared that their dog Scooby gets anxious when left alone and they're seeking technology solutions to interact with him remotely. Customer expressed interest in being notified when any pet-related products become available.",
         "sentiment": "neutral",
         "duration_minutes": 9
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-02-27",
+        "channel": "web_chat",
+        "summary": "Customer initiated chat to request information about enterprise data plans and fiber installation options. They provided details about their tech startup's growth and need for reliable connectivity.",
+        "sentiment": "neutral",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-01",
+        "channel": "web_chat",
+        "summary": "Customer requested detailed specifications for our business fiber packages and inquired about installation timelines. They mentioned their upcoming office expansion and need for reliable service.",
+        "sentiment": "neutral",
+        "duration_minutes": 20
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-04",
+        "channel": "web_chat",
+        "summary": "Customer asked about adding multiple lines to their enterprise plan and requested information about our business continuity features. They expressed interest in our dedicated support options.",
+        "sentiment": "positive",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-02-27",
+        "channel": "web_chat",
+        "summary": "Customer initiated chat to explore family plan options. They explained their household needs including online schooling and work-from-home requirements. They asked about data sharing and parental control features.",
+        "sentiment": "neutral",
+        "duration_minutes": 18
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-01",
+        "channel": "web_chat",
+        "summary": "Customer requested help setting up parental controls for their children's lines. They wanted to understand how to restrict app access during school hours and set up content filtering for educational purposes.",
+        "sentiment": "positive",
+        "duration_minutes": 15
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-04",
+        "channel": "web_chat",
+        "summary": "Customer reported slow data speeds affecting their child's online classes. They inquired about our education priority data feature and asked for information about plan upgrades that might help with their situation.",
+        "sentiment": "neutral",
+        "duration_minutes": 12
     }
 ] 

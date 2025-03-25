@@ -1,5 +1,13 @@
 [
     {
+        "customer_id": "U123",
+        "date": "2024-03-04",
+        "churn_probability": 0.45,
+        "risk_factors": ["service_quality", "network_issues", "price_sensitivity"],
+        "customer_lifetime_months": 28,
+        "recent_satisfaction_score": 3
+    },
+    {
         "customer_id": "U124",
         "date": "2024-03-03",
         "churn_probability": 0.75,
@@ -62,5 +70,21 @@
         "risk_factors": ["limited_products", "interest_in_innovation"],
         "customer_lifetime_months": 24,
         "recent_satisfaction_score": 4
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-03",
+        "churn_probability": 0.15,
+        "risk_factors": ["new_customer", "high_value", "business_critical"],
+        "customer_lifetime_months": 1,
+        "recent_satisfaction_score": 4
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-03",
+        "churn_probability": 0.35,
+        "risk_factors": ["service_quality", "price_sensitivity", "family_needs"],
+        "customer_lifetime_months": 2,
+        "recent_satisfaction_score": 3
     }
 ] 

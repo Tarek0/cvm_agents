@@ -11,6 +11,7 @@ import logging
 import io
 from datetime import datetime
 from pathlib import Path
+import pandas as pd
 
 # Ensure we can import from the parent directory
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -116,7 +117,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Initialize the orchestrator agent with proper config
-@st.cache_resource
+@st.cache_resource(ttl=300)  # Cache for 5 minutes
 def get_orchestrator():
     """Return a cached instance of the OrchestratorAgent"""
     config = load_config()
@@ -127,7 +128,14 @@ def get_orchestrator():
     config.settings["max_retries"] = 3
     config.settings["timeout"] = 30
     
-    return OrchestratorAgent(config)
+    # Create a new orchestrator instance
+    orchestrator = OrchestratorAgent(config)
+    
+    # Log the configuration for debugging
+    logging.info(f"Initialized orchestrator with model_id: {config.settings['model_id']}")
+    logging.info(f"Cache enabled: {config.settings['enable_cache']}")
+    
+    return orchestrator
 
 # Load the orchestrator agent
 orchestrator = get_orchestrator()
@@ -135,8 +143,9 @@ orchestrator = get_orchestrator()
 # Define pages for navigation
 PAGES = {
     "Home Page": "dashboard",
+    "Explainer": "explainer",
+    "Triggers": "trigger_management",
     "Agentic NBA": "process_customer",
-    "Gen AI Triggers": "trigger_management",
     "Treatment Management": "treatment_management"
 }
 
@@ -205,8 +214,10 @@ def dashboard_page():
         st.metric(label="Available Treatments", value=treatments_count)
     
     with col3:
-        # Just count the predefined triggers plus "custom"
-        st.metric(label="Available Triggers", value=6)
+        # Define available trigger types
+        trigger_types = ["network_issues", "billing_disputes", "churn_risk", 
+                        "high_value", "roaming_issues", "custom"]
+        st.metric(label="Available Triggers", value=len(trigger_types))
     
     # Display recent activity or system status
     st.write("## System Status")
@@ -244,140 +255,11 @@ def process_customer_page():
         st.markdown("""
         <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
             <strong>What is Agentic NBA?</strong>
-            <p>Agentic NBA uses AI to automatically determine and apply the best next-best-action for each customer. Process individuals or batches, filter available treatments, and get detailed justifications for each recommendation.</p>
+            <p>Agentic NBA uses AI to automatically determine and apply the best next-best-action for each customer. Process individuals or batches and get detailed justifications for each recommendation.</p>
         </div>
         """, unsafe_allow_html=True)
     
-    # Get all available treatments to allow filtering
-    treatment_filter_expander = st.expander("Treatment Selection Options", expanded=False)
-    
-    # Get all available treatments
-    with treatment_filter_expander:
-        st.write("### Limit Available Treatments")
-        st.write("Select which treatments the system can choose from. If none are selected, all treatments will be available.")
-        st.info("All treatments are selected by default. Use the buttons below to adjust your selection.")
-        
-        with st.spinner("Loading treatments..."):
-            logging.info("Loading available treatments")
-            treatments_result = orchestrator.process({
-                "type": "list_treatments"
-            })
-            
-            if treatments_result.get("status") == "success":
-                logging.info(f"Successfully loaded {len(treatments_result.get('treatments', []))} treatments")
-                all_treatments = treatments_result.get("treatments", [])
-                
-                # Store treatments by ID for lookup
-                treatments_by_id = {t.get("id"): t for t in all_treatments}
-                
-                # Create options for display with format "Display Name (ID)"
-                treatment_options = [f"{t.get('display_name', 'Unknown')} ({t.get('id')})" for t in all_treatments]
-                
-                # Initialize session state for selected treatments if it doesn't exist
-                if "selected_treatments" not in st.session_state:
-                    # Default to all treatments selected
-                    st.session_state.selected_treatments = treatment_options
-                
-                # Add Select All and Clear All buttons
-                col1, col2 = st.columns(2)
-                with col1:
-                    if st.button("Select All Treatments", key="select_all_treatments"):
-                        logging.info("Selecting all treatments")
-                        st.session_state.selected_treatments = treatment_options
-                        st.rerun()
-                
-                with col2:
-                    if st.button("Clear All Treatments", key="clear_all_treatments"):
-                        logging.info("Clearing all selected treatments")
-                        st.session_state.selected_treatments = []
-                        st.rerun()
-                
-                # Create filters for common channels/types
-                st.write("### Filter by Treatment Type")
-                
-                # Remove the checkboxes and directly categorize treatments
-                
-                # Group treatments by type
-                sms_options = [option for option in treatment_options if "sms" in option.lower()]
-                email_options = [option for option in treatment_options if "email" in option.lower()]
-                call_options = [option for option in treatment_options if "call" in option.lower()]
-                
-                # All other options
-                filtered_options = sms_options + email_options + call_options
-                other_options = [option for option in treatment_options if option not in filtered_options]
-                
-                # Display treatment categories with select buttons
-                col1, col2, col3 = st.columns(3)
-                
-                with col1:
-                    if sms_options:
-                        st.write("#### SMS Treatments")
-                        if st.button("Select All SMS", key="select_all_sms"):
-                            current = set(st.session_state.selected_treatments)
-                            st.session_state.selected_treatments = list(current.union(set(sms_options)))
-                            st.rerun()
-                
-                with col2:
-                    if email_options:
-                        st.write("#### Email Treatments")
-                        if st.button("Select All Email", key="select_all_email"):
-                            current = set(st.session_state.selected_treatments)
-                            st.session_state.selected_treatments = list(current.union(set(email_options)))
-                            st.rerun()
-                
-                with col3:
-                    if call_options:
-                        st.write("#### Call Treatments")
-                        if st.button("Select All Call", key="select_all_call"):
-                            current = set(st.session_state.selected_treatments)
-                            st.session_state.selected_treatments = list(current.union(set(call_options)))
-                            st.rerun()
-                
-                # Display count of selected treatments
-                st.write(f"### Selected Treatments: {len(st.session_state.selected_treatments)}/{len(treatment_options)}")
-                
-                # Other treatments section
-                if other_options:
-                    st.write("#### Other Treatments")
-                    if st.button("Select All Other", key="select_all_other"):
-                        current = set(st.session_state.selected_treatments)
-                        st.session_state.selected_treatments = list(current.union(set(other_options)))
-                        st.rerun()
-                
-                # Show count of selected treatments
-                if st.session_state.selected_treatments:
-                    st.write(f"### Selected Treatments: {len(st.session_state.selected_treatments)}/{len(treatment_options)}")
-                
-                # Let users select which treatments to enable
-                selected_treatment_options = st.multiselect(
-                    "Select Treatments to Include", 
-                    treatment_options,
-                    default=st.session_state.selected_treatments
-                )
-                
-                # Update session state
-                st.session_state.selected_treatments = selected_treatment_options
-                
-                # Extract treatment IDs from the selected options
-                selected_treatment_ids = []
-                for option in selected_treatment_options:
-                    # Extract ID from the format "Display Name (ID)"
-                    treatment_id = option.split("(")[-1].rstrip(")")
-                    selected_treatment_ids.append(treatment_id)
-                
-                # Show a warning if no treatments selected
-                if not selected_treatment_ids:
-                    st.info("No treatments selected. All available treatments will be considered.")
-                else:
-                    # Show selected treatments as a list - don't use an expander here since we're already in one
-                    st.write("### Selected Treatments")
-                    for treatment in selected_treatment_options:
-                        st.write(f"- {treatment}")
-            else:
-                st.error(f"Error loading treatments: {treatments_result.get('message', 'Unknown error')}")
-                selected_treatment_ids = []
-    
-    # Customer Processing Section (combining functionality from both tabs)
+    # Customer Processing Section
     st.write("## Customer Processing")
     
     # Get all customer IDs
@@ -412,17 +294,10 @@ def process_customer_page():
             st.session_state.batch_selected_customers = []
             st.rerun()
     
-    # Input field for customer IDs as text
-    custom_ids = st.text_input("Or Enter Customer IDs (comma-separated)")
-    
     # Process button
     if st.button("Process Customers with Agentic NBA", key="process_batch"):
         # Combine selected IDs and custom IDs
         ids_to_process = selected_customers
-        
-        if custom_ids:
-            custom_id_list = [cid.strip() for cid in custom_ids.split(",")]
-            ids_to_process.extend(custom_id_list)
         
         # Remove duplicates
         ids_to_process = list(set(ids_to_process))
@@ -433,20 +308,11 @@ def process_customer_page():
         else:
             logging.info(f"Starting to process {len(ids_to_process)} customers")
             with st.spinner(f"Processing {len(ids_to_process)} customers..."):
-                # Process each customer with optimal treatment selection
-                results = []
-                progress_bar = st.progress(0)
-                
-                # Create API request for batch processing
+                # Create API request for batch processing - exactly matching CLI behavior
                 api_request = {
                     "type": "process_batch",
                     "customer_ids": ids_to_process
                 }
-                
-                # Add treatment filtering if treatments are selected
-                if selected_treatment_ids:
-                    logging.info(f"Filtering to {len(selected_treatment_ids)} selected treatments")
-                    api_request["allowed_treatments"] = selected_treatment_ids
                 
                 # Process all customers in a single batch request
                 logging.info(f"Sending batch processing request: {str(api_request)}")
@@ -504,10 +370,18 @@ def process_customer_page():
                         else:
                             treatment_name = "Unknown"
                         
+                        # Add journey insights if available
+                        journey_insights = r.get("journey_insights", [])
+                        journey_summary = r.get("journey_summary", "")
+                        confidence = r.get("confidence", 0.0)
+                        
                         result_data.append({
                             "Customer ID": customer_id,
                             "Treatment": treatment_name,
-                            "Explanation": message
+                            "Explanation": message,
+                            "Journey Insights": ", ".join(journey_insights) if journey_insights else "None",
+                            "Journey Summary": journey_summary,
+                            "Confidence": f"{confidence:.2%}"
                         })
                     
                     # Show summary statistics
@@ -529,7 +403,22 @@ def process_customer_page():
                     
                     # Display the results table
                     st.write("### Processing Results")
-                    st.dataframe(result_data, use_container_width=True)
+                    # Convert the result_data to a pandas DataFrame for better display
+                    df = pd.DataFrame(result_data)
+                    
+                    # Reorder columns to put most important information first
+                    column_order = [
+                        "Customer ID", 
+                        "Treatment", 
+                        "Confidence",
+                        "Journey Insights",
+                        "Journey Summary",
+                        "Explanation"
+                    ]
+                    df = df[column_order]
+                    
+                    # Display the DataFrame with all columns
+                    st.dataframe(df, use_container_width=True)
                     
                     # Offer download of results
                     import json as json_module
@@ -558,9 +447,7 @@ def trigger_management_page():
         </div>
         """, unsafe_allow_html=True)
     
-    # Remove logs display from here
-    
-    # Trigger type selection
+    # Define available trigger types
     trigger_types = ["network_issues", "billing_disputes", "churn_risk", 
                     "high_value", "roaming_issues", "custom"]
     
@@ -851,7 +738,24 @@ def treatment_management_page():
     # Display system logs at the bottom of the page
     display_logs()
 
-# Display the selected page based on session state
+# Explainer page
+def explainer_page():
+    st.write("## CVM System Explainer")
+    st.write("Learn about how the CVM system works and its key components.")
+    
+    # Add a descriptive explanation of the explainer
+    with st.expander("About the CVM System", expanded=False):
+        st.markdown("""
+        <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #e53935;">
+            <strong>Understanding the CVM System</strong>
+            <p>This section provides detailed explanations of how the CVM system works, its components, and how they interact to deliver personalized customer experiences.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Placeholder content
+    st.info("This section is under development. More detailed explanations will be added soon.")
+
+# Main page routing
 if st.session_state.page == "dashboard":
     dashboard_page()
 elif st.session_state.page == "process_customer":
@@ -859,4 +763,6 @@ elif st.session_state.page == "process_customer":
 elif st.session_state.page == "trigger_management":
     trigger_management_page()
 elif st.session_state.page == "treatment_management":
-    treatment_management_page() 
+    treatment_management_page()
+elif st.session_state.page == "explainer":
+    explainer_page() 
