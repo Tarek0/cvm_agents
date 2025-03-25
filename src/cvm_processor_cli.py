@@ -12,6 +12,7 @@ from typing import List
 # Import the multi-agent orchestrator
 from src.agents.orchestrator_agent import OrchestratorAgent
 from src.utils.config import load_config
+from src.tools.api_v2 import get_all_customer_ids
 
 # Configure logging
 logging.basicConfig(
@@ -30,6 +31,7 @@ def main() -> None:
     """
     parser = argparse.ArgumentParser(description="Process customer journey data using multi-agent architecture.")
     parser.add_argument("--customer_ids", help="Comma separated list of Customer IDs", default="U123")
+    parser.add_argument("--all_customers", help="Process all available customers", action="store_true")
     parser.add_argument("--output_file", help="Output JSON file", default="multi_agent_results.json")
     parser.add_argument("--log_level", help="Logging level", default="INFO", 
                        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"])
@@ -39,8 +41,12 @@ def main() -> None:
     # Set logging level from command line argument
     logging.getLogger().setLevel(args.log_level)
 
-    # Parse customer IDs
-    customer_ids = [cid.strip() for cid in args.customer_ids.split(",")]
+    # Get customer IDs based on arguments
+    if args.all_customers:
+        customer_ids = get_all_customer_ids()
+        logger.info(f"Found {len(customer_ids)} customers to process")
+    else:
+        customer_ids = [cid.strip() for cid in args.customer_ids.split(",")]
     
     try:
         logger.info(f"Starting multi-agent CVM processing for {len(customer_ids)} customers")

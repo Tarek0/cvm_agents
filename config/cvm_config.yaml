@@ -2,39 +2,87 @@
 
 # Treatment definitions
 treatments:
-  call_back:
-    description: "Assign the customer to the super saves team for call back to try to resolve their problem. This team has more power to offer better discounts"
-    display_name: "Call Back"
+  service_call_back:
+    description: "Assign the customer to the service team for call back to resolve technical issues or service-related problems"
+    display_name: "Service Call Back"
     enabled: true
+    permission_type: "service_update"
+
+  marketing_call_back:
+    description: "Assign the customer to the super saves team for call back to try to resolve their problem. This team has more power to offer better discounts"
+    display_name: "Marketing Call Back"
+    enabled: true
+    permission_type: "marketing"
 
   retention_email:
     description: "Email the customer with a general retention offer"
     display_name: "Retention Email"
     enabled: true
+    permission_type: "marketing"
 
   retention_sms:
     description: "Text the customer with a general retention offer"
     display_name: "Retention SMS"
     enabled: true
+    permission_type: "marketing"
 
   service_sms:
     description: "Text the customer with a general service message letting them know the network in the area is about to be upgraded"
     display_name: "Service SMS"
     enabled: true
+    permission_type: "service_update"
 
   loyalty_app:
     description: "Update the offers with best available offers in the loyalty app"
     display_name: "Loyalty App"
     enabled: true
+    permission_type: "marketing"
+
+  early_upgrade:
+    description: "Offer an early upgrade to a newer device with special terms"
+    display_name: "Early Upgrade"
+    enabled: true
+    permission_type: "billing"
+
+  family_plan:
+    description: "Offer a family plan with additional lines at a discounted rate"
+    display_name: "Family Plan"
+    enabled: true
+    permission_type: "billing"
+
+  data_boost:
+    description: "Provide a temporary data boost to customers experiencing high data usage"
+    display_name: "Data Boost"
+    enabled: true
+    permission_type: "service_update"
+
+  loyalty_points:
+    description: "Award bonus loyalty points for staying with the service"
+    display_name: "Loyalty Points"
+    enabled: true
+    permission_type: "marketing"
+
+  personalized_offer:
+    description: "Generate a personalized offer based on customer's usage patterns and preferences"
+    display_name: "Personalized Offer"
+    enabled: true
+    permission_type: "marketing"
 
   ignore:
     description: "Do nothing and see that the customer does next"
     display_name: "No Action"
     enabled: true
+    permission_type: "service_update"
 
 # Constraints for each treatment
 constraints:
-  call_back:
+  service_call_back:
+    max_per_day: 5
+    remaining_availability: 5
+    cost_per_contact_pounds: 8.0
+    priority: 2  # High priority for service issues
+
+  marketing_call_back:
     max_per_day: 2
     remaining_availability: 2
     cost_per_contact_pounds: 10.0
@@ -63,6 +111,36 @@ constraints:
     remaining_availability: 10000
     cost_per_contact_pounds: 0.10
     priority: 5
+
+  early_upgrade:
+    max_per_day: 50
+    remaining_availability: 50
+    cost_per_contact_pounds: 15.0
+    priority: 2
+
+  family_plan:
+    max_per_day: 100
+    remaining_availability: 100
+    cost_per_contact_pounds: 5.0
+    priority: 3
+
+  data_boost:
+    max_per_day: 500
+    remaining_availability: 500
+    cost_per_contact_pounds: 2.0
+    priority: 4
+
+  loyalty_points:
+    max_per_day: 2000
+    remaining_availability: 2000
+    cost_per_contact_pounds: 0.75
+    priority: 4
+
+  personalized_offer:
+    max_per_day: 300
+    remaining_availability: 300
+    cost_per_contact_pounds: 3.0
+    priority: 3
 
 # Global settings
 settings:
