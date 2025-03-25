@@ -1,5 +1,45 @@
 [
     {
+        "customer_id": "U123",
+        "date": "2024-02-01",
+        "monthly_bill": 85.99,
+        "payment_status": "on_time",
+        "plan_name": "Individual Plus 15GB",
+        "plan_cost": 75.99,
+        "additional_charges": [
+            {
+                "type": "data_overage",
+                "amount": 10.00,
+                "description": "2GB data overage"
+            }
+        ],
+        "discounts": [],
+        "payment_method": "credit_card",
+        "auto_pay": true,
+        "paperless_billing": true,
+        "payment_issues": false
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-01",
+        "monthly_bill": 95.99,
+        "payment_status": "on_time",
+        "plan_name": "Individual Plus 15GB",
+        "plan_cost": 75.99,
+        "additional_charges": [
+            {
+                "type": "data_overage",
+                "amount": 20.00,
+                "description": "4GB data overage"
+            }
+        ],
+        "discounts": [],
+        "payment_method": "credit_card",
+        "auto_pay": true,
+        "paperless_billing": true,
+        "payment_issues": false
+    },
+    {
         "customer_id": "U124",
         "date": "2024-02-01",
         "plan_name": "Premium Data",
@@ -126,5 +166,29 @@
         "monthly_charge": 79.99,
         "additional_charges": 12.50,
         "payment_status": "paid"
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-01",
+        "plan_name": "Enterprise Fiber Pro",
+        "monthly_charge": 999.99,
+        "additional_charges": 0.00,
+        "payment_status": "paid",
+        "payment_method": "bank_transfer",
+        "auto_pay": true,
+        "paperless_billing": true,
+        "payment_issues": false
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-01",
+        "plan_name": "Family Share Plus",
+        "monthly_charge": 159.99,
+        "additional_charges": 35.50,
+        "payment_status": "pending",
+        "payment_method": "credit_card",
+        "auto_pay": true,
+        "paperless_billing": true,
+        "payment_issues": false
     }
 ] 

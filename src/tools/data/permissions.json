@@ -1,5 +1,38 @@
 [
     {
+        "customer_id": "U123",
+        "last_updated": "2024-02-10",
+        "permissions": {
+            "email": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-02-10"
+            },
+            "sms": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-02-10"
+            },
+            "call": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-02-10"
+            },
+            "push_notifications": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-02-10"
+            }
+        },
+        "preferred_contact_time": "afternoon",
+        "preferred_language": "en",
+        "do_not_disturb": "23:00-07:00"
+    },
+    {
         "customer_id": "U124",
         "last_updated": "2024-02-15",
         "permissions": {
@@ -262,5 +295,71 @@
         "preferred_contact_time": "evening",
         "do_not_disturb": "22:00-08:00",
         "preferred_language": "English"
+    },
+    {
+        "customer_id": "U131",
+        "last_updated": "2024-03-01",
+        "permissions": {
+            "email": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            },
+            "sms": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            },
+            "call": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            },
+            "push_notifications": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            }
+        },
+        "preferred_contact_time": "business_hours",
+        "preferred_language": "en",
+        "do_not_disturb": "18:00-08:00"
+    },
+    {
+        "customer_id": "U132",
+        "last_updated": "2024-03-01",
+        "permissions": {
+            "email": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            },
+            "sms": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            },
+            "call": {
+                "marketing": "Y",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            },
+            "push_notifications": {
+                "marketing": "N",
+                "service_updates": "Y",
+                "billing": "Y",
+                "last_updated": "2024-03-01"
+            }
+        },
+        "preferred_contact_time": "afternoon",
+        "preferred_language": "en",
+        "do_not_disturb": "21:00-08:00"
     }
 ] 

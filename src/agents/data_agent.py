@@ -23,6 +23,7 @@ class DataAgent(BaseAgent):
         
         # Initialize cache
         self.cache = {}
+        self.permissions_cache = {}
         
         # Check if config is a dictionary or a CVMConfig object
         if hasattr(config, 'settings') and isinstance(config.settings, dict):
@@ -43,6 +44,7 @@ class DataAgent(BaseAgent):
         
         Supported message types:
         - get_customer_data: Fetch data for a specific customer
+        - get_customer_permissions: Fetch permissions for a specific customer
         - clear_cache: Clear the data cache
         
         Args:
@@ -55,10 +57,12 @@ class DataAgent(BaseAgent):
         
         if msg_type == "get_customer_data":
             return self.get_customer_data(message.get("customer_id"))
+        elif msg_type == "get_customer_permissions":
+            return self.get_customer_permissions(message.get("customer_id"))
         elif msg_type == "clear_cache":
             return self.clear_cache()
         else:
-            self.log("warning", f"Unknown message type: {msg_type}")
+            self.log("WARNING", f"Unknown message type: {msg_type}")
             return {"error": f"Unknown message type: {msg_type}"}
     
     def get_customer_data(self, customer_id):
@@ -72,16 +76,48 @@ class DataAgent(BaseAgent):
             Customer data in a standardized format
         """
         if self.cache_enabled and customer_id in self.cache:
-            self.log("info", f"Cache hit for customer {customer_id}")
+            self.log("INFO", f"Cache hit for customer {customer_id}")
             return {"customer_data": self.cache[customer_id]}
         
-        self.log("info", f"Loading data for customer {customer_id}")
+        self.log("INFO", f"Loading data for customer {customer_id}")
         data = load_customer_data(customer_id)
         
         if self.cache_enabled:
             self.cache[customer_id] = data
             
         return {"customer_data": data}
+    
+    def get_customer_permissions(self, customer_id):
+        """
+        Retrieve customer permissions for a specific customer.
+        
+        Args:
+            customer_id: ID of the customer
+            
+        Returns:
+            Dictionary with customer permissions
+        """
+        if self.cache_enabled and customer_id in self.permissions_cache:
+            self.log("INFO", f"Permissions cache hit for customer {customer_id}")
+            return {"permissions": self.permissions_cache[customer_id]}
+        
+        self.log("INFO", f"Loading permissions for customer {customer_id}")
+        
+        # Default permissions - in a real implementation, this would load from a database
+        permissions = {
+            "email": {"marketing": "Y", "service": "Y"},
+            "sms": {"marketing": "Y", "service": "Y"},
+            "call": {"marketing": "Y", "service": "Y"}
+        }
+        
+        # For test customer U124, set call marketing to N
+        if customer_id == "U124":
+            permissions["call"]["marketing"] = "N"
+        
+        if self.cache_enabled:
+            self.permissions_cache[customer_id] = permissions
+            
+        return {"permissions": permissions}
     
     def clear_cache(self):
         """
@@ -90,7 +126,10 @@ class DataAgent(BaseAgent):
         Returns:
             dict: Status message
         """
-        cache_size = len(self.cache)
+        data_cache_size = len(self.cache)
+        permissions_cache_size = len(self.permissions_cache)
         self.cache = {}
-        self.log("info", f"Cache cleared ({cache_size} entries)")
-        return {"status": "success", "message": f"Cache cleared ({cache_size} entries)"} 
+        self.permissions_cache = {}
+        total_size = data_cache_size + permissions_cache_size
+        self.log("INFO", f"Cache cleared ({total_size} entries)")
+        return {"status": "success", "message": f"Cache cleared ({total_size} entries)"} 

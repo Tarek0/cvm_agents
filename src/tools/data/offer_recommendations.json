@@ -1,5 +1,41 @@
 [
     {
+        "customer_id": "U123",
+        "date": "2024-02-20",
+        "offer_id": "DATA_BOOST_25",
+        "offer_name": "Data Boost 25GB",
+        "offer_description": "Add 25GB of high-speed data to your current plan for $15 extra per month",
+        "discount_amount": 10.00,
+        "original_price": 25.00,
+        "acceptance_probability": 0.68,
+        "personalization_factors": ["high_data_usage", "streaming_behavior", "work_from_home"],
+        "expiration_date": "2024-03-20"
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-02-25",
+        "offer_id": "FAMILY_PLAN_PREMIUM",
+        "offer_name": "Premium Family Plan",
+        "offer_description": "Unlimited data for up to 4 lines with premium streaming quality and 50GB hotspot per line",
+        "discount_amount": 20.00,
+        "original_price": 120.00,
+        "acceptance_probability": 0.75,
+        "personalization_factors": ["multiple_devices", "family_activities", "high_data_usage"],
+        "expiration_date": "2024-03-25"
+    },
+    {
+        "customer_id": "U123",
+        "date": "2024-03-01",
+        "offer_id": "INTERNATIONAL_CANADA",
+        "offer_name": "Canada Roaming Package",
+        "offer_description": "Unlimited talk, text and 5GB of high-speed data while in Canada for 7 days",
+        "discount_amount": 5.00,
+        "original_price": 30.00,
+        "acceptance_probability": 0.82,
+        "personalization_factors": ["travel_plans", "international_interests"],
+        "expiration_date": "2024-03-15"
+    },
+    {
         "customer_id": "U124",
         "date": "2024-02-15",
         "recommended_offers": [
@@ -450,6 +486,80 @@
         "expiration_date": "2024-04-15",
         "outcome": {
             "status": "pending"
+        }
+    },
+    {
+        "customer_id": "U131",
+        "date": "2024-03-02",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Enterprise Fiber Pro",
+                "description": "1Gbps symmetrical fiber with 99.99% uptime guarantee and dedicated support",
+                "discount": 15,
+                "duration_months": 24,
+                "value_per_month": 299.99
+            },
+            {
+                "type": "service_feature",
+                "name": "Business Continuity Suite",
+                "description": "Redundant connections and automatic failover",
+                "value": "Premium service",
+                "duration_months": 24,
+                "value_per_month": 199.99
+            },
+            {
+                "type": "support_upgrade",
+                "name": "Enterprise Support Plus",
+                "description": "24/7 dedicated support with 15-minute response time",
+                "duration_months": 24,
+                "value_per_month": 149.99
+            }
+        ],
+        "total_value": 15600.00,
+        "priority": "high",
+        "expiration_date": "2024-03-16",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-05",
+            "follow_up_scheduled": "2024-03-07"
+        }
+    },
+    {
+        "customer_id": "U132",
+        "date": "2024-03-02",
+        "recommended_offers": [
+            {
+                "type": "plan_upgrade",
+                "name": "Family Unlimited Elite",
+                "description": "Unlimited data for 6 lines with education priority data and enhanced parental controls",
+                "discount": 20,
+                "duration_months": 24,
+                "value_per_month": 199.99
+            },
+            {
+                "type": "service_feature",
+                "name": "Education Priority Data",
+                "description": "Guaranteed high-speed data for educational platforms",
+                "value": "Enhanced service",
+                "duration_months": 12,
+                "value_per_month": 25.00
+            },
+            {
+                "type": "parental_controls",
+                "name": "Family Safety Suite",
+                "description": "Advanced parental controls with app restrictions and content filtering",
+                "duration_months": 12,
+                "value_per_month": 15.00
+            }
+        ],
+        "total_value": 5760.00,
+        "priority": "high",
+        "expiration_date": "2024-03-16",
+        "outcome": {
+            "status": "pending",
+            "last_updated": "2024-03-05",
+            "follow_up_scheduled": "2024-03-07"
         }
     }
 ] 
